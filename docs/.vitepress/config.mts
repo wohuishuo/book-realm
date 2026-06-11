@@ -55,6 +55,7 @@ export default defineConfig({
           text: '③ 实战篇(每 MVP 一章)',
           items: [
             { text: '本篇导读', link: '/project/' },
+            { text: 'MVP-0 用户中心(认证)', link: '/project/user-center' },
             { text: 'MVP-1 书库服务', link: '/project/library' },
             { text: 'MVP-2 阅读 App(待写)', link: '/project/reader' },
             { text: 'MVP-3 事件统计(待写)', link: '/project/event-stats' },

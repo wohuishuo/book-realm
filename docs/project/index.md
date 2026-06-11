@@ -6,6 +6,7 @@
 
 | 章 | MVP | 仓库 | 状态 |
 | --- | --- | --- | --- |
+| [MVP-0 用户中心](/project/user-center) | 统一登录(JWT) | [user-center-team-project](https://github.com/wohuishuo/user-center-team-project) | ✅ 已完成(前作复用) |
 | [MVP-1 书库服务](/project/library) | 图书/章节内容 API | [br-library-service](https://github.com/wohuishuo/br-library-service) | ✅ 已完成 |
 | [MVP-2 阅读 App](/project/reader) | Compose 客户端 | br-reader-app(开发中) | ⬜ |
 | [MVP-3 事件统计](/project/event-stats) | RabbitMQ 日志/统计 | br-event-stats | ⬜ |
