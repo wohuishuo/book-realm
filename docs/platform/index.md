@@ -8,15 +8,15 @@
 
 | 步 | 产出 | 对应结课要求 | 状态 |
 | --- | --- | --- | --- |
-| [P1](/platform/p1-positioning) | 业务领域、开发目标、用户画像 | 可行性与需求分析 | ⬜ |
-| [P2](/platform/p2-competitors) | 起点读书/微信读书/番茄 竞品对比 | 竞品分析 | ⬜ |
-| [P3](/platform/p3-features) | 功能分解层次树(每 MVP 一棵子树) | 功能分解层次图 | ⬜ |
-| [P4](/platform/p4-usecases) | UML 用例图 + 用户类型与权限 + 核心用例规约 | 用例分析 | ⬜ |
-| [P5](/platform/p5-domain) | 实体/Service/领域事件、类图、包图、**BC 划分与映射图** | 领域模型设计 | ⬜ |
-| [P6](/platform/p6-dynamics) | 顺序图/活动图(登录事件流、打开一本书、AI 问答) | 系统动态特性 | ⬜ |
-| [P7](/platform/p7-architecture) | 架构总图、技术选型表、部署图 | 系统设计文档 | ⬜ |
-| [P8](/platform/p8-schedule) | 分工表、五周时间轴、风险与砍单顺序 | 流程管理 | ⬜ |
+| [P1](/platform/p1-positioning) | 业务领域、开发目标、用户画像 | 可行性与需求分析 | ✅ |
+| [P2](/platform/p2-competitors) | 起点读书/微信读书/番茄 竞品对比 | 竞品分析 | ✅ |
+| [P3](/platform/p3-features) | 功能分解层次树(每 MVP 一棵子树) | 功能分解层次图 | ✅ |
+| [P4](/platform/p4-usecases) | UML 用例图 + 用户类型与权限 + 核心用例规约 | 用例分析 | ✅ |
+| [P5](/platform/p5-domain) | 实体/Service/领域事件、类图、包图、**BC 划分与映射图** | 领域模型设计 | ✅ |
+| [P6](/platform/p6-dynamics) | 顺序图/活动图(登录事件流、打开一本书、AI 问答) | 系统动态特性 | ✅ |
+| [P7](/platform/p7-architecture) | 架构总图、技术选型表、部署图 | 系统设计文档 | ✅ |
+| [P8](/platform/p8-schedule) | 分工表、五周时间轴、风险与砍单顺序 | 流程管理 | ✅ |
 
-::: tip P 阶段也要过 RC
-八步写完,按 [RC 清单](/guide/rc-checklist) 重读:只读每步的结论句,能连成一个通顺的平台故事吗?
+::: tip P 阶段已完成并通过架构终审(2026-06-12)
+八步全部写实并经两轮 RC 自修 + 架构终审。三条终审裁决已并入 P5:①接口以 user-center 真实代码为准;②App 不直连 MQ,进度走 HTTP 上报;③SimpleVectorStore 批准为 MVP 向量库。
 :::

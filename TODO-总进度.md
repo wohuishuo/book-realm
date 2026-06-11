@@ -43,7 +43,10 @@
 - [x] **P 阶段 P1–P8 全部写实** ✅ 2026-06-12(DeepSeek 码农会话完成,含两轮 RC 自修)
 - [x] **P 阶段架构终审** ✅ 2026-06-12(Claude 架构会话):整体合格。三条裁决——①接口以 user-center 真实代码为准(`/api/user/*`,JWT 本地验签,无 validate 接口);②**App 不直连 RabbitMQ**,ReadingProgress 走 HTTP `POST /api/stats/progress`,MQ 仅用于后端服务间(UserLogin);③SimpleVectorStore 作 MVP 向量库予以批准(接口可换)。已修订 P5。
 - [x] **MVP-1 书库服务** ✅ 2026-06-12:<https://github.com/wohuishuo/br-library-service>(公开)。6 测试绿、5 接口实测通过、61 段真实公版书种子、design.md 金字塔合格。架构终审通过(A-)。
-- [ ] **MVP-2 阅读 App**:见 book-realm 仓 `工单-MVP2阅读App.md`;需 Android Studio 环境。第一次"咬合"(登录走 MVP-0、内容走 MVP-1)
+- [x] **平台书实战篇建立** ✅ 2026-06-13:MVP-0 用户中心章 + MVP-1 书库章(嵌真实代码/讲透为什么/记真实坑,质量对标 user-center 书);确立章节质量标准(达不到不算完成)。教学集中平台书,MVP 仓只留 3 个轻文档——**"一仓一书"旧提法作废**
+- [x] **门面修缮** ✅:br-library-service README 重写(徽章/定位图/文档区);平台书首页按读者中心重写(去黑话)
+- [x] **一致性体检** ✅ 2026-06-13(Fable 架构会话):修复 6 处矛盾——MVP 地图星系树过期状态、咬合关系违反"App 不直连 MQ"裁决、P1-P8 状态未勾、"小书"旧措辞、CLAUDE.md 必读硬编码 P 阶段工单、首页 MVP-2 状态失实
+- [ ] **MVP-2 阅读 App**:见 book-realm 仓 `工单-MVP2阅读App.md`;真机方案,环境已探明。第一次"咬合"(登录走 MVP-0、内容走 MVP-1)。完成后:架构终审 + 写实战章 + 美化 README
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
