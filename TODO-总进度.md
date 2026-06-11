@@ -48,8 +48,8 @@
 | MVP | 仓库 | 代码 | 书 | RC |
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
-| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 骨架就绪,P 阶段待填 | ⬜ |
-| 1 书库服务 | br-library-service(未建) | ⬜ | ⬜ | ⬜ |
+| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 P1-P8 写实,待架构终审 | ⬜ |
+| 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | 🔄 L0 建仓完成 | ⬜ | ⬜ |
 | 2 阅读 App | br-reader-app(未建) | ⬜ | ⬜ | ⬜ |
 | 3 事件统计 | br-event-stats(未建) | ⬜ | ⬜ | ⬜ |
 | 4 AI 服务 | br-ai-service(未建) | ⬜ | ⬜ | ⬜ |
