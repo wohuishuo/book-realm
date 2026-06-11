@@ -44,6 +44,15 @@
 - [ ] **MVP-2 阅读 App**:见 book-realm 仓 `工单-MVP2阅读App.md`;需 Android Studio 环境。第一次"咬合"(登录走 MVP-0、内容走 MVP-1)
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
+**工单队列(全部已写好,在 book-realm 仓):**
+- [x] 工单-MVP1书库.md — 已执行完成 ✅
+- [ ] 工单-MVP2阅读App.md — 待 DS 执行(真机方案,环境已探明)
+- [ ] 工单-MVP3事件统计.md — 待执行(需先 `scoop install rabbitmq`)
+- [ ] 工单-MVP4-AI服务.md — 待执行(需 DEEPSEEK_API_KEY 环境变量)
+- 【架构会话待办】用户中心接入 amqp 发 UserLogin 事件(跨仓改动);各 MVP 的 Docker 化与平台级 compose;各 MVP 完成后的 RC 终审 + MVP 地图登记
+
+**仓库创建原则**:不预建空仓;每个 MVP 仓由其工单的"建仓"首单(L0/R0/S0/A0)连同可编译骨架一起创建,确保仓一出生即能跑。
+
 ### 📋 各 MVP 状态
 
 | MVP | 仓库 | 代码 | 书 | RC |
