@@ -38,17 +38,10 @@
 - [x] **建枢纽仓 book-realm** ✅ 2026-06-11:<https://github.com/wohuishuo/book-realm>(公开),本地 `起点-安卓项目\book-realm`
 - [x] 搬书骨架 ✅:平台书可构建(开始篇 4 页 + P1–P8 占位 + MVP 地图);方法论/RC清单/行动计划已入仓
 - [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
-- [x] P1 业务定位 ✅ 2026-06-11
-- [x] P2 竞品分析 ✅ 2026-06-11
-- [x] P3 功能树 ✅ 2026-06-11
-- [x] P4 用例图 ✅ 2026-06-11
-- [x] P5 领域模型+BC 映射 ✅ 2026-06-11 (初稿,待定项已标注)
-- [x] P6 动态图 ✅ 2026-06-11
-- [x] P7 架构选型 ✅ 2026-06-11 (初稿,待定项已标注)
-- [x] P8 分工计划 ✅ 2026-06-11
-- [x] **P1–P8 全部完成!** 停在这里,等架构会话做 RC 终审
-- [ ] P 阶段 RC:一分钟讲清平台 → 才许写代码
-- [ ] 第 2 周起按行动计划第三节推进(书库服务 → App → 事件 → AI)
+- [x] **P 阶段 P1–P8 全部写实** ✅ 2026-06-12(DeepSeek 码农会话完成,含两轮 RC 自修)
+- [x] **P 阶段架构终审** ✅ 2026-06-12(Claude 架构会话):整体合格。三条裁决——①接口以 user-center 真实代码为准(`/api/user/*`,JWT 本地验签,无 validate 接口);②**App 不直连 RabbitMQ**,ReadingProgress 走 HTTP `POST /api/stats/progress`,MQ 仅用于后端服务间(UserLogin);③SimpleVectorStore 作 MVP 向量库予以批准(接口可换)。已修订 P5。
+- [ ] **建 MVP 仓**(第 2 周):br-library-service(书库,JPA+种子数据)→ br-reader-app(Compose 骨架);按行动计划第三节推进
+- [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 ### 📋 各 MVP 状态
 

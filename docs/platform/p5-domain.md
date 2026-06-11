@@ -1,134 +1,91 @@
 # P5 领域模型与 BC 映射
 
-> **结论先行**:书域划分为五个 Bounded Context——用户 BC(认证)、书库 BC(内容 API)、阅读 BC(App 侧缓存)、统计 BC(事件消费)、AI BC(RAG 问答)。各 BC 拥有独立实体,只通过 API 或领域事件通信,实体不跨 BC 重叠。
+> **结论先行**:书域划分为五个 Bounded Context——用户 BC(认证)、书库 BC(内容 API)、阅读 BC(App 缓存)、统计 BC(事件消费)、AI BC(RAG 问答)。各 BC 拥有独立实体,只通过 API 或事件通信,实体不跨 BC 重叠。
 
 ## 一、五个 BC 分述
 
 ### BC-1:用户 BC(MVP-0,复用 user-center)
 
-**实体**:User(id, username, password, role, createdAt)
-> 用户 BC 位于 user-center-team-project 独立仓库,此处仅列接口契约。
+**结论:用户 BC 只做三件事——注册、登录、发事件。**
 
-**Service**:AuthService(注册/登录/Token 校验/发布 UserLogin 事件)
+**根据**:用户 BC 已由 user-center-team-project 独立仓库完成,书域只使用它的接口契约。注册返回用户 ID,登录返回 JWT,登录成功时发布 UserLogin 事件到 RabbitMQ。Token 校验由拦截器完成,对其他 BC 透明。
 
-**对外接口**:
-- `POST /api/auth/register` → 注册
-- `POST /api/auth/login` → 返回 JWT
-- `GET /api/auth/validate` → Token 校验
-
-**发布事件**:`UserLogin` → RabbitMQ fanout → 统计 BC
+**对外接口**(以 user-center 真实代码为准):`POST /api/user/register`、`POST /api/user/login`、`GET /api/user/current`。JWT 由各后端服务**本地验签**(共享密钥),不设 validate 接口。
 
 ### BC-2:书库 BC(MVP-1)
 
-**实体**:
+**结论:书库 BC 管理四类实体——Book、Chapter、Paragraph、Tag,对外提供 REST API。**
 
+**根据**:实体设计来源于旧 Android 项目 Room 实体的简化——去掉了网文专属字段(votes、rank、signStatus),只保留公版书核心字段。Book 和 Tag 多对多,Book 和 Chapter 一对多,Chapter 和 Paragraph 一对多。
+
+**实体关系**:
 ```
-Book                                 Chapter
-├─ bookId: Long (PK)                 ├─ chapterId: Long (PK)
-├─ title: String                     ├─ bookId: Long (FK → Book)
-├─ authorName: String                ├─ title: String
-├─ coverUrl: String                  ├─ chapterOrder: Int
-├─ intro: String                     └─ wordCount: Int
-├─ status: BookStatus
-└─ createdAt: DateTime               Paragraph
-                                     ├─ id: Long (PK)
-Tag                                  ├─ chapterId: Long (FK → Chapter)
-├─ id: Long (PK)                     ├─ paragraphOrder: Int
-├─ name: String                      └─ text: String
-└─ count: Int
+Book 1───* Chapter 1───* Paragraph         Book *───* Tag
 ```
 
-> 设计来源:旧 Android 项目 Room 实体简化——去掉了网文专属字段(votes、rank、signStatus 等),只保留公版书核心字段。
+**对外接口**:`GET /api/books`(+?q=&tag=)、`GET/POST/PUT/DELETE /api/books`、`GET /api/books/{id}/chapters`、`GET /api/chapters/{id}`
 
-**Service**:BookService(CRUD/搜索)、ChapterService(目录+段落)、FileService(封面存取)
+**例子**:`GET /api/books?q=西游记&tag=名著` 返回一条 JSON——App 书城直接渲染,不需要二次处理。
 
-**对外接口**:
-- `GET /api/books` → 列表(?q=&tag=)
-- `GET /api/books/{id}` → 详情
-- `POST/PUT/DELETE /api/books/{id}` → 管理员 CRUD
-- `GET /api/books/{id}/chapters` → 章节目录
-- `GET /api/chapters/{id}` → 章节内容(含段落)
+### BC-3:阅读 BC(MVP-2,Android 本地)
 
-### BC-3:阅读 BC(MVP-2,App 侧 Room 本地)
+**结论:阅读 BC 的三个实体只存 Room 本地,不暴露为服务端 API。**
 
-**实体**(仅在 Android 本地):
+**根据**:书架和阅读进度是 App 本地行为。BookCache 是书库数据的镜像,ChapterCache 是章节元数据的镜像,ReadingProgress 记录当前读到第几章第几段。进度同步不建服务端书架表——JWT 已标识用户,进度通过 ReadingProgress 事件异步上报即可。
 
-```
-BookCache             ChapterCache          ReadingProgress
-├─ bookId             ├─ chapterId          ├─ id (PK)
-├─ title              ├─ bookId             ├─ bookId
-├─ authorName         ├─ title              ├─ chapterId
-├─ coverUrl           └─ chapterOrder       ├─ paragraphIndex
-├─ intro                                    └─ updatedAt
-└─ lastReadTime
-```
+**实体**(仅 Room):BookCache、ChapterCache、ReadingProgress
 
-**说明**:这三个实体只存在 Room 本地,不暴露为服务端 API。进度同步通过 ReadingProgress 事件异步上报。
+**例子**:读者从书库加载《西游记》第一章后,ChapterCache 存入本地。下次打开同一章直接读 Room,零网络请求。退出时 ReadingProgress 事件异步上报,不阻塞翻页。
 
 ### BC-4:统计 BC(MVP-3)
 
-**实体**:
+**结论:统计 BC 消费两个领域事件,维护三张表,提供一个查询 API。**
 
-```
-LoginLog                 LoginStats              ReadingStats
-├─ id (PK)               ├─ date (PK)            ├─ date (PK)
-├─ userId                ├─ totalLogins          ├─ totalChaptersRead
-├─ loginType(App/Web)    ├─ appLogins            └─ uniqueReaders
-├─ loginTime             └─ webLogins
-└─ ipAddress
-```
+**根据**:训练课题原文要求统计"用户按设备类型的登录次数"。LoginEventConsumer 消费 UserLogin 事件,按 loginType 分别聚合到 LoginStats.appLogins 和 LoginStats.webLogins。LoginLog 保留每次登录的原始记录,LoginStats 和 ReadingStats 按天聚合。
 
-**Service**:LoginEventConsumer、ReadingEventConsumer、StatsQueryService
+**对外接口**:`GET /api/stats/logins?from=&to=`、`GET /api/stats/reading?from=&to=`
 
-**对外接口**:
-- `GET /api/stats/logins?from=&to=`
-- `GET /api/stats/reading?from=&to=`
+**例子**:管理员访问 `GET /api/stats/logins?from=2026-06-01&to=2026-06-07`,返回该周每天的总登录次数、App 登录次数、Web 登录次数。数据来自 LoginStats 表,由 LoginEventConsumer 在每次登录事件后增量更新。
 
 ### BC-5:AI BC(MVP-4)
 
-**实体**:
+**结论:AI BC 管理向量片段实体,提供问答、摘要和向量化三个接口。**
 
-```
-ChapterVector
-├─ id: Long (PK)
-├─ chapterId: Long
-├─ bookId: Long
-├─ chunkText: String
-├─ chunkOrder: Int
-└─ embedding: Vector(存于向量库)
-```
+**根据**:ChapterVector 的 embedding 字段存于 SimpleVectorStore(Spring AI 内置内存实现,MVP 阶段零运维)。向量检索限定 chapterId 范围,避免跨章节误检。后续通过 VectorStore 接口切 PGVector/Milvus 不改业务代码。
 
-**Service**:EmbeddingService(分段→向量化→入库)、AskService(RAG 问答)、SummaryService(章节摘要)
+**对外接口**:`POST /api/ai/ask`({selectedText, chapterId, question})、`POST /api/ai/summary`({chapterText})、`POST /api/ai/embed`({bookId})
 
-**对外接口**:
-- `POST /api/ai/ask` → 读书问答({selectedText, chapterId, question})
-- `POST /api/ai/summary` → 章节摘要({chapterText})
-- `POST /api/ai/embed` → 管理员触发向量化({bookId})
+**例子**:`POST /api/ai/ask` 带选中文本"灵根育孕源流出"+chapterId=3+问题"灵根指什么",AI 服务在向量库检索第 3 章内最相关的 Top-3 段落,组 prompt 发 DeepSeek,返回带段落编号引用的回答。
 
 ## 二、领域事件表
 
+**结论:两个事件驱动平台异步解耦——UserLogin 满足训练课题,ReadingProgress 满足阅读统计。**
+
 | 事件 | 载荷 | 生产者 | 消费者 |
 | --- | --- | --- | --- |
-| **UserLogin** | userId, loginType(App/Web), loginTime, ipAddress | 用户 BC(AuthService) | 统计 BC(日志服务+统计服务) |
-| **ReadingProgress** | userId, bookId, chapterId, paragraphIndex, timestamp | 阅读 BC(App 退出阅读器时) | 统计 BC(统计服务聚合) |
+| **UserLogin** | userId, loginType(App/Web), loginTime, ipAddress | 用户 BC(AuthService) | 统计 BC(日志落盘 + 登录聚合) |
+| **ReadingProgress** | userId, bookId, chapterId, paragraphIndex, timestamp | 统计 BC 的 HTTP 入口(App 经 `POST /api/stats/progress` 上报;**App 不直连 MQ**) | 统计 BC(阅读聚合) |
+
+**根据**:两个事件的载荷字段都足够消费者独立完成处理——UserLogin 带了 loginType 用于按设备类型聚合;ReadingProgress 带了 paragraphIndex 用于精确定位阅读位置。
 
 ## 三、BC 映射图
 
+**结论:BC 之间只通过两条通道通信——同步 HTTP+JWT(App 到后端服务)和异步 RabbitMQ(事件发布与消费)。**
+
 ```
-                        发布 UserLogin 事件
-     ┌───────────┐      (userId, loginType)     ┌───────────┐
-     │ 用户 BC   │ ───────────────────────────> │ 统计 BC   │
-     │ MVP-0     │                               │ MVP-3     │
-     └─────┬─────┘                               └─────┬─────┘
-           │ JWT                                       │ ReadingProgress
-           │                                           │ 事件
-           ▼                                           │
-     ┌───────────┐                                     │
-     │ 阅读 BC   │ ─────── GET /api/books/* ──────> ┌──┴────────┐
-     │ MVP-2 App │ <────── 章节 JSON ────────────── │ 书库 BC   │
-     └─────┬─────┘                                   │ MVP-1     │
-           │                                         └───────────┘
-           │ POST /api/ai/ask
+                   发布 UserLogin(异步)
+     ┌───────────┐ ────────────────────────> ┌───────────┐
+     │ 用户 BC   │                             │ 统计 BC   │
+     │ MVP-0     │                             │ MVP-3     │
+     └─────┬─────┘                             └─────┬─────┘
+           │ JWT(同步)                               │
+           ▼                                         │ ReadingProgress
+     ┌───────────┐                                   │ (异步)
+     │ 阅读 BC   │ ── GET /api/books/* ──────────> ┌──┴────────┐
+     │ MVP-2 App │ <── 章节 JSON ───────────────── │ 书库 BC   │
+     └─────┬─────┘                                  │ MVP-1     │
+           │                                        └───────────┘
+           │ POST /api/ai/ask(同步)
            ▼
      ┌───────────┐
      │ AI BC     │
@@ -136,54 +93,36 @@ ChapterVector
      └───────────┘
 ```
 
-**通信约定**:用户 BC ↔ 阅读 BC(HTTP+JWT) / 阅读 BC ↔ 书库 BC(HTTP+JWT) / 阅读 BC → AI BC(HTTP+JWT) / 用户 BC → 统计 BC(RabbitMQ) / 阅读 BC → 统计 BC(HTTP 上报,由书库服务中转发布事件)
+**通信约定**:同步走 HTTP+JWT(App→用户中心、App→书库、App→AI、**App→统计的进度上报**);异步 RabbitMQ **仅用于后端服务之间**(用户中心→统计的 UserLogin 事件)。架构裁决:移动端不直连消息队列——凭据下发到客户端不安全,弱网下也不可靠。
 
 ## 四、包图
 
-```
-com.bookrealm.user              com.bookrealm.library
-├── controller/AuthController   ├── controller/BookController, ChapterController
-├── service/AuthService         ├── service/BookService, ChapterService, FileService
-├── entity/User                 ├── entity/Book, Chapter, Paragraph, Tag
-├── event/UserLoginEvent        ├── repository/BookRepo, ChapterRepo, ParagraphRepo
-└── config/SecurityConfig       └── config/JpaConfig
-
-com.bookrealm.reader (Android)  com.bookrealm.stats
-├── ui/阅读器/书架/书城          ├── controller/StatsController
-├── viewmodel/ReaderViewModel   ├── service/StatsQueryService
-├── data/local/Room             ├── consumer/LoginEventConsumer, ReadingEventConsumer
-├── data/remote/Retrofit        ├── entity/LoginLog, LoginStats, ReadingStats
-├── di/HiltModule               ├── repository/*
-└── domain/(App 内领域模型)      └── config/RabbitMQConfig
-
-                                com.bookrealm.ai
-                                ├── controller/AiController
-                                ├── service/AskService, SummaryService, EmbeddingService
-                                ├── config/SpringAiConfig
-                                └── document/ChapterChunk(DTO)
-```
-
-**说明**:每个 BC = 一个独立 Maven/Gradle 模块或独立仓库,包之间不直接 import,只通过 HTTP API 或 RabbitMQ 事件通信。
-
-## 五、类图
-
-### 书库 BC
+**结论:每个 BC 一个独立包(或独立仓库),包之间不直接 import。**
 
 ```
-Book 1───* Chapter 1───* Paragraph
-│              │
-└──*───* Tag   └── bookId(FK)
+com.bookrealm.user                    com.bookrealm.library
+├── controller/AuthController         ├── controller/BookController, ChapterController
+├── service/AuthService               ├── service/BookService, ChapterService, FileService
+├── entity/User                       ├── entity/Book, Chapter, Paragraph, Tag
+├── event/UserLoginEvent              ├── repository/*
+└── config/SecurityConfig             └── config/JpaConfig
+
+com.bookrealm.reader (Android)        com.bookrealm.stats
+├── ui/阅读器, 书架, 书城              ├── controller/StatsController
+├── viewmodel/                        ├── service/StatsQueryService
+├── data/local/Room                   ├── consumer/LoginEventConsumer, ReadingEventConsumer
+├── data/remote/Retrofit              ├── entity/LoginLog, LoginStats, ReadingStats
+├── di/HiltModule                     ├── repository/*
+└── domain/                           └── config/RabbitMQConfig
+
+                                      com.bookrealm.ai
+                                      ├── controller/AiController
+                                      ├── service/AskService, SummaryService, EmbeddingService
+                                      ├── config/SpringAiConfig
+                                      └── document/ChapterChunk(DTO)
 ```
 
-### 统计 BC
-
-```
-LoginLog            LoginStats            ReadingStats
-├─ userId           ├─ date(PK)           ├─ date(PK)
-├─ loginType        ├─ totalLogins        ├─ totalChaptersRead
-├─ loginTime        ├─ appLogins          └─ uniqueReaders
-└─ ipAddress        └─ webLogins
-```
+**例子**:书库 BC 的 `BookService` 不会 import 阅读 BC 的任何类——它只知道 `Book` 实体和自己的 API 契约。阅读 BC 通过 Retrofit 调 `GET /api/books` 拿到 JSON,自己解析为 `BookCache`,两个 BC 在代码层面完全隔离。
 
 ## 对应结课文档
 
