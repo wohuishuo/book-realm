@@ -15,9 +15,13 @@ Kotlin · Jetpack Compose + Material 3 · MVVM(ViewModel + StateFlow + UiState �
 3. 加依赖(Compose BOM、Hilt、Navigation、Retrofit、Room、DataStore、Coil)。
 **DoD**:`gradlew assembleDebug` 通过(产出 `app-debug.apk`);commit 推送。**不要求模拟器截图**——无设备,跑 R 系列其余工单时同样以"编译通过 + 单元测试"为准,UI 实跑截图等设备到位后由用户或架构会话补。
 
-### 设备说明(运行验证怎么办)
+### 设备说明:**真机**(用户已选)
 
-无 AVD,所以 R3/R4/R5 的"模拟器实操截图"DoD **降级为**:`gradlew assembleDebug` 通过 + 相关 ViewModel/逻辑单元测试通过。真正的真机/模拟器跑通,等以下任一就位后补做(用户决定):①接真机开 USB 调试 `adb devices` 能认到;②用户在 Android Studio 里建一个 AVD。在此之前 **App 的 UI 用 Compose Preview 验证**(`@Preview` 注解,每个 screen 配一个 Preview),DoD 用 Preview 截图代替。
+运行验证用真实安卓手机(USB 调试)。执行约定:
+- 编码期每单 DoD 仍以 `gradlew assembleDebug` + 单元测试 + 每个 screen 配 `@Preview` 为准(不依赖手机也能推进);
+- 需要真机时:`adb devices` 认到设备 → `adb install -r app\build\outputs\apk\debug\app-debug.apk` → 手机上实操;
+- **真机访问后端不能用 10.0.2.2**(那是模拟器专用)。手机要连**电脑的局域网 IP**(同一 WiFi)。所以 R2 的 baseUrl 常量要**集中可配**:模拟器用 `10.0.2.2`,真机用 `http://<电脑局域网IP>:8080/api/` 与 `:8082`。把这两套地址写成注释好切换的常量,默认留真机占位 `http://192.168.x.x`,真实 IP 由用户填(用户跑 `ipconfig` 查)。
+- 手机若连不上/没插,按卡住协议:UI 用 Preview 截图、逻辑靠单元测试,真机联调标 TODO 等用户在场时做,不要卡死。
 
 ## 工单 R1:骨架(分层 + 导航 + 主题)
 
