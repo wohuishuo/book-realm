@@ -39,7 +39,7 @@
 - [x] 搬书骨架 ✅:平台书可构建(开始篇 4 页 + P1–P8 占位 + MVP 地图);方法论/RC清单/行动计划已入仓
 - [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
 - [x] P1 业务定位 ✅ 2026-06-11
-- [ ] P2 竞品分析(起点读书/微信读书/番茄)
+- [x] P2 竞品分析 ✅ 2026-06-11
 - [ ] P3 功能树
 - [ ] P4 用例图
 - [ ] P5 领域模型+BC 映射
