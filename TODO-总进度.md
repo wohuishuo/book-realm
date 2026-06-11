@@ -38,7 +38,14 @@
 - [x] **建枢纽仓 book-realm** ✅ 2026-06-11:<https://github.com/wohuishuo/book-realm>(公开),本地 `起点-安卓项目\book-realm`
 - [x] 搬书骨架 ✅:平台书可构建(开始篇 4 页 + P1–P8 占位 + MVP 地图);方法论/RC清单/行动计划已入仓
 - [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
-- [ ] **P 阶段(限一周)**:P1 业务定位 → P2 竞品分析(起点读书/微信读书/番茄)→ P3 功能树 → P4 用例图 → P5 领域模型+BC 映射 → P6 动态图 → P7 架构选型 → P8 分工计划;填实平台书 `docs/platform/p*.md`
+- [x] P1 业务定位 ✅ 2026-06-11
+- [ ] P2 竞品分析(起点读书/微信读书/番茄)
+- [ ] P3 功能树
+- [ ] P4 用例图
+- [ ] P5 领域模型+BC 映射
+- [ ] P6 动态图
+- [ ] P7 架构选型
+- [ ] P8 分工计划;填实平台书 `docs/platform/p*.md`
 - [ ] P 阶段 RC:一分钟讲清平台 → 才许写代码
 - [ ] 第 2 周起按行动计划第三节推进(书库服务 → App → 事件 → AI)
 
