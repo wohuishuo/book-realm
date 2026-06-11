@@ -40,7 +40,7 @@
 - [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
 - [x] P1 业务定位 ✅ 2026-06-11
 - [x] P2 竞品分析 ✅ 2026-06-11
-- [ ] P3 功能树
+- [x] P3 功能树 ✅ 2026-06-11
 - [ ] P4 用例图
 - [ ] P5 领域模型+BC 映射
 - [ ] P6 动态图
