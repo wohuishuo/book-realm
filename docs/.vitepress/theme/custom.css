@@ -1,0 +1,56 @@
+/* ───────────────────────────────────────────────
+   用户中心实战书 · 深色科技风配色
+   复用自「用户中心项目概览.html」已验证的色板:
+   背景 #0a0a14 / 主色 #6c63ff(紫) / 强调 #48cfad(青绿) / #fed766(黄)
+─────────────────────────────────────────────── */
+
+:root {
+  /* 品牌主色 —— 紫 */
+  --vp-c-brand-1: #8b84ff;
+  --vp-c-brand-2: #6c63ff;
+  --vp-c-brand-3: #6c63ff;
+  --vp-c-brand-soft: rgba(108, 99, 255, 0.16);
+
+  /* 首页 hero 渐变(紫 → 青绿) */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #6c63ff 30%, #48cfad);
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #6c63ff55 40%,
+    #48cfad55 60%
+  );
+  --vp-home-hero-image-filter: blur(48px);
+}
+
+/* 深色模式:沿用幻灯片的深灰蓝底 */
+.dark {
+  --vp-c-bg: #0a0a14;
+  --vp-c-bg-alt: #11111f;
+  --vp-c-bg-soft: #15152699;
+  --vp-c-brand-1: #9b94ff;
+  --vp-c-divider: rgba(255, 255, 255, 0.08);
+}
+
+/* 自定义容器(tip / warning / danger)更贴合配色 */
+.dark .custom-block.tip {
+  border-color: #48cfad;
+  background-color: rgba(72, 207, 173, 0.08);
+}
+.dark .custom-block.warning {
+  border-color: #fed766;
+  background-color: rgba(254, 215, 102, 0.08);
+}
+
+/* 表格更紧凑、可读性更好 */
+.vp-doc table {
+  display: table;
+  width: 100%;
+}
+.vp-doc th {
+  background-color: var(--vp-c-bg-soft);
+}
+
+/* hero 玻璃态点缀 */
+.VPHero .text {
+  letter-spacing: 0.5px;
+}

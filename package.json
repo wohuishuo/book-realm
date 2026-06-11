@@ -1,0 +1,16 @@
+{
+  "name": "book-realm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "书域 · 超级项目平台书",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}
+
