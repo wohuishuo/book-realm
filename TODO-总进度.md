@@ -31,10 +31,10 @@
 
 ### 🔜 下一步(按顺序执行,做完打勾并更新本文件)
 
-- [ ] **建枢纽仓 book-realm**:GitHub 建仓 + 本地 clone 到 `C:\Users\艾莉\知识数据库\起点-安卓项目\book-realm`
-- [ ] 搬书骨架进枢纽仓(从 user-center 仓拷:writing-style.md / custom.css / config.mts / deploy.yml / demo.md 幻灯片组件),改名「书域 · 平台书」
-- [ ] 《书的重读整理清单.md》《方法论》《行动计划》迁入枢纽仓(本目录留指针)
-- [ ] **P 阶段(限一周)**:P1 业务定位 → P2 竞品分析(起点读书/微信读书/番茄)→ P3 功能树 → P4 用例图 → P5 领域模型+BC 映射 → P6 动态图 → P7 架构选型 → P8 分工计划;全部写进平台书
+- [x] **建枢纽仓 book-realm** ✅ 2026-06-11:<https://github.com/wohuishuo/book-realm>(公开),本地 `起点-安卓项目\book-realm`
+- [x] 搬书骨架 ✅:平台书可构建(开始篇 4 页 + P1–P8 占位 + MVP 地图);方法论/RC清单/行动计划已入仓
+- [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
+- [ ] **P 阶段(限一周)**:P1 业务定位 → P2 竞品分析(起点读书/微信读书/番茄)→ P3 功能树 → P4 用例图 → P5 领域模型+BC 映射 → P6 动态图 → P7 架构选型 → P8 分工计划;填实平台书 `docs/platform/p*.md`
 - [ ] P 阶段 RC:一分钟讲清平台 → 才许写代码
 - [ ] 第 2 周起按行动计划第三节推进(书库服务 → App → 事件 → AI)
 
@@ -43,7 +43,7 @@
 | MVP | 仓库 | 代码 | 书 | RC |
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
-| 枢纽(平台书) | book-realm(未建) | — | ⬜ | ⬜ |
+| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 骨架就绪,P 阶段待填 | ⬜ |
 | 1 书库服务 | br-library-service(未建) | ⬜ | ⬜ | ⬜ |
 | 2 阅读 App | br-reader-app(未建) | ⬜ | ⬜ | ⬜ |
 | 3 事件统计 | br-event-stats(未建) | ⬜ | ⬜ | ⬜ |
