@@ -3,47 +3,55 @@ layout: home
 
 hero:
   name: "书域"
-  text: "多 MVP 电子书平台 · 总纲"
-  tagline: 5 个互相咬合、各自完整的 MVP,组成一个超级项目。七成准备,三成代码——这里是准备的正本。
+  text: "跟着一个真实平台,学会把项目从 0 做到能跑"
+  tagline: 我们用一个电子书平台,把登录、内容、客户端、消息、AI 五块拆成 5 个能独立跑的小项目。每一块都讲清"为什么这么做"、嵌真实代码、记下踩过的坑——你只读这本书,就能照着搭出自己的平台。
   actions:
     - theme: brand
-      text: 从序言开始
+      text: 看它怎么搭起来 →
+      link: /project/
+    - theme: alt
+      text: 先懂方法(怎么想、怎么写)
       link: /guide/preface
     - theme: alt
-      text: P 阶段(七成准备)
+      text: 看前期设计(需求到架构)
       link: /platform/
-    - theme: alt
-      text: MVP 地图
-      link: /mvp/
 
 features:
-  - icon: 🧭
-    title: 方法正本
-    details: 金字塔写作、方法论、RC 重读清单——全平台唯一正本,各 MVP 小书只链接不复制。
-    link: /guide/methodology
-    linkText: 看方法论
+  - icon: 🛠️
+    title: 实战篇:读完就懂,不用翻代码
+    details: 每个模块一章,真实代码嵌进正文,讲透为什么、记下真实的坑。先看已写好的「书库服务」章,你就知道这本书的深度。
+    link: /project/
+    linkText: 进入实战篇
   - icon: 📐
-    title: P 阶段 · 七成准备
-    details: 业务定位 → 竞品 → 功能树 → 用例 → 领域模型(DDD/BC)→ 架构选型。产出直接就是结课文档。
+    title: 前期设计:想清楚再动手
+    details: 从业务定位、竞品、用例到领域模型和架构——做项目七分靠想清楚。这一篇就是"动手前的功课"。
     link: /platform/
-    linkText: 进入平台篇
-  - icon: 🛰️
-    title: 星系结构
-    details: 1 个枢纽仓 + 每 MVP 一仓一书。用户中心(前作)已完成,直接当认证微服务复用。
-    link: /mvp/
-    linkText: 看 MVP 地图
+    linkText: 看设计过程
+  - icon: 🧭
+    title: 方法:怎么想、怎么把话说明白
+    details: 金字塔表达(结论先行)、读者中心、复盘清单。这套方法不只用在写代码,也用在写文档、做答辩、跟人沟通。
+    link: /guide/methodology
+    linkText: 学方法
 ---
 
-## 这个超级项目是什么
+## 一句话:这是什么
 
-**结论:用 5 个独立完整的 MVP 组成一个电子书平台,每个 MVP 一仓一书,枢纽仓(本仓)放总纲。**
+**我们把一个电子书平台,做成 5 个互相配合、又各自能独立跑的小项目;这本书带你看清每一块是怎么从想法变成能跑的代码的。**
 
-| MVP | 定位 | 状态 |
-| --- | --- | --- |
-| 0 用户中心 | 平台统一登录(JWT) | ✅ 已完成([书](https://wohuishuo.github.io/user-center-team-project/) · [仓](https://github.com/wohuishuo/user-center-team-project)) |
-| 1 书库服务 | 图书/章节内容 API + 文件 | 待建 |
-| 2 阅读 App | Compose 客户端 | 待建 |
-| 3 事件统计 | RabbitMQ 日志/统计微服务 | 待建 |
-| 4 AI 服务 | Spring AI + RAG 读书问答 | 待建 |
+| # | 模块 | 它解决什么 | 状态 |
+| --- | --- | --- | --- |
+| 0 | [用户中心](/project/user-center) | 一次登录,各处通行(发 JWT) | ✅ 已完成 |
+| 1 | [书库服务](/project/library) | 把书的内容存好、查得出来 | ✅ 已完成 |
+| 2 | 阅读 App | 手机上看书:书架、阅读器 | 🔄 进行中 |
+| 3 | 事件统计 | 登录/阅读行为异步统计 | ⬜ 计划中 |
+| 4 | AI 服务 | 划词提问,AI 引用原文回答 | ⬜ 计划中 |
 
-完整蓝图见 [行动计划](/platform/plan),进度存档见仓库根 `TODO-总进度.md`。
+## 为什么值得读
+
+**因为它替你把"做一个真项目"的全过程摊开了——不是教程式的玩具,是能跑、有测试、能部署的真东西。**
+
+- **想学怎么动手** → 直接看 [实战篇](/project/),每章带真实代码;
+- **想学怎么想清楚** → 看 [前期设计](/platform/),需求到架构一步步来;
+- **想学怎么表达** → 看 [方法](/guide/methodology),把复杂的事一分钟讲明白。
+
+> 这本书自己也遵守它教的方法:**每段先给结论,再讲根据和例子**。你读起来不费劲,正是因为这个。
