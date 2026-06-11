@@ -208,7 +208,53 @@ BC 之间只通过 API 或事件交换信息(箭头上标明传什么):
 - 用户 BC → 统计 BC:RabbitMQ(异步事件)
 - 阅读 BC → 统计 BC:HTTP REST(上报 ReadingProgress,由书库服务或 App 直接发布事件)【待架构终审】:ReadingProgress 走 HTTP 由书库服务中转发布事件,还是 App 直连 RabbitMQ?
 
-## 四、各 BC 内类图(ASCII)
+## 四、包图(各 BC 的 Java 包结构)
+
+每个 BC 内部按 Spring Boot 标准分层(Controller → Service → Repository),包名以 MVP 名称命名:
+
+```
+com.bookrealm.user              (用户 BC,复用 user-center 仓)
+├── controller/    AuthController
+├── service/       AuthService(注册/登录/Token校验)
+├── entity/        User
+├── event/         UserLoginEvent(生产者)
+└── config/        SecurityConfig, JwtConfig
+
+com.bookrealm.library           (书库 BC,br-library-service)
+├── controller/    BookController, ChapterController
+├── service/       BookService, ChapterService, FileService
+├── entity/        Book, Chapter, Paragraph, Tag
+├── repository/    BookRepo, ChapterRepo, ParagraphRepo, TagRepo
+└── config/        JpaConfig
+
+com.bookrealm.reader            (阅读 BC,br-reader-app Android 侧)
+├── ui/            阅读器/书架/书城/Navigation
+├── viewmodel/     ReaderViewModel, BookshelfViewModel
+├── data/
+│   ├── local/     Room(BookCache, ChapterCache, ReadingProgress)
+│   ├── remote/    Retrofit(BookApi, AuthApi, AiApi)
+│   └── repository/ BookRepository, ReadingRepository
+├── di/            Hilt Module
+└── domain/        领域模型(仅用于 App 内)
+
+com.bookrealm.stats             (统计 BC,br-event-stats)
+├── controller/    StatsController
+├── service/       StatsQueryService
+├── consumer/      LoginEventConsumer, ReadingEventConsumer
+├── entity/        LoginLog, LoginStats, ReadingStats
+├── repository/    LoginLogRepo, LoginStatsRepo, ReadingStatsRepo
+└── config/        RabbitMQConfig
+
+com.bookrealm.ai                (AI BC,br-ai-service)
+├── controller/    AiController
+├── service/       AskService, SummaryService, EmbeddingService
+├── config/        SpringAiConfig, VectorStoreConfig
+└── document/      ChapterChunk(DTO)
+```
+
+**包图说明**:每个 BC = 一个独立的 Maven/Gradle 模块(或独立仓库),包之间不直接 import,只通过 HTTP API 或 RabbitMQ 事件通信。阅读 BC 位于 Android 项目,包结构使用 Android + Hilt 惯例而非 Spring Boot 分层。
+
+## 五、各 BC 内类图(ASCII)
 
 ### 书库 BC
 
