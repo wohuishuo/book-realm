@@ -40,7 +40,8 @@
 - [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
 - [x] **P 阶段 P1–P8 全部写实** ✅ 2026-06-12(DeepSeek 码农会话完成,含两轮 RC 自修)
 - [x] **P 阶段架构终审** ✅ 2026-06-12(Claude 架构会话):整体合格。三条裁决——①接口以 user-center 真实代码为准(`/api/user/*`,JWT 本地验签,无 validate 接口);②**App 不直连 RabbitMQ**,ReadingProgress 走 HTTP `POST /api/stats/progress`,MQ 仅用于后端服务间(UserLogin);③SimpleVectorStore 作 MVP 向量库予以批准(接口可换)。已修订 P5。
-- [ ] **建 MVP 仓**(第 2 周):br-library-service(书库,JPA+种子数据)→ br-reader-app(Compose 骨架);按行动计划第三节推进
+- [x] **MVP-1 书库服务** ✅ 2026-06-12:<https://github.com/wohuishuo/br-library-service>(公开)。6 测试绿、5 接口实测通过、61 段真实公版书种子、design.md 金字塔合格。架构终审通过(A-)。
+- [ ] **MVP-2 阅读 App**:见 book-realm 仓 `工单-MVP2阅读App.md`;需 Android Studio 环境。第一次"咬合"(登录走 MVP-0、内容走 MVP-1)
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 ### 📋 各 MVP 状态
@@ -48,8 +49,8 @@
 | MVP | 仓库 | 代码 | 书 | RC |
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
-| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 P1-P8 写实,待架构终审 | ⬜ |
-| 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | 🔄 L0 建仓完成 | ⬜ | ⬜ |
+| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 骨架就绪,P 阶段待填 | ⬜ |
+| 1 书库服务 | br-library-service(未建) | ⬜ | ⬜ | ⬜ |
 | 2 阅读 App | br-reader-app(未建) | ⬜ | ⬜ | ⬜ |
 | 3 事件统计 | br-event-stats(未建) | ⬜ | ⬜ | ⬜ |
 | 4 AI 服务 | br-ai-service(未建) | ⬜ | ⬜ | ⬜ |
@@ -81,4 +82,3 @@
 - AI 出力,人验证守门
 
 > **更新纪律**:每个工作小节结束,更新"进度看板"勾选与"下一步"列表——本文件过期=存档点失效。
-

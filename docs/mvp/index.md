@@ -18,7 +18,7 @@ book-realm(本仓:平台书 + P 阶段文档 + 平台 docker-compose)
 | MVP | 仓库 | 书 | 接口契约页 | RC |
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | [GitHub](https://github.com/wohuishuo/user-center-team-project) | [在线书](https://wohuishuo.github.io/user-center-team-project/) | `/api/user/login` 等,见其 Swagger | ✅ |
-| 1 书库服务 | 待建 | 待建 | 待定 | ⬜ |
+| 1 书库服务 | [GitHub](https://github.com/wohuishuo/br-library-service) ✅ | 仓内 docs/design.md | `GET /api/books`、`/books/{id}`、`/books/{id}/chapters`、`/chapters/{id}` | ✅ |
 | 2 阅读 App | 待建 | 待建 | (客户端,消费 0/1/4 的接口) | ⬜ |
 | 3 事件统计 | 待建 | 待建 | UserLogin / ReadingProgress 事件 | ⬜ |
 | 4 AI 服务 | 待建 | 待建 | `/ai/summary`、`/ai/ask` | ⬜ |
