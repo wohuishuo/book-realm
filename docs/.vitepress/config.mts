@@ -16,6 +16,7 @@ export default defineConfig({
     nav: [
       { text: '开始', link: '/guide/preface' },
       { text: '平台篇(P 阶段)', link: '/platform/' },
+      { text: '实战篇', link: '/project/' },
       { text: 'MVP 地图', link: '/mvp/' },
       { text: '用户中心(前作)', link: 'https://wohuishuo.github.io/user-center-team-project/' }
     ],
@@ -49,9 +50,21 @@ export default defineConfig({
           ]
         }
       ],
+      '/project/': [
+        {
+          text: '③ 实战篇(每 MVP 一章)',
+          items: [
+            { text: '本篇导读', link: '/project/' },
+            { text: 'MVP-1 书库服务', link: '/project/library' },
+            { text: 'MVP-2 阅读 App(待写)', link: '/project/reader' },
+            { text: 'MVP-3 事件统计(待写)', link: '/project/event-stats' },
+            { text: 'MVP-4 AI 服务(待写)', link: '/project/ai' }
+          ]
+        }
+      ],
       '/mvp/': [
         {
-          text: '③ MVP 地图',
+          text: '④ MVP 地图',
           items: [
             { text: '星系总览与各仓链接', link: '/mvp/' }
           ]
