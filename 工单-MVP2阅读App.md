@@ -6,7 +6,9 @@
 
 Kotlin · Jetpack Compose + Material 3 · MVVM(ViewModel + StateFlow + UiState 密封类)· Navigation Compose · Hilt · Retrofit + kotlinx-serialization · Room(本地缓存)· DataStore(存 JWT 与阅读偏好)· Coil(封面图)。最低 SDK 26,目标 SDK 35。
 
-## 工单 R0:建仓 + 编译【授权建仓】
+## 工单 R0:建仓 + 编译【✅ 架构会话已代建,跳过】
+
+> **仓库实际位置:`C:\dev\br-reader-app`**(AGP 不支持中文路径,已迁出中文目录;码农会话在此目录打开)。骨架已 `assembleDebug` 通过(AGP8.5.2/Gradle8.11.1 腾讯镜像/阿里云依赖镜像/GRADLE_USER_HOME=C:\gradle-home 均已配好,勿改)。
 
 > **本机环境已由架构会话探明(2026-06-12)**:Android Studio✅ / SDK✅ / platform-tools(adb)✅ / build-tools 36✅ / platform android-36✅ → **可编译打包**;但**无 emulator、无 AVD、无系统镜像** → 暂时**没有可运行的设备**。因此本工单**以"能编译"为 DoD,不要求运行截图**;运行验证延后到设备就位(见下"设备说明")。
 
@@ -77,3 +79,5 @@ Compose 登录页(账号/密码)、注册页;调用用户中心;登录成功把 
 - 模拟器访问宿主机用 `10.0.2.2` 不是 `localhost`;
 - 每完成一单,汇报只贴 DoD 自查结果 + 各 md 的结论句;
 - **无可运行设备**:UI 一律配 `@Preview`,用 Compose Preview 截图代替模拟器截图;逻辑靠单元测试保证。别为"跑模拟器"去装东西或卡死。
+
+

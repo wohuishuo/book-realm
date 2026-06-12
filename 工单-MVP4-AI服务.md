@@ -8,7 +8,7 @@
 - LLM 用 **DeepSeek**(OpenAI 兼容接口,Spring AI 的 openai starter 配 base-url 指向 DeepSeek);
 - 章节文本来源:调 MVP-1 书库 `GET /api/chapters/{id}` 拿段落,或由 `/ai/embed` 传入。
 
-## 工单 A0:建仓 + 骨架 + 接通 LLM【授权建仓】
+## 工单 A0:建仓 + 骨架【✅ 架构会话已代建,跳过;接 LLM 调用从 A1 开始】
 
 Spring Boot 3.3 + Java 21,包 `com.bookrealm.ai`;依赖:web、validation、**spring-ai-openai-starter**(用 Spring AI BOM)、springdoc、lombok、test;`context-path:/api`,端口 8084。`gh repo create br-ai-service --public --source . --push`。
 - API Key 走环境变量 `DEEPSEEK_API_KEY`,**绝不写进代码/提交**(无 key 时相关测试跳过,不阻塞编译);
@@ -53,3 +53,4 @@ Spring Boot 3.3 + Java 21,包 `com.bookrealm.ai`;依赖:web、validation、**spr
 - ❌ API Key 绝不进版本库(检查 `.gitignore` 含 `.env`、`application-local.yml`);
 - ❌ 无 key 不许编造"AI 返回了 XXX"——无 key 时如实返回错误或仅检索结果;
 - 切向量库实现要走 `VectorStore` 接口,不写死 SimpleVectorStore 类型到业务代码。
+

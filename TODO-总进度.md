@@ -47,7 +47,12 @@
 - [x] **门面修缮** ✅:br-library-service README 重写(徽章/定位图/文档区);平台书首页按读者中心重写(去黑话)
 - [x] **一致性体检** ✅ 2026-06-13(Fable 架构会话):修复 6 处矛盾——MVP 地图星系树过期状态、咬合关系违反"App 不直连 MQ"裁决、P1-P8 状态未勾、"小书"旧措辞、CLAUDE.md 必读硬编码 P 阶段工单、首页 MVP-2 状态失实
 - [x] **门面终检** ✅ 2026-06-13:三仓 README + 两本书首页全部去黑话、过"陌生人三问"、互链成网;两本在线书均 200 可访问;实战篇排版升级(全景图+阅读引导);三仓工作树干净。**生态当前状态:全部一致、无欠账**
-- [ ] **MVP-2 阅读 App**(⏭️ 下一步):见 book-realm 仓 `工单-MVP2阅读App.md`;真机方案,环境已探明。第一次"咬合"(登录走 MVP-0、内容走 MVP-1)。完成后:架构终审 + 写实战章 + 美化 README
+- [x] **三个 MVP 仓骨架由架构会话代建** ✅ 2026-06-12(防 DS 翻车,出生即可编译):
+  - [br-event-stats](https://github.com/wohuishuo/br-event-stats):SB3+amqp+jpa,8083,MQ fanout 拓扑 Bean 就绪;**验证:编译+启动+health ✅**
+  - [br-ai-service](https://github.com/wohuishuo/br-ai-service):Spring AI(OpenAI 兼容→DeepSeek),8084,**无 key 可启动**,health 报告 llmKeyConfigured;**验证 ✅**
+  - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配、三 Tab 导航、双后端 Retrofit、UiState/Room 模式齐;**assembleDebug ✅ APK 已产出**。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径);新坑三连已解并固化:gradle 分发走腾讯镜像、依赖走阿里云镜像、`GRADLE_USER_HOME=C:\gradle-home`(用户环境变量)
+  - 三份工单的首单已标【架构会话已代建,跳过】,DS 从 R1/S1/A1 开始
+- [ ] **MVP-2 阅读 App 业务开发**(⏭️ DS 下一步):从 R1 起;真机方案。完成后:架构终审 + 写实战章 + 美化 README;随后 MVP-3(从 S1)、MVP-4(从 A1)
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**

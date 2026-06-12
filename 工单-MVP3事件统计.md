@@ -8,7 +8,7 @@
 - **ReadingProgress**:App 走 HTTP `POST /api/stats/progress` 直接到本服务(**不经 MQ**,架构裁决:移动端不直连 MQ);
 - 本期**只做统计服务侧** + 一个最小生产者验证;改用户中心发事件是【架构会话】的事,见末尾。
 
-## 工单 S0:建仓 + 骨架【授权建仓】
+## 工单 S0:建仓 + 骨架【✅ 架构会话已代建,跳过】
 
 `起点-安卓项目` 下建 Spring Boot 3.3 + Java 21 工程,包 `com.bookrealm.stats`;依赖:web、validation、data-jpa、mysql、**amqp(spring-boot-starter-amqp)**、springdoc、lombok、test;`context-path:/api`,库 `book_realm_stats`,端口 8083。`gh repo create br-event-stats --public --source . --push`。公共件(BaseResponse/异常)照抄 user-center。
 **前置**:RabbitMQ **已安装并验证可跑**(4.3.1,数据目录 `C:\rabbitmq-data`,`ERLANG_HOME` 已设为用户环境变量)。用 book-realm 的 `./start-platform.ps1` 一键起全部后端(含 MQ,管理台 http://localhost:15672,默认 guest/guest)。起不来才写 BLOCKED。
@@ -54,3 +54,4 @@
 ## 【架构会话】专属(码农不要碰)
 
 让用户中心(MVP-0)登录时真正发布 UserLogin 事件——这要改 user-center 仓(加 amqp 依赖 + 登录成功后 `convertAndSend`)。这是跨仓改动,由架构会话评估后单独下工单。本期统计服务用"测试生产者"自证闭环即可,不依赖用户中心改造。
+

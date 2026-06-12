@@ -8,9 +8,9 @@
 book-realm(本仓:平台书 + P 阶段文档 + 平台 docker-compose)
  ├── user-center-team-project   MVP-0 用户中心(认证)      ✅ 已完成
  ├── br-library-service         MVP-1 书库服务(JPA)        ✅ 已完成
- ├── br-reader-app              MVP-2 阅读 App(Compose)    ⬜ 工单就绪,待开工
- ├── br-event-stats             MVP-3 事件统计(RabbitMQ)   ⬜ 工单就绪
- └── br-ai-service              MVP-4 AI 服务(RAG)         ⬜ 工单就绪
+ ├── br-reader-app              MVP-2 阅读 App(Compose)    🔄 骨架已建,业务开发中
+ ├── br-event-stats             MVP-3 事件统计(RabbitMQ)   🔄 骨架已建(MQ 拓扑就绪)
+ └── br-ai-service              MVP-4 AI 服务(RAG)         🔄 骨架已建(LLM 已接线)
 ```
 
 ## 各仓登记表
@@ -19,9 +19,9 @@ book-realm(本仓:平台书 + P 阶段文档 + 平台 docker-compose)
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | [GitHub](https://github.com/wohuishuo/user-center-team-project) | [本书章](/project/user-center) · [它自己的书](https://wohuishuo.github.io/user-center-team-project/) | `/api/user/register`、`/api/user/login`、`/api/user/current` | ✅ |
 | 1 书库服务 | [GitHub](https://github.com/wohuishuo/br-library-service) | [本书章](/project/library) | `GET /api/books`、`/books/{id}`、`/books/{id}/chapters`、`/chapters/{id}` | ✅ |
-| 2 阅读 App | 待建(工单就绪) | [占位](/project/reader) | (客户端,消费 0/1/4 的接口) | ⬜ |
-| 3 事件统计 | 待建(工单就绪) | [占位](/project/event-stats) | UserLogin 事件;`POST /api/stats/progress`;`GET /api/stats/*` | ⬜ |
-| 4 AI 服务 | 待建(工单就绪) | [占位](/project/ai) | `/ai/summary`、`/ai/ask`、`/ai/embed` | ⬜ |
+| 2 阅读 App | [GitHub](https://github.com/wohuishuo/br-reader-app)(骨架) | [占位](/project/reader) | (客户端,消费 0/1/3/4 的接口) | ⬜ |
+| 3 事件统计 | [GitHub](https://github.com/wohuishuo/br-event-stats)(骨架) | [占位](/project/event-stats) | UserLogin 事件;`POST /api/stats/progress`;`GET /api/stats/*` | ⬜ |
+| 4 AI 服务 | [GitHub](https://github.com/wohuishuo/br-ai-service)(骨架) | [占位](/project/ai) | `/ai/summary`、`/ai/ask`、`/ai/embed` | ⬜ |
 
 ## 咬合关系(谁调谁,按已定架构裁决)
 
