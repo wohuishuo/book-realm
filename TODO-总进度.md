@@ -87,7 +87,10 @@
 - 本机:Java 21 / Maven / Node 24 / Docker Desktop ✅;MySQL+Redis 经 scoop 装(MySQL 数据目录在 `C:\mysql-data`,因中文用户名路径问题,详见 user-center 仓 `DEV-SETUP.md`)
 - npm 遇 EPERM:加 `--cache C:\temp\npmcache`
 - docker pull 偶发 EOF:重试同一命令即可
-- 待装:Android Studio、`scoop install rabbitmq`
+- RabbitMQ ✅ 已装(4.3.1 + Erlang 28;数据目录 `C:\rabbitmq-data`,`ERLANG_HOME`/`RABBITMQ_BASE` 已设用户环境变量;管理台 15672,guest/guest)
+- **平台一键启动**:`book-realm/start-platform.ps1`(MySQL+Redis+MQ+用户中心+书库,健康检查+打印手机用局域网 IP;已实测 6/6 绿)
+- Android:可编译(SDK/build-tools 齐),无模拟器,走真机方案(USB 调试)
+- **MVP-4 需要**:用户设置环境变量 `DEEPSEEK_API_KEY`(唯一未就绪项,DS 做到 A1 前设好即可)
 
 ## 五、工作约定(不变量)
 

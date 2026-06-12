@@ -11,7 +11,7 @@
 ## 工单 S0:建仓 + 骨架【授权建仓】
 
 `起点-安卓项目` 下建 Spring Boot 3.3 + Java 21 工程,包 `com.bookrealm.stats`;依赖:web、validation、data-jpa、mysql、**amqp(spring-boot-starter-amqp)**、springdoc、lombok、test;`context-path:/api`,库 `book_realm_stats`,端口 8083。`gh repo create br-event-stats --public --source . --push`。公共件(BaseResponse/异常)照抄 user-center。
-**前置**:本机 RabbitMQ 要在跑——`scoop install rabbitmq` 后启动;装不了/起不来就写 `BLOCKED.md` 停。
+**前置**:RabbitMQ **已安装并验证可跑**(4.3.1,数据目录 `C:\rabbitmq-data`,`ERLANG_HOME` 已设为用户环境变量)。用 book-realm 的 `./start-platform.ps1` 一键起全部后端(含 MQ,管理台 http://localhost:15672,默认 guest/guest)。起不来才写 BLOCKED。
 **DoD**:`/api/health` ok;Swagger 开;连得上 RabbitMQ(启动日志无报错);commit 推送。
 
 ## 工单 S1:RabbitMQ 配置 + 实体

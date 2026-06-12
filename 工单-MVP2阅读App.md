@@ -73,7 +73,7 @@ Compose 登录页(账号/密码)、注册页;调用用户中心;登录成功把 
 
 ## 给执行者的提醒
 
-- 后端要先跑起来 App 才能联调:用户中心 `docker compose up`(其仓内),书库 `mvn spring-boot:run`(8082)。起不动的部分写 BLOCKED 跳过联调、先做纯 UI,不要卡死;
+- **后端一键起**:在 book-realm 目录跑 `./start-platform.ps1`——自动起 MySQL/Redis/RabbitMQ/用户中心(Docker)/书库,并打印健康检查与**手机要用的局域网 IP**(已实测 6/6 通过)。Docker Desktop 没开先开它。起不动的部分写 BLOCKED 跳过联调、先做纯 UI,不要卡死;
 - 模拟器访问宿主机用 `10.0.2.2` 不是 `localhost`;
 - 每完成一单,汇报只贴 DoD 自查结果 + 各 md 的结论句;
 - **无可运行设备**:UI 一律配 `@Preview`,用 Compose Preview 截图代替模拟器截图;逻辑靠单元测试保证。别为"跑模拟器"去装东西或卡死。
