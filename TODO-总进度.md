@@ -52,6 +52,7 @@
   - [br-ai-service](https://github.com/wohuishuo/br-ai-service):Spring AI(OpenAI 兼容→DeepSeek),8084,**无 key 可启动**,health 报告 llmKeyConfigured;**验证 ✅**
   - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配、三 Tab 导航、双后端 Retrofit、UiState/Room 模式齐;**assembleDebug ✅ APK 已产出**。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径);新坑三连已解并固化:gradle 分发走腾讯镜像、依赖走阿里云镜像、`GRADLE_USER_HOME=C:\gradle-home`(用户环境变量)
   - 三份工单的首单已标【架构会话已代建,跳过】,DS 从 R1/S1/A1 开始
+- [x] **用户中心接入事件源** ✅ 2026-06-13(Fable 架构会话,跨仓改 user-center):登录成功**异步发布 UserLogin 事件**到 fanout `user.events`(loginType/userId/loginTime/ip;失败只记日志不影响登录);9 测试仍全绿;契约与 br-event-stats 的 RabbitMQConfig 对齐。**MVP-3 联调时已有真实事件源,不再只靠测试生产者**。已 push user-center 仓
 - [ ] **MVP-2 阅读 App 业务开发**(⏭️ DS 下一步):从 R1 起;真机方案。完成后:架构终审 + 写实战章 + 美化 README;随后 MVP-3(从 S1)、MVP-4(从 A1)
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
