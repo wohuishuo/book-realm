@@ -57,14 +57,15 @@
 - [x] **平台书 MVP-2 实战章终稿 + 技术图鉴第一版** ✅ 2026-06-14:阅读 App 章已补真实代码、链路、分页坑复盘;技术图鉴新增 Compose/Retrofit/Room/DataStore/Spring Boot/RabbitMQ/Spring AI/RAG/Docker+adb。
 - [x] **书域 v1 需求与验收清单** ✅ 2026-06-14:明确 v1 只做登录、找书、阅读、统计、AI 辅助阅读;砍掉支付/社交/推荐/复杂大屏等扩展。
 - [x] **MVP-3 事件统计服务** ✅ 2026-06-14:UserLogin 事件消费、登录日志、登录聚合、阅读进度上报、查询 API、4 测试、小书文档、真实联调均完成;用户中心真实登录后 `/api/stats/logins` 返回 `appLogins=1,total=1`。
-- [ ] **执行 MVP-4 AI 服务**:按 `工单-MVP4-AI服务.md` 和 `/platform/v1-scope` 做摘要、embed、RAG 问答、测试与小书。
+- [x] **MVP-4 AI 服务** ✅ 2026-06-14:摘要、embed、ask 三接口完成;无 key 可启动并返回检索依据;`bookId=1` embed 得到 39 段;问"仙石是什么"命中第 12 段仙石原文;2 测试绿;小书和平台实战章已补。
+- [ ] **回到 Android App 集成 MVP-3/MVP-4**:阅读器上报进度到 `POST /api/stats/progress`;增加摘要/问答入口调用 AI 服务;形成书域 v1 手机端完整体验。
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
 - [x] 工单-MVP1书库.md — 已执行完成 ✅
 - [x] 工单-MVP2阅读App.md — 业务闭环完成 ✅;实战章待终稿
 - [x] 工单-MVP3事件统计.md — 已执行完成 ✅
-- [ ] 工单-MVP4-AI服务.md — 下一步执行(需 DEEPSEEK_API_KEY 环境变量;无 key 也必须能启动)
+- [x] 工单-MVP4-AI服务.md — 已执行完成 ✅;DeepSeek key 可选,无 key 返回检索依据
 - 【架构会话待办】各 MVP 的 Docker 化与平台级 compose;各 MVP 完成后的 RC 终审 + MVP 地图登记
 
 **仓库创建原则**:不预建纯空仓;每个 MVP 仓出生时必须至少可编译、可启动或有明确骨架质量门。
@@ -78,7 +79,7 @@
 | 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | ✅ 6 测试绿,5 接口实测 | ✅ 实战章已写 | ✅ |
 | 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ 登录/书城/书架/阅读器闭环 | ✅ 实战章已补 | ✅ |
 | 3 事件统计 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) ✅ | ✅ 登录事件+阅读进度统计 | ✅ 实战章已补 | ✅ |
-| 4 AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) ✅ | 🔄 骨架可启动,业务待做 | ⬜ | ⬜ |
+| 4 AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) ✅ | ✅ 摘要+embed+RAG问答 | ✅ 实战章已补 | ✅ |
 | 5 书友匹配(可选) | 未定 | ⬜ | ⬜ | ⬜ |
 
 ## 三、资源地图(所有东西在哪)
