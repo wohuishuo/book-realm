@@ -53,8 +53,10 @@
   - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配;**MVP-2 业务闭环 ✅ 2026-06-14**:登录用户中心、书城/详情/章节读书库、Room 书架、DataStore token/字号/进度;真机 APK 已安装启动。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径)
 - [x] **用户中心接入事件源** ✅ 2026-06-13(Fable 架构会话,跨仓改 user-center):登录成功**异步发布 UserLogin 事件**到 fanout `user.events`(loginType/userId/loginTime/ip;失败只记日志不影响登录);9 测试仍全绿;契约与 br-event-stats 的 RabbitMQConfig 对齐。**MVP-3 联调时已有真实事件源,不再只靠测试生产者**。已 push user-center 仓
 - [x] **MVP-2 阅读 App 业务开发** ✅ 2026-06-14(Fable 架构会话):真机联调完成;`assembleDebug` 通过;adb reverse 已打通 `8080→80`、`8082→8082`;APK 已安装并启动;README 已补运行说明。
-- [x] **MVP-2 搜索空结果修复** ✅ 2026-06-14:原因是书库分页从 `page=0` 开始,App 误传 `page=1`;已改为 `page=0`,Android 重新构建通过。新版 APK 安装时手机拒绝了权限确认,需重新点允许安装。
-- [ ] **平台书 MVP-2 实战章终稿**:补真机截图、关键代码讲解、分页坑复盘。完成后再进入 MVP-3 业务开发。
+- [x] **MVP-2 搜索空结果修复** ✅ 2026-06-14:原因是书库分页从 `page=0` 开始,App 误传 `page=1`;已改为 `page=0`,Android 重新构建通过并重新安装到真机。
+- [x] **平台书 MVP-2 实战章终稿 + 技术图鉴第一版** ✅ 2026-06-14:阅读 App 章已补真实代码、链路、分页坑复盘;技术图鉴新增 Compose/Retrofit/Room/DataStore/Spring Boot/RabbitMQ/Spring AI/RAG/Docker+adb。
+- [x] **书域 v1 需求与验收清单** ✅ 2026-06-14:明确 v1 只做登录、找书、阅读、统计、AI 辅助阅读;砍掉支付/社交/推荐/复杂大屏等扩展。
+- [ ] **执行 MVP-3 事件统计服务**:按 `工单-MVP3事件统计.md` 和 `/platform/v1-scope` 做登录事件消费、阅读进度上报、查询 API、测试与小书。
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
@@ -73,7 +75,7 @@
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
 | 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | ✅ P 阶段完成,实战篇持续更新 | 🔄 |
 | 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | ✅ 6 测试绿,5 接口实测 | ✅ 实战章已写 | ✅ |
-| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ 登录/书城/书架/阅读器闭环 | 🔄 实战章待终稿 | 🔄 搜索修复待手机安装复测 |
+| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ 登录/书城/书架/阅读器闭环 | ✅ 实战章已补 | ✅ |
 | 3 事件统计 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) ✅ | 🔄 骨架可启动,业务待做 | ⬜ | ⬜ |
 | 4 AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) ✅ | 🔄 骨架可启动,业务待做 | ⬜ | ⬜ |
 | 5 书友匹配(可选) | 未定 | ⬜ | ⬜ | ⬜ |

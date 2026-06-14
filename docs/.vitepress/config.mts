@@ -47,7 +47,8 @@ export default defineConfig({
             { text: 'P5 领域模型与 BC 映射', link: '/platform/p5-domain' },
             { text: 'P6 动态建模', link: '/platform/p6-dynamics' },
             { text: 'P7 架构与技术选型', link: '/platform/p7-architecture' },
-            { text: 'P8 分工与计划', link: '/platform/p8-schedule' }
+            { text: 'P8 分工与计划', link: '/platform/p8-schedule' },
+            { text: 'v1 需求与验收清单', link: '/platform/v1-scope' }
           ]
         }
       ],
