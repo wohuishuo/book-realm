@@ -1,35 +1,46 @@
-# MVP 地图:星系总览
+# 仓库地图:BookRealm 由哪些模块组成
 
-> **结论先行**:1 个枢纽仓(本仓,放平台书与设计文档)+ 每个 MVP 一个独立代码仓。**仓库边界 = BC 边界**;教学讲解集中在本书[实战篇](/project/),各 MVP 仓只带 README/design/notes 三个轻文档。本页是全平台的"电话簿"。
+> **结论先行**:BookRealm 是一个跨平台阅读平台,由一个总览仓和五个可独立运行的代码仓组成。总览仓讲清楚产品、设计和集成;代码仓各自负责一个清晰边界。
 
-## 星系结构
+## 平台结构
 
 ```
-book-realm(本仓:平台书 + P 阶段文档 + 平台 docker-compose)
- ├── user-center-team-project   MVP-0 用户中心(认证)      ✅ 已完成
- ├── br-library-service         MVP-1 书库服务(JPA)        ✅ 已完成
- ├── br-reader-app              MVP-2 阅读 App(Compose)    🔄 骨架已建,业务开发中
- ├── br-event-stats             MVP-3 事件统计(RabbitMQ)   🔄 骨架已建(MQ 拓扑就绪)
- └── br-ai-service              MVP-4 AI 服务(RAG)         🔄 骨架已建(LLM 已接线)
+book-realm                 平台书 + 需求/架构/技术图鉴 + 集成说明
+ ├── user-center-team-project   用户中心:注册、登录、JWT、登录事件
+ ├── br-library-service         书库服务:公版书内容 API
+ ├── br-reader-app              Android 阅读 App:书城、书架、阅读器、AI 入口
+ ├── br-event-stats             事件统计:登录事件消费、阅读进度统计
+ └── br-ai-service              AI 阅读助手:摘要、embed、RAG 原文问答
 ```
 
 ## 各仓登记表
 
-| MVP | 仓库 | 讲解(实战章) | 接口契约 | RC |
+| 模块 | 仓库 | 能独立做什么 | 平台内负责什么 | 状态 |
 | --- | --- | --- | --- | --- |
-| 0 用户中心 | [GitHub](https://github.com/wohuishuo/user-center-team-project) | [本书章](/project/user-center) · [它自己的书](https://wohuishuo.github.io/user-center-team-project/) | `/api/user/register`、`/api/user/login`、`/api/user/current` | ✅ |
-| 1 书库服务 | [GitHub](https://github.com/wohuishuo/br-library-service) | [本书章](/project/library) | `GET /api/books`、`/books/{id}`、`/books/{id}/chapters`、`/chapters/{id}` | ✅ |
-| 2 阅读 App | [GitHub](https://github.com/wohuishuo/br-reader-app)(骨架) | [占位](/project/reader) | (客户端,消费 0/1/3/4 的接口) | ⬜ |
-| 3 事件统计 | [GitHub](https://github.com/wohuishuo/br-event-stats)(骨架) | [占位](/project/event-stats) | UserLogin 事件;`POST /api/stats/progress`;`GET /api/stats/*` | ⬜ |
-| 4 AI 服务 | [GitHub](https://github.com/wohuishuo/br-ai-service)(骨架) | [占位](/project/ai) | `/ai/summary`、`/ai/ask`、`/ai/embed` | ⬜ |
+| 平台书 | [book-realm](https://github.com/wohuishuo/book-realm) | 读完整工程书,理解平台需求、架构、技术栈和集成顺序 | 总设计与总文档 | ✅ |
+| 用户中心 | [user-center-team-project](https://github.com/wohuishuo/user-center-team-project) | 作为任意项目的认证服务复用 | App 登录、JWT、登录事件源 | ✅ |
+| 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) | 给任意阅读器或 RAG 项目提供书/章/段接口 | 内容底座 | ✅ |
+| 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) | 作为 Compose 阅读客户端学习样例 | 用户真实入口 | ✅ |
+| 事件统计 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) | 学 RabbitMQ 事件消费和统计聚合 | 登录统计、阅读进度统计 | ✅ |
+| AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) | 学 DeepSeek 接入和 RAG 原文问答 | 摘要、问答、引用依据 | ✅ |
 
-## 咬合关系(谁调谁,按已定架构裁决)
+## 调用关系
 
-- 阅读 App →(HTTP+JWT)用户中心(登录)、书库(内容)、AI(问答)、**统计的 `POST /api/stats/progress`(进度上报)**;
-- 用户中心 →(RabbitMQ)发布 UserLogin 事件;
-- 日志/统计服务 ←(RabbitMQ)订阅消费;
-- **裁决**:RabbitMQ 仅用于后端服务之间,**App 不直连 MQ**(详见 [P5 通信约定](/platform/p5-domain))。
+```mermaid
+flowchart LR
+  App["br-reader-app"] --> Auth["user-center-team-project"]
+  App --> Library["br-library-service"]
+  App --> Stats["br-event-stats"]
+  App --> Ai["br-ai-service"]
+  Auth --> MQ["RabbitMQ user.events"]
+  MQ --> Stats
+  Ai --> Library
+```
 
-::: tip 跨书一致性
-各 MVP 小书描述接口时,以**代码为准**;本页和小书的契约描述在每次 RC 的"跨书检查"层核对(见 [RC 清单](/guide/rc-checklist) 第三层)。
-:::
+**关键裁决**:App 不直连 RabbitMQ。移动端只走 HTTP;RabbitMQ 只用于后端服务之间的异步事件。
+
+## 为什么分仓
+
+**结论:分仓不是为了显得复杂,而是为了让边界真实可见。**
+
+用户中心可以服务别的 App;书库服务可以被别的阅读器或 AI 项目复用;事件统计可以替换成更复杂的数据平台;AI 服务可以换模型、换向量库。每一块独立,整个平台才不会变成一团难以讲清的代码。

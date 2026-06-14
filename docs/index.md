@@ -2,78 +2,82 @@
 layout: home
 
 hero:
-  name: "书域"
-  text: "一个真实平台,从想清楚到跑起来"
-  tagline: 我们把电子书平台拆成 5 个能独立跑的模块——登录、书库、App、统计、AI。每章嵌真实代码、讲透为什么、记下踩的坑。
+  name: "书域 BookRealm"
+  text: "开源跨平台阅读平台"
+  tagline: Android 阅读 App + Spring Boot 服务 + RabbitMQ 统计 + DeepSeek RAG 原文问答。我们不只交付代码,也把从需求到上线的工程过程写成一本书。
   actions:
     - theme: brand
-      text: 看它怎么搭起来 →
+      text: 进入实战篇 →
       link: /project/
     - theme: alt
-      text: 前期设计(P 阶段)
+      text: 看平台设计
       link: /platform/
     - theme: alt
-      text: 学方法
-      link: /guide/preface
+      text: 看技术图鉴
+      link: /stack/
 
 features:
   - icon: 🔐
-    title: MVP-0 用户中心
-    details: 平台的门卫:一次登录,各处通行。BCrypt 存密码 + JWT 无状态登录态。
+    title: 用户中心
+    details: 注册、登录、当前用户、JWT 登录态,并在登录成功后发布 UserLogin 事件。
     link: /project/user-center
-    linkText: ✅ 已完成
+    linkText: 查看实战章
   - icon: 📚
-    title: MVP-1 书库服务
-    details: 内容底座:书→章→段结构化入库,4 个只读接口,61 段真实公版原文开箱即用。
+    title: 书库服务
+    details: 把公版书按书、章、段、标签结构化,给 App 和 AI 服务提供统一内容 API。
     link: /project/library
-    linkText: ✅ 已完成
+    linkText: 查看实战章
   - icon: 📱
-    title: MVP-2 阅读 App
-    details: Jetpack Compose 客户端:登录、书架、阅读器,Room 离线缓存。
+    title: 阅读 App
+    details: Jetpack Compose 客户端:登录、书城、书架、阅读器、进度保存、AI 摘要和问答入口。
     link: /project/reader
-    linkText: ⬜ 工单就绪
+    linkText: 查看实战章
   - icon: 📊
-    title: MVP-3 事件统计
-    details: 登录事件 → RabbitMQ 广播 → 日志 + 统计两个微服务异步消费。
+    title: 事件统计
+    details: RabbitMQ 消费登录事件,HTTP 接收阅读进度,把旁路统计从主链路里拆出来。
     link: /project/event-stats
-    linkText: ⬜ 工单就绪
+    linkText: 查看实战章
   - icon: 🤖
-    title: MVP-4 AI 服务
-    details: 读到不懂的段落,划词提问,AI 检索本书原文、带引用回答(RAG)。
+    title: AI 阅读助手
+    details: 从书库拉取段落建立索引,用 DeepSeek 做摘要和基于原文引用的 RAG 问答。
     link: /project/ai
-    linkText: ⬜ 工单就绪
+    linkText: 查看实战章
   - icon: 🧭
-    title: 方法与设计
-    details: 金字塔表达、复盘清单,以及从需求到架构的全套前期设计(P1–P8)。
+    title: 工程方法
+    details: 用金字塔表达、RC 重读、真实验证和 commit 闭环,把项目做成可复盘的工程。
     link: /guide/methodology
     linkText: 学方法
 ---
 
+## 一分钟理解
+
+**结论:BookRealm 是一个已经跑通 v1 的 AI 辅助阅读平台,也是一本把它讲清楚的工程书。**
+
+读者在 Android App 登录后,可以搜索公版书、加入书架、打开章节阅读;系统会记录登录和阅读进度;读到不懂的段落时,可以请求摘要或提问,AI 会先检索书中原文,再生成带依据的回答。
+
 ## 平台长什么样
 
-**结论:一个 Android 客户端 + 四个后端服务,各管一摊,拼成完整平台。**
+**结论:一个 Android 客户端 + 四个后端服务,各自独立,组合成完整阅读体验。**
 
-```
-                     登录(JWT)        ┌──────────────┐  发布 UserLogin 事件
-        ┌──────────────────────────▶ │ ① 用户中心    │ ─────────────┐
-        │                            └──────────────┘              ▼
- ┌─────────────┐   拉书/章节         ┌──────────────┐        ┌──────────────┐
- │ ② 阅读 App  │ ──────────────────▶ │ ① 书库服务    │        │   RabbitMQ   │
- │  (Compose)  │                     └──────────────┘        └──────┬───────┘
- │  Room 缓存  │   划词提问           ┌──────────────┐               │ 广播
- └─────────────┘ ──────────────────▶ │ ④ AI 服务     │        ┌──────▼───────┐
-        │            进度上报(HTTP)   │  (RAG 问答)  │        │ ③ 日志+统计   │
-        └──────────────────────────▶ └──────────────┘        └──────────────┘
+```mermaid
+flowchart LR
+  App["Android 阅读 App\nCompose / Room / DataStore"] --> Auth["用户中心\nJWT 登录"]
+  App --> Library["书库服务\n书 / 章 / 段 / 标签"]
+  App --> Stats["事件统计\n阅读进度 API"]
+  App --> Ai["AI 服务\n摘要 / RAG 问答"]
+  Auth --> MQ["RabbitMQ\nUserLogin fanout"]
+  MQ --> Stats
+  Ai --> Library
 ```
 
-每个编号模块都是独立仓库、独立可跑、独立可演示——这是有意的设计:**任何一块出问题或被砍掉,其余照常工作**。
+每个服务仓库都能独立运行。平台书负责把这些模块的边界、接口、依赖和生命周期讲清楚。
 
 ## 三条阅读线
 
-| 你想要什么 | 这样读 |
+| 你现在想做什么 | 建议路径 |
 | --- | --- |
-| **学动手**:照着搭一个真项目 | 直接进 [实战篇](/project/),按 MVP-0 → 4 顺序读,代码就嵌在章里 |
-| **学想清楚**:动手前的功课怎么做 | [前期设计 P1–P8](/platform/):业务定位 → 用例 → 领域模型 → 架构 |
-| **学表达**:把复杂的事一分钟讲明白 | [方法](/guide/methodology) + [金字塔写作](/guide/writing-style),全书就是活样板 |
+| **先跑起来** | 读 [实战篇](/project/),按用户中心 → 书库 → App → 统计 → AI 顺序走 |
+| **先想清楚** | 读 [平台篇](/platform/),看需求、用例、领域模型、架构和计划 |
+| **先补技术** | 读 [技术图鉴](/stack/),每个依赖一张卡,先知道它解决什么问题 |
 
-> 这本书自己也遵守它教的方法:**每段先给结论,再讲根据和例子**。你读起来不费劲,正是因为这个。
+> 这本书遵守同一条写作规则:先给结论,再给根据和例子。读者不用陪作者绕路,应该直接走到结果。
