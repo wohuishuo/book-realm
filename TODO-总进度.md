@@ -39,7 +39,7 @@
 
 - [x] **建枢纽仓 book-realm** ✅ 2026-06-11:<https://github.com/wohuishuo/book-realm>(公开),本地 `起点-安卓项目\book-realm`
 - [x] 搬书骨架 ✅:平台书可构建(开始篇 4 页 + P1–P8 占位 + MVP 地图);方法论/RC清单/行动计划已入仓
-- [ ] **(需手动)** GitHub 仓库 Settings → Pages 把 Source 设为 GitHub Actions → 平台书自动上线 `https://wohuishuo.github.io/book-realm/`
+- [x] **GitHub Pages 已开启** ✅:平台书自动上线 `https://wohuishuo.github.io/book-realm/`
 - [x] **P 阶段 P1–P8 全部写实** ✅ 2026-06-12(DeepSeek 码农会话完成,含两轮 RC 自修)
 - [x] **P 阶段架构终审** ✅ 2026-06-12(Claude 架构会话):整体合格。三条裁决——①接口以 user-center 真实代码为准(`/api/user/*`,JWT 本地验签,无 validate 接口);②**App 不直连 RabbitMQ**,ReadingProgress 走 HTTP `POST /api/stats/progress`,MQ 仅用于后端服务间(UserLogin);③SimpleVectorStore 作 MVP 向量库予以批准(接口可换)。已修订 P5。
 - [x] **MVP-1 书库服务** ✅ 2026-06-12:<https://github.com/wohuishuo/br-library-service>(公开)。6 测试绿、5 接口实测通过、61 段真实公版书种子、design.md 金字塔合格。架构终审通过(A-)。
@@ -51,30 +51,31 @@
   - [br-event-stats](https://github.com/wohuishuo/br-event-stats):SB3+amqp+jpa,8083,MQ fanout 拓扑 Bean 就绪;**验证:编译+启动+health ✅**
   - [br-ai-service](https://github.com/wohuishuo/br-ai-service):Spring AI(OpenAI 兼容→DeepSeek),8084,**无 key 可启动**,health 报告 llmKeyConfigured;**验证 ✅**
   - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配;**MVP-2 业务闭环 ✅ 2026-06-14**:登录用户中心、书城/详情/章节读书库、Room 书架、DataStore token/字号/进度;真机 APK 已安装启动。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径)
-  - 三份工单的首单已标【架构会话已代建,跳过】,DS 从 R1/S1/A1 开始
 - [x] **用户中心接入事件源** ✅ 2026-06-13(Fable 架构会话,跨仓改 user-center):登录成功**异步发布 UserLogin 事件**到 fanout `user.events`(loginType/userId/loginTime/ip;失败只记日志不影响登录);9 测试仍全绿;契约与 br-event-stats 的 RabbitMQConfig 对齐。**MVP-3 联调时已有真实事件源,不再只靠测试生产者**。已 push user-center 仓
-- [x] **MVP-2 阅读 App 业务开发** ✅ 2026-06-14(Fable 架构会话):真机联调完成;`assembleDebug` 通过;adb reverse 已打通 `8080→80`、`8082→8082`;APK 已安装并启动;README 已补运行说明。下一步:平台书 MVP-2 实战章终稿,随后 MVP-3(从 S1)、MVP-4(从 A1)
+- [x] **MVP-2 阅读 App 业务开发** ✅ 2026-06-14(Fable 架构会话):真机联调完成;`assembleDebug` 通过;adb reverse 已打通 `8080→80`、`8082→8082`;APK 已安装并启动;README 已补运行说明。
+- [x] **MVP-2 搜索空结果修复** ✅ 2026-06-14:原因是书库分页从 `page=0` 开始,App 误传 `page=1`;已改为 `page=0`,Android 重新构建通过。新版 APK 安装时手机拒绝了权限确认,需重新点允许安装。
+- [ ] **平台书 MVP-2 实战章终稿**:补真机截图、关键代码讲解、分页坑复盘。完成后再进入 MVP-3 业务开发。
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
 - [x] 工单-MVP1书库.md — 已执行完成 ✅
-- [ ] 工单-MVP2阅读App.md — 待 DS 执行(真机方案,环境已探明)
-- [ ] 工单-MVP3事件统计.md — 待执行(需先 `scoop install rabbitmq`)
+- [x] 工单-MVP2阅读App.md — 业务闭环完成 ✅;实战章待终稿
+- [ ] 工单-MVP3事件统计.md — 下一步执行;RabbitMQ 已安装,用户中心已有真实 UserLogin 事件源
 - [ ] 工单-MVP4-AI服务.md — 待执行(需 DEEPSEEK_API_KEY 环境变量)
-- 【架构会话待办】用户中心接入 amqp 发 UserLogin 事件(跨仓改动);各 MVP 的 Docker 化与平台级 compose;各 MVP 完成后的 RC 终审 + MVP 地图登记
+- 【架构会话待办】各 MVP 的 Docker 化与平台级 compose;各 MVP 完成后的 RC 终审 + MVP 地图登记
 
-**仓库创建原则**:不预建空仓;每个 MVP 仓由其工单的"建仓"首单(L0/R0/S0/A0)连同可编译骨架一起创建,确保仓一出生即能跑。
+**仓库创建原则**:不预建纯空仓;每个 MVP 仓出生时必须至少可编译、可启动或有明确骨架质量门。
 
 ### 📋 各 MVP 状态
 
 | MVP | 仓库 | 代码 | 书 | RC |
 | --- | --- | --- | --- | --- |
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
-| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 骨架就绪,P 阶段待填 | ⬜ |
-| 1 书库服务 | br-library-service(未建) | ⬜ | ⬜ | ⬜ |
-| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | 登录/书城/书架/阅读器闭环 | 🔄 实战章待终稿 | ✅ |
-| 3 事件统计 | br-event-stats(未建) | ⬜ | ⬜ | ⬜ |
-| 4 AI 服务 | br-ai-service(未建) | ⬜ | ⬜ | ⬜ |
+| 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | ✅ P 阶段完成,实战篇持续更新 | 🔄 |
+| 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | ✅ 6 测试绿,5 接口实测 | ✅ 实战章已写 | ✅ |
+| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ 登录/书城/书架/阅读器闭环 | 🔄 实战章待终稿 | 🔄 搜索修复待手机安装复测 |
+| 3 事件统计 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) ✅ | 🔄 骨架可启动,业务待做 | ⬜ | ⬜ |
+| 4 AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) ✅ | 🔄 骨架可启动,业务待做 | ⬜ | ⬜ |
 | 5 书友匹配(可选) | 未定 | ⬜ | ⬜ | ⬜ |
 
 ## 三、资源地图(所有东西在哪)
