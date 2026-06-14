@@ -1,6 +1,6 @@
 # MVP-2 阅读 App
 
-> **结论先行**:阅读 App 是书域的第一条端到端产品链路。它不自己造用户、不自己造书,而是把 MVP-0 用户中心和 MVP-1 书库服务接到手机上,再用 Room 与 DataStore 把体验留在本地。
+> **结论先行**:阅读 App 是书域的第一条端到端产品链路。它不自己造用户、不自己造书,而是把 MVP-0 用户中心、MVP-1 书库、MVP-3 统计、MVP-4 AI 都接到手机上,再用 Room 与 DataStore 把体验留在本地。
 
 仓库:[br-reader-app](https://github.com/wohuishuo/br-reader-app)。本章代码片段来自真实工程。
 
@@ -13,8 +13,8 @@
   ├─ 登录:POST /api/user/login  ─────────▶ MVP-0 用户中心
   ├─ 搜书:GET  /api/books?q=西游 ───────▶ MVP-1 书库服务
   ├─ 读章:GET  /api/chapters/{id} ─────▶ MVP-1 书库服务
-  ├─ 进度:POST /api/stats/progress ────▶ MVP-3 统计服务(下一步)
-  └─ 问答:POST /api/ai/ask ────────────▶ MVP-4 AI 服务(下一步)
+  ├─ 进度:POST /api/stats/progress ────▶ MVP-3 统计服务
+  └─ 问答:POST /api/ai/ask ────────────▶ MVP-4 AI 服务
 ```
 
 **根据**:手机端最怕边界混乱。App 一旦直连数据库、直连 RabbitMQ,后续安全、升级、排错都会变难。所以本项目裁决很明确:**App 只面对 HTTP API,不直连 MQ**。MQ 是后端服务间设施,用户登录事件由用户中心发布,阅读进度由 App 通过 HTTP 上报给统计服务。
@@ -39,9 +39,11 @@ object ApiConfig {
 ```powershell
 adb reverse tcp:8080 tcp:80
 adb reverse tcp:8082 tcp:8082
+adb reverse tcp:8083 tcp:8083
+adb reverse tcp:8084 tcp:8084
 ```
 
-**为什么用户中心是 8080 转 80?** 因为手机不能稳定绑定低端口 80,所以 App 访问手机自己的 `127.0.0.1:8080`,adb 再把它转到电脑的 Nginx `:80`。书库服务本来就在电脑 `:8082`,所以直接转 `8082 → 8082`。
+**为什么用户中心是 8080 转 80?** 因为手机不能稳定绑定低端口 80,所以 App 访问手机自己的 `127.0.0.1:8080`,adb 再把它转到电脑的 Nginx `:80`。书库、统计、AI 服务分别在电脑 `:8082/:8083/:8084`,所以直接同端口反代。
 
 ::: tip 模拟器和真机别混
 模拟器访问电脑用 `10.0.2.2`;真机不能用它。真机要么用局域网 IP,要么像本章这样用 USB `adb reverse`。
@@ -211,4 +213,4 @@ suspend fun listBooks(
 
 ## 下一步
 
-下一章应该先做 [MVP-3 事件统计](/project/event-stats):用户中心已经能发布 `UserLogin` 事件,App 后续补 `POST /api/stats/progress`。统计服务完成后,阅读 App 就不只是"能读",还能记录"谁在读、读到哪、读了多少"。
+App 端 v1 集成代码已经完成:阅读器会上报进度,并提供摘要/问答入口。最后的真实验收需要手机在线后重新安装 APK。

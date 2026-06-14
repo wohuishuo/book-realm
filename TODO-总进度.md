@@ -58,7 +58,8 @@
 - [x] **书域 v1 需求与验收清单** ✅ 2026-06-14:明确 v1 只做登录、找书、阅读、统计、AI 辅助阅读;砍掉支付/社交/推荐/复杂大屏等扩展。
 - [x] **MVP-3 事件统计服务** ✅ 2026-06-14:UserLogin 事件消费、登录日志、登录聚合、阅读进度上报、查询 API、4 测试、小书文档、真实联调均完成;用户中心真实登录后 `/api/stats/logins` 返回 `appLogins=1,total=1`。
 - [x] **MVP-4 AI 服务** ✅ 2026-06-14:摘要、embed、ask 三接口完成;无 key 可启动并返回检索依据;`bookId=1` embed 得到 39 段;问"仙石是什么"命中第 12 段仙石原文;2 测试绿;小书和平台实战章已补。
-- [ ] **回到 Android App 集成 MVP-3/MVP-4**:阅读器上报进度到 `POST /api/stats/progress`;增加摘要/问答入口调用 AI 服务;形成书域 v1 手机端完整体验。
+- [x] **Android App 集成 MVP-3/MVP-4 代码** ✅ 2026-06-14:阅读器已接 `POST /api/stats/progress`;新增摘要/问答入口调用 MVP-4;`assembleDebug` 通过。⚠️ 真机安装未完成:用户吃饭期间手机离线,adb 返回 `no devices/emulators found`;回来后需重新插手机安装验证。
+- [ ] **书域 v1 真机终验**:手机连接后执行 adb reverse 8080/8082/8083/8084、安装新版 APK、重新登录、验证搜书/阅读/进度上报/AI 摘要问答。
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
@@ -77,7 +78,7 @@
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
 | 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | ✅ P 阶段完成,实战篇持续更新 | 🔄 |
 | 1 书库服务 | [br-library-service](https://github.com/wohuishuo/br-library-service) ✅ | ✅ 6 测试绿,5 接口实测 | ✅ 实战章已写 | ✅ |
-| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ 登录/书城/书架/阅读器闭环 | ✅ 实战章已补 | ✅ |
+| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | ✅ v1 集成代码完成,真机终验待补 | ✅ 实战章已补 | 🔄 |
 | 3 事件统计 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) ✅ | ✅ 登录事件+阅读进度统计 | ✅ 实战章已补 | ✅ |
 | 4 AI 服务 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) ✅ | ✅ 摘要+embed+RAG问答 | ✅ 实战章已补 | ✅ |
 | 5 书友匹配(可选) | 未定 | ⬜ | ⬜ | ⬜ |
