@@ -17,6 +17,7 @@ export default defineConfig({
       { text: '开始', link: '/guide/preface' },
       { text: '平台篇(P 阶段)', link: '/platform/' },
       { text: '实战篇', link: '/project/' },
+      { text: '技术图鉴', link: '/stack/' },
       { text: 'MVP 地图', link: '/mvp/' },
       { text: '用户中心(前作)', link: 'https://wohuishuo.github.io/user-center-team-project/' }
     ],
@@ -63,9 +64,25 @@ export default defineConfig({
           ]
         }
       ],
+      '/stack/': [
+        {
+          text: '④ 技术图鉴',
+          items: [
+            { text: '图鉴导读', link: '/stack/' },
+            { text: 'Jetpack Compose', link: '/stack/jetpack-compose' },
+            { text: 'Retrofit', link: '/stack/retrofit' },
+            { text: 'Room', link: '/stack/room' },
+            { text: 'DataStore', link: '/stack/datastore' },
+            { text: 'Spring Boot', link: '/stack/spring-boot' },
+            { text: 'RabbitMQ', link: '/stack/rabbitmq' },
+            { text: 'Spring AI 与 RAG', link: '/stack/spring-ai-rag' },
+            { text: 'Docker 与 adb 调试', link: '/stack/docker-adb' }
+          ]
+        }
+      ],
       '/mvp/': [
         {
-          text: '④ MVP 地图',
+          text: '⑤ MVP 地图',
           items: [
             { text: '星系总览与各仓链接', link: '/mvp/' }
           ]
