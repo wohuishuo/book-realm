@@ -50,10 +50,10 @@
 - [x] **三个 MVP 仓骨架由架构会话代建** ✅ 2026-06-12(防 DS 翻车,出生即可编译):
   - [br-event-stats](https://github.com/wohuishuo/br-event-stats):SB3+amqp+jpa,8083,MQ fanout 拓扑 Bean 就绪;**验证:编译+启动+health ✅**
   - [br-ai-service](https://github.com/wohuishuo/br-ai-service):Spring AI(OpenAI 兼容→DeepSeek),8084,**无 key 可启动**,health 报告 llmKeyConfigured;**验证 ✅**
-  - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配、三 Tab 导航、双后端 Retrofit、UiState/Room 模式齐;**assembleDebug ✅ APK 已产出**。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径);新坑三连已解并固化:gradle 分发走腾讯镜像、依赖走阿里云镜像、`GRADLE_USER_HOME=C:\gradle-home`(用户环境变量)
+  - [br-reader-app](https://github.com/wohuishuo/br-reader-app):Compose+Hilt+Room+Retrofit 全配;**MVP-2 业务闭环 ✅ 2026-06-14**:登录用户中心、书城/详情/章节读书库、Room 书架、DataStore token/字号/进度;真机 APK 已安装启动。⚠️ 本地在 `C:\dev\br-reader-app`(AGP 不吃中文路径)
   - 三份工单的首单已标【架构会话已代建,跳过】,DS 从 R1/S1/A1 开始
 - [x] **用户中心接入事件源** ✅ 2026-06-13(Fable 架构会话,跨仓改 user-center):登录成功**异步发布 UserLogin 事件**到 fanout `user.events`(loginType/userId/loginTime/ip;失败只记日志不影响登录);9 测试仍全绿;契约与 br-event-stats 的 RabbitMQConfig 对齐。**MVP-3 联调时已有真实事件源,不再只靠测试生产者**。已 push user-center 仓
-- [ ] **MVP-2 阅读 App 业务开发**(⏭️ DS 下一步):从 R1 起;真机方案。完成后:架构终审 + 写实战章 + 美化 README;随后 MVP-3(从 S1)、MVP-4(从 A1)
+- [x] **MVP-2 阅读 App 业务开发** ✅ 2026-06-14(Fable 架构会话):真机联调完成;`assembleDebug` 通过;adb reverse 已打通 `8080→80`、`8082→8082`;APK 已安装并启动;README 已补运行说明。下一步:平台书 MVP-2 实战章终稿,随后 MVP-3(从 S1)、MVP-4(从 A1)
 - [ ] 各 MVP 重复"工单→执行→终审"模式:架构会话出工单,码农会话执行
 
 **工单队列(全部已写好,在 book-realm 仓):**
@@ -72,7 +72,7 @@
 | 0 用户中心 | user-center-team-project | ✅ | ✅ | ✅ |
 | 枢纽(平台书) | [book-realm](https://github.com/wohuishuo/book-realm) ✅ | — | 🔄 骨架就绪,P 阶段待填 | ⬜ |
 | 1 书库服务 | br-library-service(未建) | ⬜ | ⬜ | ⬜ |
-| 2 阅读 App | br-reader-app(未建) | ⬜ | ⬜ | ⬜ |
+| 2 阅读 App | [br-reader-app](https://github.com/wohuishuo/br-reader-app) ✅ | 登录/书城/书架/阅读器闭环 | 🔄 实战章待终稿 | ✅ |
 | 3 事件统计 | br-event-stats(未建) | ⬜ | ⬜ | ⬜ |
 | 4 AI 服务 | br-ai-service(未建) | ⬜ | ⬜ | ⬜ |
 | 5 书友匹配(可选) | 未定 | ⬜ | ⬜ | ⬜ |
