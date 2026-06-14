@@ -49,7 +49,9 @@ export default defineConfig({
             { text: 'P7 架构与技术选型', link: '/platform/p7-architecture' },
             { text: 'P8 分工与计划', link: '/platform/p8-schedule' },
             { text: 'v1 需求与验收清单', link: '/platform/v1-scope' },
-            { text: 'v2 需求与执行计划', link: '/platform/v2-scope' }
+            { text: 'v2 需求与执行计划', link: '/platform/v2-scope' },
+            { text: 'v2 参考项目', link: '/platform/reference-projects' },
+            { text: 'TTS 服务计划', link: '/platform/tts-service-plan' }
           ]
         }
       ],
