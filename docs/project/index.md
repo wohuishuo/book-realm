@@ -26,7 +26,7 @@
 | [MVP-0 用户中心](/project/user-center) | 平台的门卫,一次登录各处通行 | BCrypt 为什么安全、JWT 怎么做到"无状态" | ✅ |
 | [MVP-1 书库服务](/project/library) | 内容底座,书→章→段 | 数据结构怎么为下游功能设计、JPA 懒加载坑 | ✅ |
 | [MVP-2 阅读 App](/project/reader) | Compose 客户端 | MVVM 状态流、Room 离线缓存、对接两个后端 | ✅ |
-| [MVP-3 事件统计](/project/event-stats) | 异步事件管道 | 为什么用消息队列、fanout 广播、消费者幂等 | ⬜ |
+| [MVP-3 事件统计](/project/event-stats) | 异步事件管道 | 为什么用消息队列、fanout 广播、消费者幂等 | ✅ |
 | [MVP-4 AI 服务](/project/ai) | RAG 读书问答 | 向量化、检索、带引用回答的完整链路 | ⬜ |
 
 ::: tip 这一篇的承诺:读完就懂,不用翻代码
