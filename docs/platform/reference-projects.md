@@ -9,6 +9,7 @@
 | [refgd/legado](https://github.com/refgd/legado) | 主题、EPUB、AI、发现页、漫画/视频等阅读生态能力 | 不做复杂书源抓取和版权不清的内容聚合 |
 | [Luoyacheng/legado](https://github.com/Luoyacheng/legado) | 书架模式、书源搜索、本地 TXT/EPUB、阅读界面高度自定义、多翻页模式 | 不把 v2 做成规则引擎平台 |
 | [codedogQBY/ReadAny](https://github.com/codedogQBY/ReadAny) | AI Chat、语义搜索、划线笔记、知识管理、TTS、阅读统计、跨端同步 | 不立即做桌面端和全格式阅读器 |
+| [Manhhao/Hoshi-Reader-Android](https://github.com/Manhhao/Hoshi-Reader-Android) | 竖排/横排阅读、Yomitan 词典、递归查词、Anki 制卡、跟读式 audiobook、e-ink 模式 | 不把 BookRealm 做成日语学习专用 App |
 | 本地 `tts pre` | Qwen3-TTS、FastAPI、预设音色、VoiceClone、模型常驻 | 不直接把脚本塞进 App 或现有 AI 服务 |
 
 ## 二、阅读体验参考 Legado
@@ -79,7 +80,31 @@
 
 这样 UI 参考会变成设计依据,不会变成“看起来都不错”的图片堆。
 
-## 五、v2 的产品裁决
+## 五、Hoshi Reader 给我们的新增裁决
+
+**结论:Hoshi Reader 让 v2 的阅读体验多了两个明确方向——排版模式和词典辅助。**
+
+Hoshi Reader 是日语 EPUB reader,它的 README 明确提到:支持竖排或横排阅读、分页或连续滚动、主题/字体/间距自定义;支持导入和管理 Yomitan 词典、在阅读器里点词查询、递归查词、在线或本地单词音频;还支持五色高亮、阅读统计、Anki 制卡、audiobook read-along 和 Android 媒体控制。我们不做日语学习专用 App,但这些能力能直接启发 BookRealm。
+
+BookRealm v2 应吸收:
+
+- **竖排/横排切换**:古书、诗词、文言文可以用竖排,现代书默认横排;
+- **分页/连续滚动切换**:普通阅读用分页,检索/AI/笔记场景用连续滚动更顺;
+- **词典弹窗**:选中词后先显示释义,再给 AI 解释入口;
+- **递归查词**:释义里不懂的词还能继续点;
+- **五色高亮**:颜色本身就是读者的思维分类;
+- **跟读式朗读**:TTS 播放时高亮当前句/段,自动翻页或滚动。
+
+BookRealm v2 暂不吸收:
+
+- Anki 制卡;
+- Yomitan 全格式兼容;
+- Google Drive 同步;
+- 专门为日语学习设计的字段系统。
+
+这些可以进入 v3 的“学习增强模式”。v2 先把通用阅读体验做稳。
+
+## 六、v2 的产品裁决
 
 **结论:BookRealm v2 的核心不是“功能最多”,而是“阅读链路完整”。**
 
