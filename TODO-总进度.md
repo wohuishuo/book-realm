@@ -65,7 +65,8 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2 UI 参考台账** ✅ 2026-06-15:本地 `C:\Users\艾莉\知识数据库\ui 参考` 已整理 61 张起点/微信读书截图;新增 `docs/platform/ui-reference.md`,只提交分析结论,不提交商业 App 截图。
 - [x] **能力野心地图** ✅ 2026-06-15:新增 `docs/platform/ambition-map.md`;长期目标从“功能越多越好”收束成阅读体验、AI、导入、TTS、社区、推荐、商业、企业级工程 8 个能力层,以后全部按小 MVP 交付。
 - [x] **br-design-book 终审** ✅ 2026-06-15:检查本地 `br-design-book`;裁决为“高价值设计草稿,暂不独立建仓公开”;已把技术栈、许可证、复用边界、下一步工单写入 `docs/platform/design-book-audit.md`。
-- [ ] **v2.1 第二轮阅读体验工单**:先拆 `AppRoot.kt` 为 screen/component,建立 `Tokens`、`ReadStyle`、`StateBox`;再补首页最近阅读、阅读器目录/进度/主题/字号/行距、空错加载状态,并更新平台书。
+- [x] **v2.1 第二轮阅读体验工单** ✅ 2026-06-15:已拆 `AppRoot.kt` 为 `ui/screen`、`ui/component`、`ui/reader`;新增 `Tokens`、`ReadStyle`、`StateBox`;书城/详情错误态支持重试;`assembleDebug` 通过并已安装启动到真机。
+- [ ] **v2.2 笔记与 AI 工单**:基于 `br-design-book/工单-v2.2-笔记与AI.md` 裁剪执行;先做划线/笔记/批注/AI 引用跳转,再考虑复杂分页、字体导入、竖排阅读。
 
 **工单队列(全部已写好,在 book-realm 仓):**
 - [x] 工单-MVP1书库.md — 已执行完成 ✅

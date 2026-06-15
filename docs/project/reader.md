@@ -203,7 +203,9 @@ suspend fun listBooks(
 | ViewModel 状态机 | [ReaderViewModel.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/viewmodel/ReaderViewModel.kt) |
 | Room 书架缓存 | [ReaderDatabase.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/data/local/ReaderDatabase.kt) |
 | DataStore 登录/偏好 | [SessionStore.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/data/local/SessionStore.kt) |
-| Compose 页面入口 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| Compose 根导航 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 页面层 | [ui/screen](https://github.com/wohuishuo/br-reader-app/tree/main/app/src/main/java/com/bookrealm/reader/ui/screen) |
+| 组件层 | [ui/component](https://github.com/wohuishuo/br-reader-app/tree/main/app/src/main/java/com/bookrealm/reader/ui/component) |
 
 ## 本章小结
 
@@ -264,14 +266,32 @@ v2.1 第一轮已做:
 
 ### 5. 本轮真实代码
 
-核心改动仍集中在 Compose 入口:
+第一轮核心改动曾集中在 Compose 入口,第二轮已经把它拆开:
 
 | 改动 | 文件 |
 | --- | --- |
-| 书架最近阅读与书架列表 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
-| 详情页长页结构 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
-| 阅读页沉浸工具层 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
-| 阅读设置底板 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 根导航、Snackbar、沉浸切换 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 书架最近阅读与书架列表 | [ShelfScreen.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/ui/screen/ShelfScreen.kt) |
+| 详情页长页结构 | [BookDetailScreen.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/ui/screen/BookDetailScreen.kt) |
+| 阅读页沉浸工具层 | [ReaderScreen.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/ui/screen/ReaderScreen.kt) |
+| 封面、列表、状态盒 | [ui/component](https://github.com/wohuishuo/br-reader-app/tree/main/app/src/main/java/com/bookrealm/reader/ui/component) |
+| 阅读主题 token | [Tokens.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/ui/theme/Tokens.kt) |
+
+### 6. v2.1 第二轮:先把代码拆干净
+
+**结论:这一步不是为了“文件多一点”,而是为了让后续功能有位置可放。**
+
+拆分前,`AppRoot.kt` 同时负责导航、书架、书城、详情、阅读器、工具栏、封面、空态。这样短期能跑,但继续加划线、笔记、TTS、词典、竖排阅读时,每个功能都会挤进同一个文件。
+
+拆分后:
+
+- `navigation/AppRoot.kt`:只负责根导航、Snackbar、沉浸模式切换;
+- `ui/screen`:每个页面一份文件;
+- `ui/component`:封面、书籍行、章节行、加载/错误/空态;
+- `ui/reader/ReadStyle.kt`:阅读主题、字号、行距模型;
+- `ui/theme/Tokens.kt`:颜色、圆角、间距 token。
+
+这一轮还补了 `StateBox`:书城和详情页失败时不再只是显示错误文字,而是出现可点击的“重试”。这件事很小,但它让 App 从“Demo 页面”往“真实产品页面”走了一步。
 
 ### 6. 验证
 
@@ -280,14 +300,13 @@ cd C:\dev\br-reader-app
 ./gradlew assembleDebug
 ```
 
-实测结果:`assembleDebug` 通过。当前只有 Android Gradle Plugin 与 `compileSdk=35` 的兼容性警告,不影响构建。
+实测结果:`assembleDebug` 通过,并已通过 adb 安装启动到真机。当前只有 Android Gradle Plugin 与 `compileSdk=35` 的兼容性警告,不影响构建。
 
 ## 下一步
 
-v2.1 第二轮应该继续做:
+下一步进入 v2.2,但要裁剪执行:
 
-- 目录底板显示整本书并支持跳转;
-- 阅读页分页/连续滚动切换;
-- 横排/竖排模式雏形;
-- 选中文字菜单的交互原型;
-- 真机截图回填到平台书。
+- 先做划线、笔记、批注;
+- 再做 AI 引用跳转和选中文本解释;
+- TTS 另开 `br-tts-service`;
+- 分页、字体导入、竖排阅读先做技术 Spike,不要直接塞进主线。
