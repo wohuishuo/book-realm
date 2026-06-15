@@ -66,6 +66,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **能力野心地图** ✅ 2026-06-15:新增 `docs/platform/ambition-map.md`;长期目标从“功能越多越好”收束成阅读体验、AI、导入、TTS、社区、推荐、商业、企业级工程 8 个能力层,以后全部按小 MVP 交付。
 - [x] **br-design-book 终审** ✅ 2026-06-15:检查本地 `br-design-book`;裁决为“高价值设计草稿,暂不独立建仓公开”;已把技术栈、许可证、复用边界、下一步工单写入 `docs/platform/design-book-audit.md`。
 - [x] **v2.1 第二轮阅读体验工单** ✅ 2026-06-15:已拆 `AppRoot.kt` 为 `ui/screen`、`ui/component`、`ui/reader`;新增 `Tokens`、`ReadStyle`、`StateBox`;书城/详情错误态支持重试;`assembleDebug` 通过并已安装启动到真机。
+- [x] **v2.1 阅读手感修复** ✅ 2026-06-15:阅读页隐藏手机顶部通知栏;AI 提问改为右下角圆形入口,点击展开;Android 返回键改成“阅读→详情→书架,书架二次退出”;`assembleDebug` 通过并已安装启动到真机。
 - [ ] **v2.2 笔记与 AI 工单**:基于 `br-design-book/工单-v2.2-笔记与AI.md` 裁剪执行;先做划线/笔记/批注/AI 引用跳转,再考虑复杂分页、字体导入、竖排阅读。
 
 **工单队列(全部已写好,在 book-realm 仓):**
