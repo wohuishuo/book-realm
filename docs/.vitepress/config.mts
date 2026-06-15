@@ -54,6 +54,7 @@ export default defineConfig({
             { text: 'v2.1 阅读体验 MVP', link: '/platform/v2-1-reader-experience' },
             { text: 'v2 参考项目', link: '/platform/reference-projects' },
             { text: '参考复用策略', link: '/platform/reference-reuse-policy' },
+            { text: '设计知识库终审', link: '/platform/design-book-audit' },
             { text: 'v2 UI 参考台账', link: '/platform/ui-reference' },
             { text: 'TTS 服务计划', link: '/platform/tts-service-plan' }
           ]
