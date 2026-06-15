@@ -1,6 +1,6 @@
 # BookRealm v2 需求与执行计划
 
-> **结论先行**:v2 不做“大而全阅读商业平台”,先做一个更像真实阅读 App 的版本。优先级是:阅读体验 → 笔记互动 → 听书 → 导入书籍 → 控制台。推荐、会员、小游戏和跨平台客户端先进入 v2.x 备选池。参考项目和 TTS 服务设计分别见 [v2 参考项目](/platform/reference-projects) 与 [br-tts-service 计划](/platform/tts-service-plan)。
+> **结论先行**:v2 不做“大而全阅读商业平台”,先做一个更像真实阅读 App 的版本。优先级是:阅读体验 → 笔记互动 → 听书 → 导入书籍 → 控制台。推荐、会员、小游戏和跨平台客户端先进入 v2.x 备选池。参考项目、UI 截图分析和 TTS 服务设计分别见 [v2 参考项目](/platform/reference-projects)、[v2 UI 参考台账](/platform/ui-reference) 与 [br-tts-service 计划](/platform/tts-service-plan)。
 
 ## 一、v2 一分钟说明
 

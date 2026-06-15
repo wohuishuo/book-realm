@@ -62,6 +62,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **书域 v1 真机终验** ✅ 2026-06-14:手机重新连接后已执行 adb reverse 8080/8082/8083/8084;新版 APK 安装并启动成功;AI 服务用 `deepseek-v4-flash` 和用户 key 跑通真实摘要与 RAG 问答(`llmUsed=true`);统计服务可查到阅读进度。提示:该 key 已出现在聊天记录中,演示后建议轮换。
 - [x] **v2 需求收束** ✅ 2026-06-14:已把外观、朗读、推荐、PDF/EPUB、控制台、跨平台、小游戏等想法收束为 `docs/platform/v2-scope.md`;裁决为先做 v2.1 阅读体验,再做笔记、朗读、控制台、导入。
 - [x] **v2 参考项目与 TTS 裁决** ✅ 2026-06-14:新增 `docs/platform/reference-projects.md` 和 `docs/platform/tts-service-plan.md`;参考 Legado/ReadAny/Hoshi Reader 的阅读体验、笔记、TTS、词典、竖排阅读、知识管理能力;TTS 定为独立 `br-tts-service`,Spring Boot 管任务/缓存/API,Python Qwen Worker 管推理。
+- [x] **v2 UI 参考台账** ✅ 2026-06-15:本地 `C:\Users\艾莉\知识数据库\ui 参考` 已整理 61 张起点/微信读书截图;新增 `docs/platform/ui-reference.md`,只提交分析结论,不提交商业 App 截图。
 - [ ] **v2.1 阅读体验工单**:首页最近阅读、阅读器目录/进度/主题/字号/行距、空错加载状态,并更新平台书。
 
 **工单队列(全部已写好,在 book-realm 仓):**
