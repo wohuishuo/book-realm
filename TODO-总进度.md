@@ -74,6 +74,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
 - [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。
 - [x] **v2.x 全局组件 A1 第一批** ✅ 2026-06-16:新增 `SectionHeader`,`SearchField`,`BrButton`,`BannerCard`,`QuickEntryGrid`,`EntryCard`,`MiniPlayerBar`;书城搜索、书架标题/空态、我的页登录按钮/入口网格已迁移;`assembleDebug` 通过。
+- [x] **v2.x 旧 UI 替换 A2** ✅ 2026-06-16:新增 `BrTextField`,`InfoCard`,`BrActionDock`,`BrDockAction`,`AiPromptChip`,`AiInputBar`;替换详情页按钮/信息卡、我的页输入框、书架继续阅读卡、阅读器选择工具条/写想法面板、AI 临时窗口输入与提示;`assembleDebug` 通过。
 - [ ] **v2.2 AI 引用跳转 + 笔记列表入口**:AI 回答引用段落后点击跳回原文段落;我的/详情页补笔记列表入口。复杂分页、字体导入、竖排阅读进入 Spike。
 
 **工单队列(全部已写好,在 book-realm 仓):**
