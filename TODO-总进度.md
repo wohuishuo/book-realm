@@ -72,6 +72,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.2 划线交互修正** ✅ 2026-06-15:长按段落不再弹底部大 sheet,改为蓝色选中态 + 黑色浮动工具条;修复旧登录态 userId=0 导致“已登录但不能划线”;修复搜书覆盖 Room `inShelf=false` 导致书架丢书;摘要会打开 AI 面板显示。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
+- [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。
 - [ ] **v2.2 AI 引用跳转 + 笔记列表入口**:AI 回答引用段落后点击跳回原文段落;我的/详情页补笔记列表入口。复杂分页、字体导入、竖排阅读进入 Spike。
 
 **工单队列(全部已写好,在 book-realm 仓):**

@@ -409,6 +409,22 @@ v2.2 最小闭环:
 
 这不是完整离线书库,但已经解决最重要的问题:读过或加入书架后预缓存过的内容不会因为后端暂时不可用而完全打不开。
 
+## 十、v2.x 设计系统地基
+
+**结论:阅读 App 不能让每个页面各写各的 UI。**
+
+本轮根据 Material 3 / Compose 官方建议,先建立 `ui/design` 作为单一真相来源:
+
+- `BrTheme`:统一 Material 3 color scheme,预留 Android 12+ dynamic color;
+- `BrColors`:品牌色、阅读主题色、AI 黑屏、选区、划线色;
+- `BrDimens`:页面边距、组件间距、图标尺寸、阅读工具栏高度;
+- `BrShapes`:圆角层级;
+- `BrMotion`:标准弹簧和 expressive 弹簧参数;
+- `BrTopBar` / `BrNavBar` / `BrNavItem`:普通页面统一顶栏和底部导航;
+- `BrReaderTopSurface` / `BrReaderBottomSurface`:阅读器沉浸工具层统一处理系统栏避让。
+
+这样以后改顶栏、底栏、阅读工具层、AI 黑屏色,不需要到每个页面手动找硬编码。旧的 `ReaderTokens` 已经变成兼容层,真实值来自 `ui/design`。
+
 ### 6. 验证
 
 ```powershell
