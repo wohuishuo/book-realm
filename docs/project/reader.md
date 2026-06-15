@@ -211,6 +211,83 @@ suspend fun listBooks(
 - **根据**:App 只面对 HTTP API;网络、本地缓存、页面状态分别放在 Retrofit/Repository/ViewModel 里。
 - **例子**:登录 `root/12345678`,搜索 `西游`,打开《西游记》章节阅读;分页 bug 用 `page=0` 修复。
 
+## 八、v2.1 第一刀:把阅读器做成产品骨架
+
+> **结论先行**:v2.1 的第一轮不加新后端,先把 App 的“阅读产品感”做出来。书架、详情页、阅读器工具层三块最能改变用户感受,所以先改它们。
+
+### 1. 书架从列表变成继续阅读入口
+
+旧版书架只是本地缓存列表。v2.1 改成两段:
+
+- **继续阅读**:优先显示上次阅读的书和段落;
+- **我的书架**:显示已加入书架的书,并保留去书城入口。
+
+这一步学的是起点和微信读书的共同点:书架不是仓库,而是回到阅读的最短路径。
+
+### 2. 详情页从信息块变成长页
+
+旧版详情页只有标题、作者、简介和目录。v2.1 增加:
+
+- 封面占位;
+- 标签;
+- 开始阅读/继续阅读;
+- 加入书架;
+- 简介卡片;
+- AI 阅读入口说明;
+- 目录列表。
+
+这不是为了“好看一点”,而是为了让读者在进入正文前完成判断:这是什么书、我读到哪、现在能不能继续。
+
+### 3. 阅读页进入沉浸模式
+
+旧版阅读页一直显示顶部按钮和 AI 输入框。v2.1 改成:
+
+- 进入章节后隐藏 App 顶部/底部导航;
+- 点击正文显示/隐藏阅读工具层;
+- 顶部工具层:返回、章节名、更多;
+- 底部工具层:目录、设置、摘要、听;
+- AI 提问条贴近底部,不挤在正文上方。
+
+这一步来自微信读书参考图:阅读页默认服务正文,工具只在需要时出现。
+
+### 4. 阅读设置先做可用闭环
+
+v2.1 第一轮已做:
+
+- 字号调整;
+- 行距调整;
+- 纸页、护眼、夜间三种主题;
+- 目录底板;
+- AI 摘要/提问入口保留。
+
+竖排、分页、选区菜单、词典、划线会放到 v2.1 第二轮和 v2.2,否则第一轮会膨胀。
+
+### 5. 本轮真实代码
+
+核心改动仍集中在 Compose 入口:
+
+| 改动 | 文件 |
+| --- | --- |
+| 书架最近阅读与书架列表 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 详情页长页结构 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 阅读页沉浸工具层 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+| 阅读设置底板 | [AppRoot.kt](https://github.com/wohuishuo/br-reader-app/blob/main/app/src/main/java/com/bookrealm/reader/navigation/AppRoot.kt) |
+
+### 6. 验证
+
+```powershell
+cd C:\dev\br-reader-app
+./gradlew assembleDebug
+```
+
+实测结果:`assembleDebug` 通过。当前只有 Android Gradle Plugin 与 `compileSdk=35` 的兼容性警告,不影响构建。
+
 ## 下一步
 
-App 端 v1 集成代码已经完成:阅读器会上报进度,并提供摘要/问答入口。最后的真实验收需要手机在线后重新安装 APK。
+v2.1 第二轮应该继续做:
+
+- 目录底板显示整本书并支持跳转;
+- 阅读页分页/连续滚动切换;
+- 横排/竖排模式雏形;
+- 选中文字菜单的交互原型;
+- 真机截图回填到平台书。
