@@ -31,3 +31,15 @@ P1-P8 解决"平台怎么设计", [v1 需求与验收清单](/platform/v1-scope)
 ::: tip P 阶段已完成并通过架构终审(2026-06-12)
 八步全部写实并经两轮 RC 自修 + 架构终审。三条终审裁决已并入 P5:①接口以 user-center 真实代码为准;②App 不直连 MQ,进度走 HTTP 上报;③SimpleVectorStore 批准为 MVP 向量库。
 :::
+
+## ⑥ 工程治理(P 阶段之后的现状核对)
+
+> **结论先行**:P1–P8 是"设计意图",代码落地后会有偏差和新决策。本组文档是 2026-06-16 起的**实现核对与治理记录**,与 P 阶段并列但分区。
+
+| 文档 | 作用 |
+| --- | --- |
+| [架构现状评估与 v2 演进](/platform/architecture-review) | 代码核对 P7、已知漂移、下一步演进 |
+| [ADR-001 统一鉴权](/platform/adr-001-unified-auth) | 后端鉴权缺陷的正式决策(提案) |
+| [平台 API 参考](/platform/api-reference) | 三服务真实接口、错误码、鉴权现状 |
+| [测试策略与覆盖缺口](/platform/testing-strategy) | 现有覆盖盘点 + 补测优先级 |
+| [启动 / 运维 Runbook](/platform/runbook-platform-ops) | 一键启动、真机联调、故障排查 |

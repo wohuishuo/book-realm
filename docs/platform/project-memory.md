@@ -80,7 +80,25 @@
 ## 四、接手前检查清单
 
 - 先读 `TODO-总进度.md`、本页、`docs/platform/versioning.md`;
+- 后端相关先读工程治理五件套:`architecture-review.md`、`adr-001-unified-auth.md`、`api-reference.md`、`testing-strategy.md`、`runbook-platform-ops.md`;
 - 看当前 App 产品版本,不要随手升 beta;
 - 每次改 UI,至少跑 `testDebugUnitTest`、`assembleDebug`、`scripts/adb-smoke.ps1`;
 - 能用稳定 `testTag` 测的地方,不要用中文文本做核心断言;
 - 每次修复用户指出的重复问题,把规则写回本页。
+
+## 五、后端治理裁决
+
+**结论**:三个后端服务结构健康,但鉴权不是小瑕疵,是下一个后端工单的红线。
+
+2026-06-16 的架构评估确认:
+
+- `br-library-service`、`br-event-stats`、`br-ai-service` 分层一致、依赖较新、可继续演进;
+- 真实实现与 P7 有漂移:MQ 是 `user.events`,阅读进度走 HTTP;P7 已加警告,不再假装图就是代码;
+- 当前后端不验 JWT,`userId` 由客户端传,存在越权风险;
+- ADR-001 状态是 Proposed,还没有实施。任何人不能把"写了 ADR"说成"已经安全"。
+
+下一步后端优先级:
+
+1. 落地 ADR-001 统一鉴权;
+2. 补越权负向测试;
+3. 再处理 RAG 持久化、接口幂等、API 网关等演进。

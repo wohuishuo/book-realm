@@ -2,6 +2,10 @@
 
 > **结论先行**:书域 = 1 个 Android 客户端 + 5 个 Spring Boot 微服务 + RabbitMQ + 2 个 MySQL + Redis + 向量库,全部容器化。选型原则:"栈已验证过,不引入未知技术"。
 
+::: warning 本页是设计意图,实现以代码核对为准(2026-06-16)
+P7 表达的是设计目标。代码落地后有两处与本页不一致,详见 [架构现状评估](/platform/architecture-review):①MQ 真实 exchange 为 `user.events` + 仅 `login.log/login.stats`(下图的 `bookrealm.events`/`reading.stats` 是早期设计,进度实际走 HTTP);②"App 用 JWT 访问后端"是目标,后端当前**尚未验签**,整改见 [ADR-001](/platform/adr-001-unified-auth)。
+:::
+
 ## 一、架构总图
 
 ```

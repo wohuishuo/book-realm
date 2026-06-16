@@ -60,6 +60,16 @@ export default defineConfig({
             { text: 'v2 UI 参考台账', link: '/platform/ui-reference' },
             { text: 'TTS 服务计划', link: '/platform/tts-service-plan' }
           ]
+        },
+        {
+          text: '⑥ 工程治理(评估 / ADR / API / 测试 / 运维)',
+          items: [
+            { text: '架构现状评估与 v2 演进', link: '/platform/architecture-review' },
+            { text: 'ADR-001 统一鉴权', link: '/platform/adr-001-unified-auth' },
+            { text: '平台 API 参考', link: '/platform/api-reference' },
+            { text: '测试策略与覆盖缺口', link: '/platform/testing-strategy' },
+            { text: '平台启动 / 运维 Runbook', link: '/platform/runbook-platform-ops' }
+          ]
         }
       ],
       '/project/': [
