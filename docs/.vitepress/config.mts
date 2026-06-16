@@ -48,6 +48,7 @@ export default defineConfig({
             { text: 'P6 动态建模', link: '/platform/p6-dynamics' },
             { text: 'P7 架构与技术选型', link: '/platform/p7-architecture' },
             { text: 'P8 分工与计划', link: '/platform/p8-schedule' },
+            { text: '版本规则', link: '/platform/versioning' },
             { text: 'v1 需求与验收清单', link: '/platform/v1-scope' },
             { text: '能力野心地图', link: '/platform/ambition-map' },
             { text: 'v2 需求与执行计划', link: '/platform/v2-scope' },
