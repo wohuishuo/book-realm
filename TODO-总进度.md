@@ -20,7 +20,7 @@
 
 BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中心、书库服务、Android 阅读 App、事件统计、AI 阅读助手组成;每个代码仓都能独立运行,平台书集中讲清需求、架构、技术栈和集成过程。
 
-当前 App 产品版本:`0.3.0-alpha.20260616`。说明:登录/书架/阅读/AI/划线/笔记/段评/点赞主链路已接入,但仍是 alpha;`v2.1/v2.2` 是内部工程阶段,不是对外成熟版本。
+当前 App 产品版本:`0.3.0-alpha.20260616`。说明:登录/书架/阅读/AI/划线/笔记/段评/点赞主链路已接入,但仍是 alpha;`v2.1/v2.2` 是内部工程阶段,不是对外成熟版本。下一批修复只记为 `0.3.x-alpha`,不进入 beta。
 
 ## 二、进度看板
 
@@ -75,12 +75,14 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.2 划线交互修正** ✅ 2026-06-15:长按段落不再弹底部大 sheet,改为蓝色选中态 + 黑色浮动工具条;修复旧登录态 userId=0 导致“已登录但不能划线”;修复搜书覆盖 Room `inShelf=false` 导致书架丢书;摘要会打开 AI 面板显示。
 - [x] **v2.2 阅读互动后端第一版** ✅ 2026-06-16:`br-library-service` 从划线/笔记扩展到段评与点赞;新增 `reading_comments`、`reading_comment_likes`、我的标记/我的段评/段落互动接口;书库测试从 7 条增至 9 条;平台冒烟新增保存段评、点赞、段落互动查询并通过。
 - [x] **v2.2 App 接入阅读互动第一版** ✅ 2026-06-16:阅读器选中工具条新增“段评”;App 接入发布段评、查看段落互动、点赞/取消点赞接口;新增 DTO 契约单元测试;`assembleDebug`、`testDebugUnitTest`、真机安装启动验证通过。
-- [x] **0.4.0-beta 地基第一刀** ✅ 2026-06-16:App 增加稳定 `testTag` 并开启 `testTagsAsResourceId`;新增 `scripts/adb-smoke.ps1` 真机冒烟脚本;书架搜索改为本地搜索,书城入口独立;书架书籍可移出;阅读主题/行距持久化;点击已划线段落可打开操作面板删除/写想法/段评。`testDebugUnitTest`、`assembleDebug`、adb smoke 通过。
+- [x] **0.3.x-alpha 产品化地基第一刀** ✅ 2026-06-16:App 增加稳定 `testTag` 并开启 `testTagsAsResourceId`;新增 `scripts/adb-smoke.ps1` 真机冒烟脚本;书架搜索改为本地搜索,书城入口独立;书架书籍可移出;阅读主题/行距持久化;点击已划线段落可打开操作面板删除/写想法/段评。`testDebugUnitTest`、`assembleDebug`、adb smoke 通过。注意:这不是 beta,只是 alpha 阶段的测试与交互地基。
+- [x] **0.3.x-alpha 老坑回收第一刀** ✅ 2026-06-16:补 `docs/platform/project-memory.md` 作为项目记忆库;修正划线面板返回/点屏关闭规则;书架直接阅读返回书架,详情页目录阅读返回详情。待真机复测。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
 - [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。
 - [x] **v2.x 全局组件 A1 第一批** ✅ 2026-06-16:新增 `SectionHeader`,`SearchField`,`BrButton`,`BannerCard`,`QuickEntryGrid`,`EntryCard`,`MiniPlayerBar`;书城搜索、书架标题/空态、我的页登录按钮/入口网格已迁移;`assembleDebug` 通过。
 - [x] **v2.x 旧 UI 替换 A2** ✅ 2026-06-16:新增 `BrTextField`,`InfoCard`,`BrActionDock`,`BrDockAction`,`AiPromptChip`,`AiInputBar`;替换详情页按钮/信息卡、我的页输入框、书架继续阅读卡、阅读器选择工具条/写想法面板、AI 临时窗口输入与提示;`assembleDebug` 通过。
+- [ ] **0.3.x-alpha 产品化验收链路**:把 adb smoke 升级为真实点击链路:书架搜索→打开阅读→长按段落→划线→点击划线→关闭/删除→返回书架。每次 UI 大改必须跑。
 - [ ] **v2.2 笔记列表 + AI 引用跳转**:我的/详情页补笔记与段评列表入口;AI 回答引用段落后点击跳回原文段落;段评 UI 继续打磨为微信读书式轻浮层。复杂分页、字体导入、竖排阅读进入 Spike。
 
 **工单队列(全部已写好,在 book-realm 仓):**

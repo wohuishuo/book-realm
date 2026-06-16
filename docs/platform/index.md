@@ -25,6 +25,7 @@ P1-P8 解决"平台怎么设计", [v1 需求与验收清单](/platform/v1-scope)
 | [P7](/platform/p7-architecture) | 架构总图、技术选型表、部署图 | 系统设计文档 | ✅ |
 | [P8](/platform/p8-schedule) | 分工表、五周时间轴、风险与砍单顺序 | 流程管理 | ✅ |
 | [版本规则](/platform/versioning) | 产品版本与工程阶段分离 | 版本管理 | ✅ |
+| [项目记忆库](/platform/project-memory) | 记录反复踩坑、交互裁决和接手前检查 | 工程记忆 | ✅ |
 | [v1](/platform/v1-scope) | 第一版需求边界、验收清单、执行顺序 | 版本范围管理 | ✅ |
 
 ::: tip P 阶段已完成并通过架构终审(2026-06-12)
