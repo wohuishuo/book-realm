@@ -75,6 +75,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.2 划线交互修正** ✅ 2026-06-15:长按段落不再弹底部大 sheet,改为蓝色选中态 + 黑色浮动工具条;修复旧登录态 userId=0 导致“已登录但不能划线”;修复搜书覆盖 Room `inShelf=false` 导致书架丢书;摘要会打开 AI 面板显示。
 - [x] **v2.2 阅读互动后端第一版** ✅ 2026-06-16:`br-library-service` 从划线/笔记扩展到段评与点赞;新增 `reading_comments`、`reading_comment_likes`、我的标记/我的段评/段落互动接口;书库测试从 7 条增至 9 条;平台冒烟新增保存段评、点赞、段落互动查询并通过。
 - [x] **v2.2 App 接入阅读互动第一版** ✅ 2026-06-16:阅读器选中工具条新增“段评”;App 接入发布段评、查看段落互动、点赞/取消点赞接口;新增 DTO 契约单元测试;`assembleDebug`、`testDebugUnitTest`、真机安装启动验证通过。
+- [x] **0.4.0-beta 地基第一刀** ✅ 2026-06-16:App 增加稳定 `testTag` 并开启 `testTagsAsResourceId`;新增 `scripts/adb-smoke.ps1` 真机冒烟脚本;书架搜索改为本地搜索,书城入口独立;书架书籍可移出;阅读主题/行距持久化;点击已划线段落可打开操作面板删除/写想法/段评。`testDebugUnitTest`、`assembleDebug`、adb smoke 通过。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
 - [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。
