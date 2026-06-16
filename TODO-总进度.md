@@ -71,12 +71,13 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.2 划线/笔记最小闭环** ✅ 2026-06-15:在 `br-library-service` 增加 `reading_marks`、保存/查询/删除接口和 1 个 MockMvc 测试;App 长按段落可划线、写笔记、问 AI;已划线段落高亮;后端 `mvn test` 7 绿,App `assembleDebug` 通过并安装到真机。注意:中文路径下 `mvn spring-boot:run` 类加载失败,当前用 `mvn package` + `java -jar target/br-library-service-0.1.0-SNAPSHOT.jar` 启动。
 - [x] **后端 MVP 自动化验收** ✅ 2026-06-16:新增 `test-platform.ps1`,一键执行用户中心/书库/事件统计/AI 服务测试、健康检查和跨服务冒烟;已验证登录 root、搜书、书籍详情、章节读取、保存/查询划线、阅读进度上报、AI 摘要、AI 问答全通过。`start-platform.ps1` 已修复 PowerShell 5 中文路径编码问题,三个 Spring MVP 已补 Dockerfile。
 - [x] **v2.2 划线交互修正** ✅ 2026-06-15:长按段落不再弹底部大 sheet,改为蓝色选中态 + 黑色浮动工具条;修复旧登录态 userId=0 导致“已登录但不能划线”;修复搜书覆盖 Room `inShelf=false` 导致书架丢书;摘要会打开 AI 面板显示。
+- [x] **v2.2 阅读互动后端第一版** ✅ 2026-06-16:`br-library-service` 从划线/笔记扩展到段评与点赞;新增 `reading_comments`、`reading_comment_likes`、我的标记/我的段评/段落互动接口;书库测试从 7 条增至 9 条;平台冒烟新增保存段评、点赞、段落互动查询并通过。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
 - [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。
 - [x] **v2.x 全局组件 A1 第一批** ✅ 2026-06-16:新增 `SectionHeader`,`SearchField`,`BrButton`,`BannerCard`,`QuickEntryGrid`,`EntryCard`,`MiniPlayerBar`;书城搜索、书架标题/空态、我的页登录按钮/入口网格已迁移;`assembleDebug` 通过。
 - [x] **v2.x 旧 UI 替换 A2** ✅ 2026-06-16:新增 `BrTextField`,`InfoCard`,`BrActionDock`,`BrDockAction`,`AiPromptChip`,`AiInputBar`;替换详情页按钮/信息卡、我的页输入框、书架继续阅读卡、阅读器选择工具条/写想法面板、AI 临时窗口输入与提示;`assembleDebug` 通过。
-- [ ] **v2.2 AI 引用跳转 + 笔记列表入口**:AI 回答引用段落后点击跳回原文段落;我的/详情页补笔记列表入口。复杂分页、字体导入、竖排阅读进入 Spike。
+- [ ] **v2.2 App 接入阅读互动**:阅读器接入段评列表、发布段评、点赞;我的/详情页补笔记与段评列表入口;AI 回答引用段落后点击跳回原文段落。复杂分页、字体导入、竖排阅读进入 Spike。
 
 **工单队列(全部已写好,在 book-realm 仓):**
 - [x] 工单-MVP1书库.md — 已执行完成 ✅

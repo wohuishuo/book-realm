@@ -88,6 +88,27 @@ if (($marks.data | Where-Object { $_.paragraphId -eq $paragraph.id }).Count -eq 
   throw "saved mark was not returned by list marks"
 }
 
+$comment = Invoke-Json Post "http://localhost:8082/api/comments" @{
+  userId = $userId
+  bookId = $book.id
+  chapterId = $chapter.id
+  paragraphId = $paragraph.id
+  content = "platform smoke comment"
+}
+Assert-Ok "save paragraph comment" $comment
+
+$liked = Invoke-Json Post "http://localhost:8082/api/comments/$($comment.data.id)/like?userId=$userId" $null
+Assert-Ok "like paragraph comment" $liked
+if ($liked.data.likeCount -lt 1) {
+  throw "comment like count was not updated"
+}
+
+$interactions = Invoke-Json Get "http://localhost:8082/api/paragraphs/$($paragraph.id)/interactions?userId=$userId"
+Assert-Ok "paragraph interactions" $interactions
+if (($interactions.data.comments | Where-Object { $_.id -eq $comment.data.id }).Count -eq 0) {
+  throw "saved comment was not returned by paragraph interactions"
+}
+
 $progress = Invoke-Json Post "http://localhost:8083/api/stats/progress" @{
   userId = $userId
   bookId = $book.id
