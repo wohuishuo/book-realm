@@ -78,6 +78,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **0.3.x-alpha 产品化地基第一刀** ✅ 2026-06-16:App 增加稳定 `testTag` 并开启 `testTagsAsResourceId`;新增 `scripts/adb-smoke.ps1` 真机冒烟脚本;书架搜索改为本地搜索,书城入口独立;书架书籍可移出;阅读主题/行距持久化;点击已划线段落可打开操作面板删除/写想法/段评。`testDebugUnitTest`、`assembleDebug`、adb smoke 通过。注意:这不是 beta,只是 alpha 阶段的测试与交互地基。
 - [x] **0.3.x-alpha 老坑回收第一刀** ✅ 2026-06-16:补 `docs/platform/project-memory.md` 作为项目记忆库;修正划线面板返回/点屏关闭规则;书架直接阅读返回书架,详情页目录阅读返回详情。待真机复测。
 - [x] **后端工程治理评估第一轮** ✅ 2026-06-16:完成 `br-library-service`、`br-event-stats`、`br-ai-service` 代码级评估;新增工程治理文档组——架构现状评估、ADR-001 统一鉴权、真实 API 参考、测试策略与覆盖缺口、启动运维 Runbook;P7 已加"设计意图 vs 代码现状"警告。结论:结构健康,但后端尚未验 JWT,ADR-001 是下个后端高优先级工单。
+- [x] **平台书 PRD 化第一刀** ✅ 2026-06-16:新增 `docs/platform/prd.md` 作为产品需求正本;首页、README、平台篇导读和侧边栏改成"PRD 先行,设计证据跟随";P1-P8、v2 研究、工程治理保留为证据层。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
 - [x] **v2.x 设计系统地基** ✅ 2026-06-16:查阅 Material 3 / Compose 官方文档;新增 `ui/design` 单一真相来源(`BrTheme`,`BrColors`,`BrDimens`,`BrShapes`,`BrMotion`,`BrTopBar`,`BrNavBar`,`BrReaderTopSurface/BottomSurface`);AppRoot 顶栏/底栏和阅读器 chrome 已接入;旧 `ReaderTokens` 降级为兼容层;`assembleDebug` 通过。

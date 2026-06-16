@@ -15,7 +15,7 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: '开始', link: '/guide/preface' },
-      { text: '平台篇(P 阶段)', link: '/platform/' },
+      { text: '产品 PRD', link: '/platform/prd' },
       { text: '实战篇', link: '/project/' },
       { text: '技术图鉴', link: '/stack/' },
       { text: '仓库地图', link: '/mvp/' },
@@ -36,9 +36,19 @@ export default defineConfig({
       ],
       '/platform/': [
         {
-          text: '② 平台篇 · P 阶段(七成准备)',
+          text: '② 产品需求(PRD)',
           items: [
-            { text: '本篇导读 + 行动计划', link: '/platform/' },
+            { text: 'PRD 总览', link: '/platform/prd' },
+            { text: 'PRD 控制台', link: '/platform/' },
+            { text: 'v1 需求与验收清单', link: '/platform/v1-scope' },
+            { text: 'v2 需求与执行计划', link: '/platform/v2-scope' },
+            { text: '版本规则', link: '/platform/versioning' },
+            { text: '项目记忆库', link: '/platform/project-memory' }
+          ]
+        },
+        {
+          text: '③ 设计依据(P1-P8)',
+          items: [
             { text: '行动计划全文', link: '/platform/plan' },
             { text: 'P1 业务定位', link: '/platform/p1-positioning' },
             { text: 'P2 竞品分析', link: '/platform/p2-competitors' },
@@ -47,12 +57,13 @@ export default defineConfig({
             { text: 'P5 领域模型与 BC 映射', link: '/platform/p5-domain' },
             { text: 'P6 动态建模', link: '/platform/p6-dynamics' },
             { text: 'P7 架构与技术选型', link: '/platform/p7-architecture' },
-            { text: 'P8 分工与计划', link: '/platform/p8-schedule' },
-            { text: '版本规则', link: '/platform/versioning' },
-            { text: '项目记忆库', link: '/platform/project-memory' },
-            { text: 'v1 需求与验收清单', link: '/platform/v1-scope' },
+            { text: 'P8 分工与计划', link: '/platform/p8-schedule' }
+          ]
+        },
+        {
+          text: '④ v2 扩展研究',
+          items: [
             { text: '能力野心地图', link: '/platform/ambition-map' },
-            { text: 'v2 需求与执行计划', link: '/platform/v2-scope' },
             { text: 'v2.1 阅读体验 MVP', link: '/platform/v2-1-reader-experience' },
             { text: 'v2 参考项目', link: '/platform/reference-projects' },
             { text: '参考复用策略', link: '/platform/reference-reuse-policy' },
