@@ -77,9 +77,32 @@ npm run docs:dev
 
 默认地址:<http://localhost:5173/book-realm/>
 
+## 本地启动后端
+
+**结论:后端联调先跑 `start-platform.ps1`,验收先跑 `test-platform.ps1`。**
+
+这两个脚本把"我感觉能跑"改成"机器替我们证明能跑"。启动脚本负责拉起依赖和四个后端服务;测试脚本负责跑单元测试、健康检查和跨服务 API 冒烟。
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start-platform.ps1
+powershell -ExecutionPolicy Bypass -File .\test-platform.ps1
+```
+
+本地端口:
+
+| 服务 | 地址 |
+| --- | --- |
+| 用户中心 | <http://localhost/api/health> |
+| 书库服务 | <http://localhost:8082/api/health> |
+| 事件统计 | <http://localhost:8083/api/health> |
+| AI 服务 | <http://localhost:8084/api/health> |
+| RabbitMQ 管理台 | <http://localhost:15672> |
+
+`test-platform.ps1` 会验证登录、搜书、书籍详情、章节读取、划线笔记、阅读进度上报、AI 摘要和 AI 问答。以后新增需求时,先把验收点写清楚,再补测试或冒烟步骤。
+
 ## 进度
 
-BookRealm v1 已完成并通过真机验证:App 可登录、搜书、阅读、上报进度、请求 AI 摘要和原文问答。
+BookRealm v1 已完成并通过真机验证:App 可登录、搜书、阅读、上报进度、请求 AI 摘要和原文问答。后端已补平台级一键回归脚本,用于持续验证这些链路没有被后续改动打断。
 
 详细进度见 [`TODO-总进度.md`](TODO-总进度.md)。
 

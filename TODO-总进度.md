@@ -69,6 +69,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] **v2.1 阅读手感修复** ✅ 2026-06-15:阅读页隐藏手机顶部通知栏;AI 提问改为右下角圆形入口,点击展开;Android 返回键改成“阅读→详情→书架,书架二次退出”;`assembleDebug` 通过并已安装启动到真机。
 - [x] **v2.1 阅读器二次手感修复** ✅ 2026-06-15:顶部工具条增加状态栏/刘海避让;底部工具条改成轻量系统感工具带;AI 展开面板支持关闭按钮和返回键收起;修复打开书后底部 tab 不能切换;顶部标题按当前页显示,退出只在“我的”页出现,书架找书移动到顶部。
 - [x] **v2.2 划线/笔记最小闭环** ✅ 2026-06-15:在 `br-library-service` 增加 `reading_marks`、保存/查询/删除接口和 1 个 MockMvc 测试;App 长按段落可划线、写笔记、问 AI;已划线段落高亮;后端 `mvn test` 7 绿,App `assembleDebug` 通过并安装到真机。注意:中文路径下 `mvn spring-boot:run` 类加载失败,当前用 `mvn package` + `java -jar target/br-library-service-0.1.0-SNAPSHOT.jar` 启动。
+- [x] **后端 MVP 自动化验收** ✅ 2026-06-16:新增 `test-platform.ps1`,一键执行用户中心/书库/事件统计/AI 服务测试、健康检查和跨服务冒烟;已验证登录 root、搜书、书籍详情、章节读取、保存/查询划线、阅读进度上报、AI 摘要、AI 问答全通过。`start-platform.ps1` 已修复 PowerShell 5 中文路径编码问题,三个 Spring MVP 已补 Dockerfile。
 - [x] **v2.2 划线交互修正** ✅ 2026-06-15:长按段落不再弹底部大 sheet,改为蓝色选中态 + 黑色浮动工具条;修复旧登录态 userId=0 导致“已登录但不能划线”;修复搜书覆盖 Room `inShelf=false` 导致书架丢书;摘要会打开 AI 面板显示。
 - [x] **v2.2 AI 临时窗口与范围选择** ✅ 2026-06-15:AI 问书改成类似微信读书的黑色临时全屏窗口;摘要不再插入正文;长按段落后可点另一段扩展为段落范围选择;复制会写入剪贴板并 Toast 提示。`assembleDebug` 通过。⚠️ 真机安装被手机拒绝权限确认,需用户允许后重装。
 - [x] **v2.2 本地离线阅读** ✅ 2026-06-15:新增 Room `chapter_cache`;在线打开章节会写缓存;加入书架时预缓存前 8 章;网络失败时从本地章节缓存回退;`assembleDebug` 通过并已成功安装启动到真机。
@@ -82,7 +83,7 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - [x] 工单-MVP2阅读App.md — 业务闭环完成 ✅;实战章待终稿
 - [x] 工单-MVP3事件统计.md — 已执行完成 ✅
 - [x] 工单-MVP4-AI服务.md — 已执行完成 ✅;DeepSeek key 可选,无 key 返回检索依据
-- 【架构会话待办】各 MVP 的 Docker 化与平台级 compose;各 MVP 完成后的 RC 终审 + MVP 地图登记
+- 【架构会话待办】平台级 compose 第二版;各 MVP 完成后的 RC 终审 + MVP 地图登记
 
 **仓库创建原则**:不预建纯空仓;每个 MVP 仓出生时必须至少可编译、可启动或有明确骨架质量门。
 
@@ -115,7 +116,8 @@ BookRealm = 开源跨平台阅读平台 + 在线工程书。平台由用户中�
 - npm 遇 EPERM:加 `--cache C:\temp\npmcache`
 - docker pull 偶发 EOF:重试同一命令即可
 - RabbitMQ ✅ 已装(4.3.1 + Erlang 28;数据目录 `C:\rabbitmq-data`,`ERLANG_HOME`/`RABBITMQ_BASE` 已设用户环境变量;管理台 15672,guest/guest)
-- **平台一键启动**:`book-realm/start-platform.ps1`(MySQL+Redis+MQ+用户中心+书库,健康检查+打印手机用局域网 IP;已实测 6/6 绿)
+- **平台一键启动**:`book-realm/start-platform.ps1`(MySQL+Redis+MQ+用户中心+书库+统计+AI,健康检查+打印手机用局域网 IP)
+- **平台一键验收**:`book-realm/test-platform.ps1`(四个后端测试 + 健康检查 + 登录/搜书/章节/划线/进度/AI 冒烟)
 - Android:可编译(SDK/build-tools 齐),无模拟器,走真机方案(USB 调试)
 - **MVP-4 需要**:用户设置环境变量 `DEEPSEEK_API_KEY`(唯一未就绪项,DS 做到 A1 前设好即可)
 
