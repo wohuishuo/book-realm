@@ -29,9 +29,9 @@ BookRealm 让读者在手机上登录、找书、阅读;系统记录阅读进度
 
 ## 一分钟理解
 
-**BookRealm 是一个可运行、可学习、可拆开复用的 AI 辅助阅读平台;PRD 是第一入口,代码和工程书是证据。**
+**BookRealm 是一个可运行、可拆开复用的 AI 辅助阅读平台;18 份 PRD 定义功能,11 份 ADR 固化决策,Feature 和 Harness 提供验收证据。**
 
-读者使用 Android App 登录后,可以搜索公版书、加入书架、打开章节阅读。阅读行为会进入统计服务;章节内容会被 AI 服务检索,用于摘要和基于原文的问答。平台不是只给一堆代码,而是把每个决策写进在线书,让后来者知道为什么这样做。
+读者使用 Android App 登录后,可以搜索公版书、加入书架、打开章节阅读。阅读行为进入统计服务;章节内容由 AI 服务检索,用于摘要和基于原文的问答。
 
 ## 平台结构
 
@@ -48,26 +48,28 @@ BookRealm 让读者在手机上登录、找书、阅读;系统记录阅读进度
         └──────────────────────────▶ └──────────────┘        └──────────────┘
 ```
 
-## 仓库地图
+## 产品与仓库地图
 
 每个代码仓都能独立运行和复用;BookRealm 仓库负责平台书、总设计和集成说明。
 
+产品按“产品 → PRD → ADR/UI Rules → Feature → Issue → PR → Harness”管理。下面五个代码组件共同交付 BookRealm,不再称为五个独立 MVP。规格入口见 [`docs/product/index.md`](docs/product/index.md)。
+
 | 仓库 | 读者看到什么 | 工程职责 | 状态 |
 | --- | --- | --- | --- |
-| [book-realm](https://github.com/wohuishuo/book-realm) | 在线工程书与平台总览 | 需求、架构、技术图鉴、集成指南 | ✅ 当前仓 |
+| [book-realm](https://github.com/wohuishuo/book-realm) | 产品与工程规格 | PRD、ADR、Feature、UI Rules、Harness | ✅ 当前仓 |
 | [user-center-team-project](https://github.com/wohuishuo/user-center-team-project) | 注册、登录、当前用户 | JWT 认证、用户管理、登录事件源 | ✅ 完成 |
 | [br-library-service](https://github.com/wohuishuo/br-library-service) | 搜书、看目录、读章节 | 公版书内容 API:书/章/段/标签 | ✅ 完成 |
 | [br-reader-app](https://github.com/wohuishuo/br-reader-app) | 手机书架、阅读器、AI 按钮 | Jetpack Compose Android 客户端 | ✅ 完成 |
 | [br-event-stats](https://github.com/wohuishuo/br-event-stats) | 登录和阅读统计可查询 | RabbitMQ 事件消费 + 阅读进度 API | ✅ 完成 |
 | [br-ai-service](https://github.com/wohuishuo/br-ai-service) | 摘要、围绕原文提问 | DeepSeek + RAG 原文问答服务 | ✅ 完成 |
 
-## 这本书讲什么
+## 规格内容
 
-- **产品 PRD**:先讲清用户、问题、范围、功能、验收、风险和下一工单。
-- **实战篇**:从用户中心、书库、Android App、统计服务到 AI 服务,逐章解释真实代码和真实取舍。
-- **平台篇**:作为 PRD 的证据层,保留需求、用例、领域模型、架构和计划。
-- **技术图鉴**:用短卡片解释 Compose、Retrofit、Room、DataStore、Spring Boot、RabbitMQ、RAG 等关键技术。
-- **方法**:全书采用金字塔表达:结论先行,再给根据和例子,尽量让读者不用绕路。
+- **PRD**:定义每项功能的 Why、Problem、Goal、Journey、Non-goals 和 Acceptance。
+- **ADR**:记录已经采用或待决定的长期架构选择。
+- **Feature**:用 Gherkin 描述关键用户行为。
+- **UI Rules**:统一 Android、Web 管理端和组件规则。
+- **Harness**:定义本地检查、CI、平台冒烟和真实设备验收。
 
 ## 本地预览工程书
 
@@ -103,11 +105,11 @@ powershell -ExecutionPolicy Bypass -File .\test-platform.ps1
 
 ## 进度
 
-当前 App 产品版本为 `0.3.0-alpha.20260616`:已接入登录、书架、阅读、AI、划线、笔记、段评和点赞,但仍属于 alpha,阅读体验和自动化 UI 验收还在产品化整理中。平台书里的 `v2.1/v2.2` 是内部工程阶段,不是对外产品版本。
+当前 App 产品版本为 `0.3.0-alpha.20260616`:已接入登录、书架、阅读、AI、划线、笔记、段评和点赞。统一鉴权、完整 Android 自动验收和个人记录入口完成后进入下一发布阶段。
 
 BookRealm 第一条主链路已完成并通过真机验证:App 可登录、搜书、阅读、上报进度、请求 AI 摘要和原文问答。后端已补平台级一键回归脚本,用于持续验证这些链路没有被后续改动打断。
 
-详细进度见 [`TODO-总进度.md`](TODO-总进度.md)。
+当前三项工作见 [`TODO-总进度.md`](TODO-总进度.md);完整产品路线见 [`docs/product/roadmap.md`](docs/product/roadmap.md),历史材料统一存放在 `docs/archive/legacy/`。
 
 ---
 

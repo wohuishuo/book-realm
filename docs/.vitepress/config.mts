@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitepress'
 
-// BookRealm platform book
 export default defineConfig({
   lang: 'zh-CN',
-  title: 'BookRealm · 跨平台阅读平台',
-  description: 'BookRealm 开源跨平台阅读平台:Android App、Spring Boot 服务、事件统计、AI 原文问答与工程书。',
+  title: 'BookRealm · 产品与工程规格',
+  description: 'BookRealm 阅读平台的 PRD、ADR、验收规格、UI Rules 与工程质量门。',
   base: '/book-realm/',
+  srcExclude: ['archive/legacy/**'],
   ignoreDeadLinks: true,
   lastUpdated: true,
   cleanUrls: true,
@@ -14,109 +14,129 @@ export default defineConfig({
 
   themeConfig: {
     nav: [
-      { text: '开始', link: '/guide/preface' },
-      { text: '产品 PRD', link: '/platform/prd' },
-      { text: '实战篇', link: '/project/' },
-      { text: '技术图鉴', link: '/stack/' },
-      { text: '仓库地图', link: '/mvp/' },
-      { text: '用户中心(前作)', link: 'https://wohuishuo.github.io/user-center-team-project/' }
+      { text: '产品', link: '/product/' },
+      { text: 'PRD', link: '/product/prd/' },
+      { text: '架构', link: '/architecture/' },
+      { text: 'ADR', link: '/architecture/adr/' },
+      { text: '验收', link: '/specs/' },
+      { text: 'UI Rules', link: '/ui/' },
+      { text: '质量', link: '/quality/' },
+      { text: '交付', link: '/delivery/' },
+      { text: 'Agent', link: '/agent/' }
     ],
 
     sidebar: {
-      '/guide/': [
+      '/product/': [
         {
-          text: '① 开始(方法正本)',
+          text: '产品规格',
           items: [
-            { text: '序言:BookRealm 是什么', link: '/guide/preface' },
-            { text: '方法论(从用户中心提炼)', link: '/guide/methodology' },
-            { text: '金字塔写作方法', link: '/guide/writing-style' },
-            { text: 'RC 重读整理清单', link: '/guide/rc-checklist' }
-          ]
-        }
-      ],
-      '/platform/': [
-        {
-          text: '② 产品需求(PRD)',
-          items: [
-            { text: 'PRD 总览', link: '/platform/prd' },
-            { text: 'PRD 控制台', link: '/platform/' },
-            { text: 'v1 需求与验收清单', link: '/platform/v1-scope' },
-            { text: 'v2 需求与执行计划', link: '/platform/v2-scope' },
-            { text: '版本规则', link: '/platform/versioning' },
-            { text: '项目记忆库', link: '/platform/project-memory' }
+            { text: '产品入口', link: '/product/' },
+            { text: '产品愿景', link: '/product/vision' },
+            { text: '产品路线图', link: '/product/roadmap' },
+            { text: 'PRD 索引', link: '/product/prd/' }
           ]
         },
         {
-          text: '③ 设计依据(P1-P8)',
+          text: '核心功能 PRD',
+          collapsed: false,
           items: [
-            { text: '行动计划全文', link: '/platform/plan' },
-            { text: 'P1 业务定位', link: '/platform/p1-positioning' },
-            { text: 'P2 竞品分析', link: '/platform/p2-competitors' },
-            { text: 'P3 功能分解树', link: '/platform/p3-features' },
-            { text: 'P4 用例分析', link: '/platform/p4-usecases' },
-            { text: 'P5 领域模型与 BC 映射', link: '/platform/p5-domain' },
-            { text: 'P6 动态建模', link: '/platform/p6-dynamics' },
-            { text: 'P7 架构与技术选型', link: '/platform/p7-architecture' },
-            { text: 'P8 分工与计划', link: '/platform/p8-schedule' }
+            { text: '001 项目规格重构', link: '/product/prd/prd-001-specification-refactor' },
+            { text: '002 账号与会话', link: '/product/prd/prd-002-account-session' },
+            { text: '003 管理员用户管理', link: '/product/prd/prd-003-admin-user-management' },
+            { text: '004 书库与搜索', link: '/product/prd/prd-004-book-catalog' },
+            { text: '005 个人书架', link: '/product/prd/prd-005-bookshelf' },
+            { text: '006 章节阅读器', link: '/product/prd/prd-006-reader' },
+            { text: '007 阅读样式设置', link: '/product/prd/prd-007-reading-preferences' },
+            { text: '008 阅读进度同步', link: '/product/prd/prd-008-reading-progress' },
+            { text: '009 离线阅读', link: '/product/prd/prd-009-offline-reading' },
+            { text: '010 段落选择与划线', link: '/product/prd/prd-010-highlights' },
+            { text: '011 阅读笔记', link: '/product/prd/prd-011-notes' },
+            { text: '012 段评与点赞', link: '/product/prd/prd-012-comments-likes' },
+            { text: '013 AI 章节摘要', link: '/product/prd/prd-013-ai-summary' },
+            { text: '014 AI 原文问答', link: '/product/prd/prd-014-grounded-qa' },
+            { text: '015 登录事件统计', link: '/product/prd/prd-015-login-statistics' },
+            { text: '016 阅读进度统计', link: '/product/prd/prd-016-reading-statistics' },
+            { text: '017 UI 设计系统', link: '/product/prd/prd-017-design-system' },
+            { text: '018 自动化质量门', link: '/product/prd/prd-018-automated-quality' }
+          ]
+        }
+      ],
+      '/architecture/': [
+        {
+          text: '架构规格',
+          items: [
+            { text: '架构入口', link: '/architecture/' },
+            { text: '仓库与能力地图', link: '/architecture/repositories' },
+            { text: '平台 API', link: '/architecture/api-reference' },
+            { text: 'ADR 索引', link: '/architecture/adr/' }
           ]
         },
         {
-          text: '④ v2 扩展研究',
+          text: 'ADR',
+          collapsed: false,
           items: [
-            { text: '能力野心地图', link: '/platform/ambition-map' },
-            { text: 'v2.1 阅读体验 MVP', link: '/platform/v2-1-reader-experience' },
-            { text: 'v2 参考项目', link: '/platform/reference-projects' },
-            { text: '参考复用策略', link: '/platform/reference-reuse-policy' },
-            { text: '设计知识库终审', link: '/platform/design-book-audit' },
-            { text: 'v2 UI 参考台账', link: '/platform/ui-reference' },
-            { text: 'TTS 服务计划', link: '/platform/tts-service-plan' }
-          ]
-        },
-        {
-          text: '⑥ 工程治理(评估 / ADR / API / 测试 / 运维)',
-          items: [
-            { text: '架构现状评估与 v2 演进', link: '/platform/architecture-review' },
-            { text: 'ADR-001 统一鉴权', link: '/platform/adr-001-unified-auth' },
-            { text: '平台 API 参考', link: '/platform/api-reference' },
-            { text: '测试策略与覆盖缺口', link: '/platform/testing-strategy' },
-            { text: '平台启动 / 运维 Runbook', link: '/platform/runbook-platform-ops' }
+            { text: '001 Spring 分层', link: '/architecture/adr/adr-001-spring-layered-architecture' },
+            { text: '002 JWT 认证', link: '/architecture/adr/adr-002-jwt-authentication' },
+            { text: '003 共用 REST API', link: '/architecture/adr/adr-003-shared-rest-api' },
+            { text: '004 阅读进度表', link: '/architecture/adr/adr-004-reading-progress-table' },
+            { text: '005 管理权限', link: '/architecture/adr/adr-005-admin-permissions' },
+            { text: '006 UI 设计系统', link: '/architecture/adr/adr-006-ui-design-system' },
+            { text: '007 多仓边界', link: '/architecture/adr/adr-007-multi-repository' },
+            { text: '008 后端事件', link: '/architecture/adr/adr-008-backend-events-only' },
+            { text: '009 Android 本地存储', link: '/architecture/adr/adr-009-room-local-storage' },
+            { text: '010 原文 RAG', link: '/architecture/adr/adr-010-grounded-rag' },
+            { text: '011 统一 JWT 验证', link: '/architecture/adr/adr-011-unified-jwt-validation' }
           ]
         }
       ],
-      '/project/': [
+      '/specs/': [
+        { text: '验收规格', items: [{ text: 'Feature 索引', link: '/specs/' }] }
+      ],
+      '/ui/': [
         {
-          text: '③ 实战篇(每个模块一章)',
+          text: 'UI Rules',
           items: [
-            { text: '本篇导读', link: '/project/' },
-            { text: 'MVP-0 用户中心(认证)', link: '/project/user-center' },
-            { text: 'MVP-1 书库服务', link: '/project/library' },
-            { text: 'MVP-2 阅读 App', link: '/project/reader' },
-            { text: 'MVP-3 事件统计', link: '/project/event-stats' },
-            { text: 'MVP-4 AI 服务', link: '/project/ai' }
+            { text: 'UI 入口', link: '/ui/' },
+            { text: '全局规则', link: '/ui/global-rules' },
+            { text: 'Android 规则', link: '/ui/android-rules' },
+            { text: 'Web 管理端规则', link: '/ui/web-admin-rules' },
+            { text: '组件规则', link: '/ui/component-rules' },
+            { text: '设计系统', link: '/ui/design-system' },
+            { text: '模式库', link: '/ui/patterns' }
           ]
         }
       ],
-      '/stack/': [
+      '/quality/': [
         {
-          text: '④ 技术图鉴',
+          text: '质量',
           items: [
-            { text: '图鉴导读', link: '/stack/' },
-            { text: 'Jetpack Compose', link: '/stack/jetpack-compose' },
-            { text: 'Retrofit', link: '/stack/retrofit' },
-            { text: 'Room', link: '/stack/room' },
-            { text: 'DataStore', link: '/stack/datastore' },
-            { text: 'Spring Boot', link: '/stack/spring-boot' },
-            { text: 'RabbitMQ', link: '/stack/rabbitmq' },
-            { text: 'Spring AI 与 RAG', link: '/stack/spring-ai-rag' },
-            { text: 'Docker 与 adb 调试', link: '/stack/docker-adb' }
+            { text: '质量入口', link: '/quality/' },
+            { text: 'Harness', link: '/quality/harness' },
+            { text: '平台 Runbook', link: '/quality/runbook-platform-ops' }
           ]
         }
       ],
-      '/mvp/': [
+      '/delivery/': [
         {
-          text: '⑤ 仓库地图',
+          text: '交付',
           items: [
-            { text: '平台模块与各仓链接', link: '/mvp/' }
+            { text: '交付入口', link: '/delivery/' },
+            { text: '标准流程', link: '/delivery/workflow' },
+            { text: 'Linear 工作模型', link: '/delivery/linear' }
+          ]
+        }
+      ],
+      '/agent/': [
+        {
+          text: 'Agent Skills',
+          items: [
+            { text: '入口', link: '/agent/' },
+            { text: 'PRD', link: '/agent/skill-prd' },
+            { text: 'ADR', link: '/agent/skill-adr' },
+            { text: 'UI Loop', link: '/agent/skill-ui-loop' },
+            { text: 'Test', link: '/agent/skill-test' },
+            { text: 'Review', link: '/agent/skill-review' },
+            { text: 'Delivery', link: '/agent/skill-delivery' }
           ]
         }
       ]
@@ -127,8 +147,8 @@ export default defineConfig({
     docFooter: { prev: '上一页', next: '下一页' },
     outline: { label: '本页目录', level: [2, 3] },
     footer: {
-      message: 'BookRealm 开源跨平台阅读平台 · 七成准备,三成代码',
-      copyright: '书域团队 · 移动互联系统分析与设计课程项目'
+      message: 'BookRealm 产品与工程规格',
+      copyright: '书域团队'
     }
   }
 })

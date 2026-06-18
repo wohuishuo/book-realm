@@ -1,0 +1,81 @@
+import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
+import assert from 'node:assert/strict'
+
+setDefaultTimeout(20_000)
+
+const urls = {
+  auth: process.env.AUTH_URL ?? 'http://localhost/api',
+  library: process.env.LIBRARY_URL ?? 'http://localhost:8082/api',
+  stats: process.env.STATS_URL ?? 'http://localhost:8083/api',
+  ai: process.env.AI_URL ?? 'http://localhost:8084/api'
+}
+
+async function json(method, url, body) {
+  const response = await fetch(url, {
+    method,
+    headers: body ? { 'content-type': 'application/json' } : undefined,
+    body: body ? JSON.stringify(body) : undefined
+  })
+  assert.equal(response.ok, true, `${method} ${url} returned ${response.status}`)
+  const payload = await response.json()
+  assert.equal(payload.code, 0, payload.message ?? `${url} failed`)
+  return payload.data
+}
+
+Given('平台服务已经启动', async function () {
+  this.health = await Promise.all(Object.values(urls).map((base) => json('GET', `${base}/health`)))
+})
+
+for (const [step, key] of [['认证服务应健康', 'auth'], ['书库服务应健康', 'library'], ['统计服务应健康', 'stats'], ['AI 服务应健康', 'ai']]) {
+  Then(step, async function () {
+    await json('GET', `${urls[key]}/health`)
+  })
+}
+
+When('用户使用测试账号登录', async function () {
+  const data = await json('POST', `${urls.auth}/user/login`, {
+    userAccount: process.env.BDD_USER ?? 'root',
+    userPassword: process.env.BDD_PASSWORD ?? '12345678',
+    loginType: 'Cucumber'
+  })
+  this.userId = data.user.id
+  assert.ok(this.userId)
+})
+
+When('用户搜索一本书并打开第一章', async function () {
+  const books = await json('GET', `${urls.library}/books?q=${encodeURIComponent('西游')}&page=0&size=5`)
+  assert.ok(books.items.length, 'No seeded book matched the BDD query')
+  this.book = await json('GET', `${urls.library}/books/${books.items[0].id}`)
+  assert.ok(this.book.chapters.length, 'The selected book has no chapter')
+  this.chapter = await json('GET', `${urls.library}/chapters/${this.book.chapters[0].id}`)
+  assert.ok(this.chapter.paragraphs.length, 'The selected chapter has no paragraph')
+})
+
+When('用户保存当前阅读位置', async function () {
+  assert.ok(this.userId, 'Login must run before saving progress')
+  this.position = {
+    userId: this.userId,
+    bookId: this.book.id,
+    chapterId: this.chapter.id,
+    paragraphIndex: 0
+  }
+  await json('POST', `${urls.stats}/stats/progress`, this.position)
+})
+
+Then('再次查询时应返回该阅读位置', async function () {
+  const rows = await json('GET', `${urls.stats}/stats/reading?userId=${this.userId}`)
+  const serialized = JSON.stringify(rows)
+  assert.ok(serialized.includes(String(this.position.chapterId)), 'Saved chapter was not returned')
+})
+
+When('用户针对当前章节提问', async function () {
+  this.answer = await json('POST', `${urls.ai}/ai/ask`, {
+    bookId: this.book.id,
+    chapterId: this.chapter.id,
+    question: '这一章开头在讲什么？'
+  })
+})
+
+Then('AI 请求应成功并返回非空答案', function () {
+  assert.ok(JSON.stringify(this.answer).length > 2, 'AI returned an empty answer')
+})

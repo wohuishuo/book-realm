@@ -1,4 +1,6 @@
 node_modules/
+.npm-cache/
+reports/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 *.log

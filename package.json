@@ -7,9 +7,16 @@
   "scripts": {
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "lint": "node scripts/validate-specs.mjs",
+    "test": "npm run bdd:dry",
+    "bdd:dry": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags @api --dry-run",
+    "bdd:api": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags @api --format progress --format html:reports/cucumber.html",
+    "verify": "npm run lint && npm run bdd:dry && npm run docs:build",
+    "hooks:install": "powershell -ExecutionPolicy Bypass -File scripts/install-hooks.ps1"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
     "vitepress": "^1.6.3"
   }
 }
