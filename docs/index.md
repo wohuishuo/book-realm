@@ -3,15 +3,15 @@ layout: home
 
 hero:
   name: "BookRealm"
-  text: "阅读平台产品与工程规格"
-  tagline: PRD 定义功能,ADR 固化决策,Feature 描述验收,UI Rules 统一体验,Harness 保证交付。
+  text: "实战书与项目管理台"
+  tagline: 顺序学习真实项目，也能随时查询 PRD、ADR、Feature、UI Rules 与 Harness。
   actions:
     - theme: brand
-      text: 查看 PRD
-      link: /product/prd/
+      text: 阅读实战书
+      link: /workbook/
     - theme: alt
-      text: 查看 ADR
-      link: /architecture/adr/
+      text: 进入项目管理台
+      link: /product/
     - theme: alt
       text: 查看验收规格
       link: /specs/
@@ -69,4 +69,3 @@ Product Roadmap
 ```
 
 旧分析、旧工单和旧计划统一归档,不参与当前开发决策。
-

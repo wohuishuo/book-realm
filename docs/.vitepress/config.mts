@@ -14,6 +14,8 @@ export default defineConfig({
 
   themeConfig: {
     nav: [
+      { text: '实战书', link: '/workbook/' },
+      { text: '项目管理台', link: '/product/' },
       { text: '产品', link: '/product/' },
       { text: 'PRD', link: '/product/prd/' },
       { text: '架构', link: '/architecture/' },
@@ -26,6 +28,27 @@ export default defineConfig({
     ],
 
     sidebar: {
+      '/workbook/': [
+        {
+          text: 'BookRealm 实战书',
+          items: [
+            { text: '开始阅读', link: '/workbook/' },
+            { text: '01 项目地图', link: '/workbook/01-project-map' },
+            { text: '02 产品规格', link: '/workbook/02-product-specification' },
+            { text: '03 账号与身份', link: '/workbook/03-identity' },
+            { text: '04 书库与书架', link: '/workbook/04-library' },
+            { text: '05 Android 阅读器', link: '/workbook/05-reader' },
+            { text: '06 连续阅读', link: '/workbook/06-continuity' },
+            { text: '07 阅读互动', link: '/workbook/07-interactions' },
+            { text: '08 事件与统计', link: '/workbook/08-events' },
+            { text: '09 阅读 AI', link: '/workbook/09-ai' },
+            { text: '10 设计系统', link: '/workbook/10-design-system' },
+            { text: '11 可执行 BDD', link: '/workbook/11-bdd' },
+            { text: '12 工程 Harness', link: '/workbook/12-harness' },
+            { text: '13 交付与发布', link: '/workbook/13-delivery' }
+          ]
+        }
+      ],
       '/product/': [
         {
           text: '产品规格',
