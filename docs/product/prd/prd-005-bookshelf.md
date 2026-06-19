@@ -1,6 +1,6 @@
 # PRD-005 个人书架
 
-status: Done  
+status: Partial
 owner: Reader App
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader App
 - 加入后重启仍可见。
 - 书架搜索只搜索已加入的书。
 - 移出后本地状态一致。
-

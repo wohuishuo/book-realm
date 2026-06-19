@@ -56,6 +56,7 @@ export default defineConfig({
             { text: '产品入口', link: '/product/' },
             { text: '产品愿景', link: '/product/vision' },
             { text: '产品路线图', link: '/product/roadmap' },
+            { text: '功能与实现证据', link: '/product/capability-inventory' },
             { text: 'PRD 索引', link: '/product/prd/' }
           ]
         },

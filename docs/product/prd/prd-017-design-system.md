@@ -1,6 +1,6 @@
 # PRD-017 UI 设计系统
 
-status: Done  
+status: Partial
 owner: Reader App
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader App
 - 颜色、尺寸、形状和动效有单一代码来源。
 - 常用输入、按钮、卡片和状态组件可复用。
 - 阅读器遵守独立 UI Rules。
-
