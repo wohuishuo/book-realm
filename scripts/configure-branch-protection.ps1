@@ -24,7 +24,18 @@ foreach ($entry in $repositories.GetEnumerator()) {
         restrictions = $null
         required_conversation_resolution = $true
     } | ConvertTo-Json -Depth 6
-    $body | gh api --method PUT -H 'Accept: application/vnd.github+json' "repos/$($entry.Key)/branches/main/protection" --input -
-    if ($LASTEXITCODE -ne 0) { throw "Failed to protect $($entry.Key)" }
+    $tempFile = [System.IO.Path]::GetTempFileName()
+    try {
+        [System.IO.File]::WriteAllText(
+            $tempFile,
+            $body,
+            [System.Text.UTF8Encoding]::new($false)
+        )
+        gh api --method PUT -H 'Accept: application/vnd.github+json' "repos/$($entry.Key)/branches/main/protection" --input $tempFile
+        if ($LASTEXITCODE -ne 0) { throw "Failed to protect $($entry.Key)" }
+    }
+    finally {
+        Remove-Item -LiteralPath $tempFile -Force -ErrorAction SilentlyContinue
+    }
     Write-Host "Protected $($entry.Key): $($entry.Value) required."
 }

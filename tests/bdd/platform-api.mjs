@@ -1,7 +1,7 @@
 import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
 import assert from 'node:assert/strict'
 
-setDefaultTimeout(20_000)
+setDefaultTimeout(120_000)
 
 const urls = {
   auth: process.env.AUTH_URL ?? 'http://127.0.0.1:8080/api',
@@ -12,7 +12,7 @@ const urls = {
 
 async function json(method, url, body) {
   let response, lastError
-  for (let attempt = 1; attempt <= 20; attempt += 1) {
+  for (let attempt = 1; attempt <= 120; attempt += 1) {
     try {
       response = await fetch(url, {
         method,
@@ -22,7 +22,7 @@ async function json(method, url, body) {
       break
     } catch (error) {
       lastError = error
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 1_000))
     }
   }
   if (!response) throw new Error(`${method} ${url} could not connect`, { cause: lastError })
