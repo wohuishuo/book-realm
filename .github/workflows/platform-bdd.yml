@@ -35,6 +35,7 @@ jobs:
         with:
           name: platform-bdd-evidence
           path: reports/
+          retention-days: 30
       - name: Stop platform
         if: always()
         run: docker compose -f docker-compose.bdd.yml down -v

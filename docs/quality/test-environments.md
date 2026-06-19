@@ -1,5 +1,7 @@
 # 测试运行环境
 
+所有机器报告的统一入口见[测试证据](/quality/test-evidence)。
+
 测试代码运行在宿主机或 GitHub Actions runner，真实依赖运行在临时 Docker 容器。应用不需要为了测试再套一层容器；平台 BDD 才把全部服务一起构建为容器。
 
 | 门 | 运行内容 | Docker |
