@@ -1,6 +1,6 @@
 # PRD-007 阅读样式设置
 
-status: Done  
+status: Partial
 owner: Reader App
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader App
 - 字号、行距和主题均可调整。
 - 设置变化立即作用于正文。
 - 重启 App 后设置保持。
-

@@ -1,6 +1,6 @@
 # PRD-013 AI 章节摘要
 
-status: Done  
+status: Partial
 owner: AI + Reader
 
 ## Why
@@ -22,4 +22,3 @@ owner: AI + Reader
 - 摘要不修改正文内容。
 - 无模型 Key 时返回明确状态。
 - AI 失败不影响章节阅读。
-

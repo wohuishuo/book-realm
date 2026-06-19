@@ -1,6 +1,6 @@
 # PRD-010 段落选择与划线
 
-status: Done  
+status: Partial
 owner: Reader + Library
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader + Library
 - 选择范围有明确视觉状态。
 - 划线持久化并在重开章节后显示。
 - 用户可以删除自己的划线。
-

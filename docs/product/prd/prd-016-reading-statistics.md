@@ -1,6 +1,6 @@
 # PRD-016 阅读进度统计
 
-status: Done / Security pending  
+status: Partial
 owner: Reader + Stats
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader + Stats
 - App 不连接 RabbitMQ。
 - 同一用户/书/章重复上报执行更新。
 - 用户不能读写他人的进度。
-

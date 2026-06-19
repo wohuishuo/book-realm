@@ -1,6 +1,6 @@
 # PRD-002 账号与会话
 
-status: Done / Security pending  
+status: Partial
 owner: Identity
 
 ## Why
@@ -22,4 +22,3 @@ owner: Identity
 - 密码使用 BCrypt 保存。
 - 错误凭据不暴露账号是否存在。
 - 受保护接口最终统一验证 JWT。
-

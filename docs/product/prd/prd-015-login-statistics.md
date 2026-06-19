@@ -1,6 +1,6 @@
 # PRD-015 登录事件统计
 
-status: Done  
+status: Partial
 owner: Identity + Stats
 
 ## Why
@@ -22,4 +22,3 @@ owner: Identity + Stats
 - 发布失败不影响登录结果。
 - 消费者保存登录日志并更新聚合。
 - 查询接口返回指定日期范围数据。
-

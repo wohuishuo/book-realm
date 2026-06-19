@@ -1,6 +1,6 @@
 # PRD-009 离线阅读
 
-status: Done  
+status: Partial
 owner: Reader App
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader App
 - 在线章节成功写入 Room。
 - 网络失败时优先读取缓存。
 - 无缓存时显示明确错误和重试。
-

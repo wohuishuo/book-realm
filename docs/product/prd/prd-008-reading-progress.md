@@ -1,6 +1,6 @@
 # PRD-008 阅读进度同步
 
-status: Done / Security pending  
+status: Partial
 owner: Reader + Stats
 
 ## Why
@@ -22,4 +22,3 @@ owner: Reader + Stats
 - 重复上报更新同一条进度。
 - 再次打开恢复章节与位置。
 - 上报失败不阻断阅读。
-
