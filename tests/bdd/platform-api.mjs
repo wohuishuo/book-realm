@@ -78,6 +78,80 @@ Then('再次查询时应返回该阅读位置', async function () {
   assert.ok(serialized.includes(String(this.position.chapterId)), 'Saved chapter was not returned')
 })
 
+When('用户为当前段落保存划线和笔记', async function () {
+  const paragraph = this.chapter.paragraphs[0]
+  this.note = `Cucumber note ${Date.now()}`
+  this.mark = await json('POST', `${urls.library}/marks`, {
+    userId: this.userId,
+    bookId: this.book.id,
+    chapterId: this.chapter.id,
+    paragraphId: paragraph.id,
+    paragraphSeq: paragraph.seq,
+    markType: 'NOTE',
+    note: this.note
+  })
+})
+
+Then('再次查询章节标记时应返回该笔记', async function () {
+  const marks = await json(
+    'GET',
+    `${urls.library}/chapters/${this.chapter.id}/marks?userId=${this.userId}`
+  )
+  assert.ok(marks.some((mark) => mark.id === this.mark.id && mark.note === this.note))
+})
+
+When('用户为当前段落发布段评', async function () {
+  const paragraph = this.chapter.paragraphs[0]
+  this.comment = await json('POST', `${urls.library}/comments`, {
+    userId: this.userId,
+    bookId: this.book.id,
+    chapterId: this.chapter.id,
+    paragraphId: paragraph.id,
+    content: `Cucumber comment ${Date.now()}`
+  })
+})
+
+When('用户连续两次点赞该段评', async function () {
+  this.firstLike = await json(
+    'POST',
+    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`
+  )
+  this.secondLike = await json(
+    'POST',
+    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`
+  )
+})
+
+Then('段评只记录一次点赞', function () {
+  assert.equal(this.firstLike.likeCount, 1)
+  assert.equal(this.secondLike.likeCount, 1)
+  assert.equal(this.secondLike.likedByMe, true)
+})
+
+When('用户连续上报两个阅读位置', async function () {
+  this.latestParagraphIndex = 2
+  for (const paragraphIndex of [1, this.latestParagraphIndex]) {
+    await json('POST', `${urls.stats}/stats/progress`, {
+      userId: this.userId,
+      bookId: this.book.id,
+      chapterId: this.chapter.id,
+      paragraphIndex
+    })
+  }
+})
+
+Then('阅读统计只保留该书当天的最新位置', async function () {
+  const rows = await json('GET', `${urls.stats}/stats/reading`)
+  const matches = rows.filter((row) =>
+    row.userId === this.userId &&
+    row.bookId === this.book.id &&
+    row.chapterId === this.chapter.id
+  )
+  assert.equal(matches.length, 1)
+  assert.equal(matches[0].paragraphIndex, this.latestParagraphIndex)
+  assert.ok(matches[0].reportCount >= 2)
+})
+
 When('用户针对当前章节提问', async function () {
   this.answer = await json('POST', `${urls.ai}/ai/ask`, {
     bookId: this.book.id,
