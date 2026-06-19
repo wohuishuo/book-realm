@@ -135,6 +135,7 @@ export default defineConfig({
           items: [
             { text: '质量入口', link: '/quality/' },
             { text: 'Harness', link: '/quality/harness' },
+            { text: '测试运行环境', link: '/quality/test-environments' },
             { text: '平台 Runbook', link: '/quality/runbook-platform-ops' }
           ]
         }

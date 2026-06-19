@@ -4,18 +4,28 @@ import assert from 'node:assert/strict'
 setDefaultTimeout(20_000)
 
 const urls = {
-  auth: process.env.AUTH_URL ?? 'http://localhost/api',
-  library: process.env.LIBRARY_URL ?? 'http://localhost:8082/api',
-  stats: process.env.STATS_URL ?? 'http://localhost:8083/api',
-  ai: process.env.AI_URL ?? 'http://localhost:8084/api'
+  auth: process.env.AUTH_URL ?? 'http://127.0.0.1:8080/api',
+  library: process.env.LIBRARY_URL ?? 'http://127.0.0.1:8082/api',
+  stats: process.env.STATS_URL ?? 'http://127.0.0.1:8083/api',
+  ai: process.env.AI_URL ?? 'http://127.0.0.1:8084/api'
 }
 
 async function json(method, url, body) {
-  const response = await fetch(url, {
-    method,
-    headers: body ? { 'content-type': 'application/json' } : undefined,
-    body: body ? JSON.stringify(body) : undefined
-  })
+  let response, lastError
+  for (let attempt = 1; attempt <= 20; attempt += 1) {
+    try {
+      response = await fetch(url, {
+        method,
+        headers: body ? { 'content-type': 'application/json' } : undefined,
+        body: body ? JSON.stringify(body) : undefined
+      })
+      break
+    } catch (error) {
+      lastError = error
+      await new Promise((resolve) => setTimeout(resolve, 500))
+    }
+  }
+  if (!response) throw new Error(`${method} ${url} could not connect`, { cause: lastError })
   assert.equal(response.ok, true, `${method} ${url} returned ${response.status}`)
   const payload = await response.json()
   assert.equal(payload.code, 0, payload.message ?? `${url} failed`)

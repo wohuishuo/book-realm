@@ -1,0 +1,40 @@
+name: Platform BDD
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 18 * * *'
+
+jobs:
+  cucumber:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: wohuishuo/user-center-team-project, path: services/user-center-team-project }
+      - uses: actions/checkout@v4
+        with: { repository: wohuishuo/br-library-service, path: services/br-library-service }
+      - uses: actions/checkout@v4
+        with: { repository: wohuishuo/br-event-stats, path: services/br-event-stats }
+      - uses: actions/checkout@v4
+        with: { repository: wohuishuo/br-ai-service, path: services/br-ai-service }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - name: Build and start platform
+        run: docker compose -f docker-compose.bdd.yml up -d --build --wait
+      - name: Run executable user journeys
+        env:
+          AUTH_URL: http://127.0.0.1:8080/api
+        run: npm run bdd:api
+      - name: Capture service logs
+        if: always()
+        run: docker compose -f docker-compose.bdd.yml logs --no-color > reports/platform-services.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: platform-bdd-evidence
+          path: reports/
+      - name: Stop platform
+        if: always()
+        run: docker compose -f docker-compose.bdd.yml down -v

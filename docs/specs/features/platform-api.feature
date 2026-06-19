@@ -17,6 +17,7 @@ Feature: 平台核心接口闭环
     And 用户保存当前阅读位置
     Then 再次查询时应返回该阅读位置
 
+  @requires-ai
   Scenario: AI 回答由原文支撑
     Given 平台服务已经启动
     And 用户搜索一本书并打开第一章

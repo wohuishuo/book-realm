@@ -11,7 +11,8 @@
     "lint": "node scripts/validate-specs.mjs",
     "test": "npm run bdd:dry",
     "bdd:dry": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags @api --dry-run",
-    "bdd:api": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags @api --format progress --format html:reports/cucumber.html",
+    "bdd:api": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags \"@api and not @requires-ai\" --format progress --format html:reports/cucumber.html",
+    "bdd:ai": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags \"@api and @requires-ai\" --format progress --format html:reports/cucumber-ai.html",
     "verify": "npm run lint && npm run bdd:dry && npm run docs:build",
     "hooks:install": "powershell -ExecutionPolicy Bypass -File scripts/install-hooks.ps1"
   },

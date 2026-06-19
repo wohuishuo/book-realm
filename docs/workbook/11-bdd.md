@@ -18,6 +18,8 @@ npm run bdd:dry  # 校验所有 @api 步骤都有实现
 npm run bdd:api  # 对已启动平台发真实 HTTP 请求
 ```
 
+完整 Docker 平台使用 `./scripts/run-platform-bdd.ps1`。运行位置、容器生命周期和 CI 报告见[测试运行环境](/quality/test-environments)。
+
 UI 场景先标 `@manual`，接入设备驱动后改为 `@android`。不能用空步骤把未自动化场景伪装成通过。
 
 ## 完成证据

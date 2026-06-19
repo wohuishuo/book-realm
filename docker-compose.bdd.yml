@@ -1,0 +1,76 @@
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root_dev
+    ports: ["3306:3306"]
+    volumes:
+      - ./docker/init-databases.sql:/docker-entrypoint-initdb.d/001-databases.sql:ro
+      - ${USER_CENTER_ROOT:-./services/user-center-team-project/user-center}/backend/src/main/resources/sql/create_table.sql:/docker-entrypoint-initdb.d/002-user-center.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot_dev"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+    tmpfs: [/var/lib/mysql]
+
+  redis:
+    image: redis:7
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  auth:
+    build: ${USER_CENTER_ROOT:-./services/user-center-team-project/user-center}/backend
+    depends_on:
+      mysql: { condition: service_healthy }
+      redis: { condition: service_healthy }
+      rabbitmq: { condition: service_healthy }
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_center?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_dev
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_RABBITMQ_HOST: rabbitmq
+      JWT_SECRET: bdd-only-secret-please-never-use-in-production-0123456789
+    ports: ["8080:8080"]
+
+  library:
+    build: ${LIBRARY_ROOT:-./services/br-library-service}
+    depends_on:
+      mysql: { condition: service_healthy }
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/book_realm_library?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_dev
+    ports: ["8082:8082"]
+
+  stats:
+    build: ${STATS_ROOT:-./services/br-event-stats}
+    depends_on:
+      mysql: { condition: service_healthy }
+      rabbitmq: { condition: service_healthy }
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/book_realm_stats?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root_dev
+      SPRING_RABBITMQ_HOST: rabbitmq
+    ports: ["8083:8083"]
+
+  ai:
+    build: ${AI_ROOT:-./services/br-ai-service}
+    depends_on: [library]
+    environment:
+      BOOK_REALM_LIBRARY_BASE_URL: http://library:8082/api
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-dummy-key-app-boots-but-llm-calls-fail}
+    ports: ["8084:8084"]
