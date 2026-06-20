@@ -1,4 +1,4 @@
-@prd-004 @prd-005 @manual
+@prd-004 @prd-005 @manual @platform-android @level-manual
 Feature: 找书并加入书架
 
   Scenario: 用户搜索西游记并加入书架

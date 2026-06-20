@@ -1,4 +1,4 @@
-import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
+import { After, Before, Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
 import assert from 'node:assert/strict'
 
 setDefaultTimeout(120_000)
@@ -9,8 +9,10 @@ const urls = {
   stats: process.env.STATS_URL ?? 'http://127.0.0.1:8083/api',
   ai: process.env.AI_URL ?? 'http://127.0.0.1:8084/api'
 }
+let activeWorld
 
 async function json(method, url, body) {
+  activeWorld.actualHttpCalls += 1
   let response, lastError
   for (let attempt = 1; attempt <= 120; attempt += 1) {
     try {
@@ -31,6 +33,21 @@ async function json(method, url, body) {
   assert.equal(payload.code, 0, payload.message ?? `${url} failed`)
   return payload.data
 }
+
+Before({ tags: '@api' }, function () {
+  this.actualHttpCalls = 0
+  activeWorld = this
+})
+
+After({ tags: '@api' }, async function ({ pickle }) {
+  assert.ok(this.actualHttpCalls > 0, 'API scenario produced no real HTTP calls')
+  await this.attach(JSON.stringify({
+    scenario: pickle.name,
+    platform: 'api',
+    evidenceLevel: 'integration',
+    actualHttpCalls: this.actualHttpCalls
+  }), 'application/json')
+})
 
 Given('平台服务已经启动', async function () {
   this.health = await Promise.all(Object.values(urls).map((base) => json('GET', `${base}/health`)))

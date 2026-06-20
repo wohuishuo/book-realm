@@ -1,4 +1,4 @@
-@prd-013 @prd-014 @manual
+@prd-013 @prd-014 @manual @platform-android @level-manual
 Feature: 基于原文的 AI 阅读帮助
 
   Scenario: 用户围绕原文提问

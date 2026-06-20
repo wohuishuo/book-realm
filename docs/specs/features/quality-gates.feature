@@ -1,4 +1,4 @@
-@prd-018 @manual
+@prd-018 @manual @platform-github @level-manual
 Feature: Pull Request 质量门
 
   Scenario: 代码检查失败

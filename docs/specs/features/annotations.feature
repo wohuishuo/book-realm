@@ -1,4 +1,4 @@
-@prd-010 @prd-011 @manual
+@prd-010 @prd-011 @manual @platform-android @level-manual
 Feature: 划线与笔记
 
   Scenario: 用户划线后重新打开章节

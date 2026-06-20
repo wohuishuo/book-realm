@@ -1,4 +1,4 @@
-@prd-009 @manual
+@prd-009 @manual @platform-android @level-manual
 Feature: 离线章节阅读
 
   Scenario: 用户离线打开已缓存章节

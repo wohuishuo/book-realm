@@ -1,4 +1,4 @@
-@prd-015 @prd-016 @manual
+@prd-015 @prd-016 @manual @platform-api @level-manual
 Feature: 登录与阅读统计
 
   Scenario: 登录事件被异步统计
