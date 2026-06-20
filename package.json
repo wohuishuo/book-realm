@@ -10,12 +10,15 @@
     "docs:preview": "vitepress preview docs",
     "tokens:generate": "node scripts/generate-design-tokens.mjs",
     "tokens:check": "node scripts/check-design-tokens.mjs",
+    "contract:mutation": "node scripts/test-delivery-contract.mjs",
+    "contract:check": "node scripts/verify-delivery.mjs",
     "lint": "node scripts/validate-specs.mjs && npm run tokens:check",
     "test": "npm run bdd:dry",
     "bdd:dry": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags @api --dry-run",
     "bdd:api": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags \"@api and not @requires-ai\" --format progress --format html:reports/cucumber.html",
     "bdd:ai": "cucumber-js docs/specs/features/**/*.feature --import tests/bdd/**/*.mjs --tags \"@api and @requires-ai\" --format progress --format html:reports/cucumber-ai.html",
-    "verify": "npm run lint && npm run bdd:dry && npm run docs:build",
+    "verify:fast": "npm run contract:check && npm run lint && npm run contract:mutation && npm run bdd:dry",
+    "verify": "npm run verify:fast && npm run docs:build",
     "hooks:install": "powershell -ExecutionPolicy Bypass -File scripts/install-hooks.ps1"
   },
   "devDependencies": {
@@ -23,4 +26,3 @@
     "vitepress": "^1.6.3"
   }
 }
-

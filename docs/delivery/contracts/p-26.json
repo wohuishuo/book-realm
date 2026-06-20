@@ -1,0 +1,23 @@
+{
+  "issue": "P-26",
+  "targetRepository": "book-realm",
+  "platform": "node-cli-git-hooks",
+  "authoritativeSpecs": ["docs/quality/harness.md", "docs/delivery/workflow.md"],
+  "allowedPaths": [
+    "scripts/delivery-contract.mjs",
+    "scripts/verify-delivery.mjs",
+    "scripts/test-delivery-contract.mjs",
+    "docs/delivery/contracts/",
+    "docs/quality/",
+    "docs/delivery/workflow.md",
+    ".githooks/",
+    ".github/workflows/quality.yml",
+    "package.json",
+    "package-lock.json"
+  ],
+  "requiredCommands": ["npm run verify:fast", "npm run verify"],
+  "checks": {
+    "requiredFiles": ["scripts/delivery-contract.mjs", "scripts/verify-delivery.mjs", "scripts/test-delivery-contract.mjs"],
+    "forbiddenPatterns": []
+  }
+}
