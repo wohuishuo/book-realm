@@ -1,4 +1,4 @@
-@prd-002 @manual
+@prd-002 @manual @platform-android @level-manual
 Feature: 账号登录与会话恢复
 
   Scenario: 用户登录后重新打开 App

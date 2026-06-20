@@ -1,0 +1,26 @@
+{
+  "issue": "P-27",
+  "targetRepository": "book-realm",
+  "platform": "cucumber-api-integration",
+  "authoritativeSpecs": ["docs/product/prd/prd-018-automated-quality.md", "docs/quality/harness.md"],
+  "allowedPaths": [
+    "docs/specs/features/",
+    "docs/delivery/contracts/p-27.json",
+    "tests/bdd/",
+    "tests/fixtures/",
+    "scripts/validate-bdd-truth.mjs",
+    "scripts/test-bdd-truth.mjs",
+    "scripts/test-bdd-http-proof.mjs",
+    "package.json",
+    "cucumber.mjs"
+  ],
+  "requiredCommands": ["npm test", "npm run bdd:dry", "npm run bdd:api"],
+  "checks": {
+    "requiredFiles": [
+      "scripts/validate-bdd-truth.mjs",
+      "scripts/test-bdd-truth.mjs",
+      "tests/bdd/platform-api.mjs"
+    ],
+    "forbiddenPatterns": []
+  }
+}

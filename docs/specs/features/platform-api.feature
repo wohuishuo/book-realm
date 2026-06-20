@@ -1,4 +1,4 @@
-@prd-002 @prd-004 @prd-008 @prd-013 @prd-014 @api
+@prd-002 @prd-004 @prd-008 @prd-013 @prd-014 @api @platform-api @level-integration
 Feature: 平台核心接口闭环
   为了确认各服务能共同支撑阅读旅程
   系统应通过真实 HTTP 接口完成健康检查、登录、找书、进度与 AI 能力验证

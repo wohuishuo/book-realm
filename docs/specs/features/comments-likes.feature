@@ -1,4 +1,4 @@
-@prd-012 @manual
+@prd-012 @manual @platform-android @level-manual
 Feature: 段评与点赞
 
   Scenario: 用户发布段评

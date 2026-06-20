@@ -1,4 +1,4 @@
-@prd-003 @manual
+@prd-003 @manual @platform-web-admin @level-manual
 Feature: 管理员用户管理
 
   Scenario: 管理员搜索并删除用户

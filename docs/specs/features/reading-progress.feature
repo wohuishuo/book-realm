@@ -1,4 +1,4 @@
-@prd-007 @prd-008 @manual
+@prd-007 @prd-008 @manual @platform-android @level-manual
 Feature: 阅读进度恢复
 
   Scenario: 用户重新打开一本读过的书
