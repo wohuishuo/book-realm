@@ -126,6 +126,7 @@ export default defineConfig({
             { text: 'Web 管理端规则', link: '/ui/web-admin-rules' },
             { text: '组件规则', link: '/ui/component-rules' },
             { text: '设计系统', link: '/ui/design-system' },
+            { text: 'Claude Design 契约', link: '/ui/claude-design-contract' },
             { text: '模式库', link: '/ui/patterns' }
           ]
         }
