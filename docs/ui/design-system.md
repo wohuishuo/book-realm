@@ -1,12 +1,14 @@
 # Android Design System
 
+设计令牌的唯一机器源是 `design-system/tokens.json`。修改后运行 `npm run tokens:generate`，生成并接入 Web 的 `docs/.vitepress/theme/br-tokens.css`，同时生成 Compose 的 `design-system/generated/BrTokens.kt`；CI 使用 `npm run tokens:check` 阻止源文件和生成产物漂移。
+
 设计基准以本地 `ui 参考/微信读书` 为主：书架、阅读器、文字选择、阅读设置和底部导航遵循微信读书；微信读书没有覆盖的 AI 对话、复杂目录与听书入口才参考 `ui 参考/起点`。参考图用于模式判断，不逐像素复制品牌资产。
 
 ## Token
 
 | 类别 | Token | 值 | 用途 |
 | --- | --- | --- | --- |
-| 色彩 | `color.background` | `#F7F7F5` | 浅色应用背景 |
+| 色彩 | `color.background` | `#F7F8FA` | 浅色应用背景 |
 | 色彩 | `color.surface` | `#FFFFFF` | 面板、工具栏 |
 | 色彩 | `color.text.primary` | `#1F2329` | 标题与正文 |
 | 色彩 | `color.text.secondary` | `#7A7F87` | 辅助信息 |
@@ -87,3 +89,4 @@ BrPrimaryButton(
 - 禁止 `Modifier.background(Color(...))`、十六进制裸颜色、页面内 `ButtonDefaults`、任意 `dp/sp` 和重复实现 TopBar/Button。
 - Detekt 自定义规则或代码搜索在 CI 拦截裸颜色与行内样式。
 - 新组件必须在 Compose Preview 展示浅色、深色、禁用、加载和长中文文本。
+- Claude Code Design 必须遵守[设计契约](/ui/claude-design-contract)，不得在原型内建立第二套 token。

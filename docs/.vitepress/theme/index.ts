@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import type { Theme } from 'vitepress'
+import './br-tokens.css'
 import './custom.css'
 
 // 在默认主题上叠加自定义配色(深色科技风)
