@@ -1,0 +1,26 @@
+{
+  "issue": "P-18",
+  "targetRepository": "br-reader-app",
+  "platform": "android-jetpack-compose",
+  "authoritativeSpecs": ["docs/ui/design-system.md", "docs/ui/android-rules.md", "docs/ui/component-rules.md"],
+  "allowedPaths": ["app/src/main/java/com/bookrealm/reader/ui/design/", "app/src/test/", "app/src/androidTest/"],
+  "requiredCommands": ["gradlew.bat detekt lintDebug testDebugUnitTest assembleDebug", "gradlew.bat connectedDebugAndroidTest"],
+  "checks": {
+    "requiredFiles": [
+      "app/src/main/java/com/bookrealm/reader/ui/design/BrTheme.kt",
+      "app/src/main/java/com/bookrealm/reader/ui/design/BrComponents.kt"
+    ],
+    "forbiddenPatterns": [
+      {
+        "pattern": "Color\\s*\\(\\s*0x|Color\\.(Red|Blue|Green|Yellow|Magenta|Cyan)",
+        "message": "raw color is forbidden; use BrTheme colors",
+        "allowPaths": ["app/src/main/java/com/bookrealm/reader/ui/design/"]
+      },
+      {
+        "pattern": "\\b(Button|TopAppBar|NavigationBar)\\s*\\(",
+        "message": "screen must use approved Br components",
+        "allowPaths": ["app/src/main/java/com/bookrealm/reader/ui/design/"]
+      }
+    ]
+  }
+}
