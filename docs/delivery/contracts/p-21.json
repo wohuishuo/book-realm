@@ -1,0 +1,26 @@
+{
+  "issue": "P-21",
+  "targetRepository": "book-realm",
+  "platform": "implementation-plan",
+  "authoritativeSpecs": [
+    "docs/architecture/adr/adr-011-unified-jwt-validation.md",
+    "docs/delivery/workflow.md",
+    "docs/delivery/linear.md",
+    "docs/product/roadmap.md",
+    "docs/quality/harness.md"
+  ],
+  "allowedPaths": [
+    "docs/superpowers/plans/2026-07-02-unified-jwt-validation.md",
+    "docs/delivery/contracts/p-21.json"
+  ],
+  "requiredCommands": [
+    "npm run docs:build",
+    "npm run verify:fast"
+  ],
+  "checks": {
+    "requiredFiles": [
+      "docs/superpowers/plans/2026-07-02-unified-jwt-validation.md"
+    ],
+    "forbiddenPatterns": []
+  }
+}
