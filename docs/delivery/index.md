@@ -5,6 +5,7 @@
 | 要做什么 | 正本 |
 | --- | --- |
 | 从需求走到合并 | [标准交付流程](/delivery/workflow) |
+| 让多人和 Agent 按同一套门禁协作 | [团队交付操作模型](/delivery/team-operating-model) |
 | 在 Linear 管项目和 Agent | [Linear 工作模型](/delivery/linear) |
 | 查看当前三项工作 | 仓库根 `TODO-总进度.md` |
 | 查看历史材料 | `docs/archive/legacy/` |

@@ -1,0 +1,27 @@
+{
+  "issue": "P-33",
+  "targetRepository": "book-realm",
+  "platform": "delivery-operating-model",
+  "authoritativeSpecs": [
+    "docs/delivery/workflow.md",
+    "docs/delivery/linear.md",
+    "docs/product/roadmap.md",
+    "docs/quality/harness.md"
+  ],
+  "allowedPaths": [
+    "docs/delivery/team-operating-model.md",
+    "docs/delivery/index.md",
+    "docs/delivery/contracts/p-33.json",
+    "docs/.vitepress/config.mts"
+  ],
+  "requiredCommands": [
+    "npm run docs:build",
+    "npm run verify:fast"
+  ],
+  "checks": {
+    "requiredFiles": [
+      "docs/delivery/team-operating-model.md"
+    ],
+    "forbiddenPatterns": []
+  }
+}

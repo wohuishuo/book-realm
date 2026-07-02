@@ -149,6 +149,7 @@ export default defineConfig({
           items: [
             { text: '交付入口', link: '/delivery/' },
             { text: '标准流程', link: '/delivery/workflow' },
+            { text: '团队交付操作模型', link: '/delivery/team-operating-model' },
             { text: 'Linear 工作模型', link: '/delivery/linear' }
           ]
         }
