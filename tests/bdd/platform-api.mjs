@@ -11,14 +11,17 @@ const urls = {
 }
 let activeWorld
 
-async function json(method, url, body) {
+async function json(method, url, body, options = {}) {
   activeWorld.actualHttpCalls += 1
+  const headers = {}
+  if (body) headers['content-type'] = 'application/json'
+  if (options.token) headers.Authorization = `Bearer ${options.token}`
   let response, lastError
   for (let attempt = 1; attempt <= 120; attempt += 1) {
     try {
       response = await fetch(url, {
         method,
-        headers: body ? { 'content-type': 'application/json' } : undefined,
+        headers: Object.keys(headers).length ? headers : undefined,
         body: body ? JSON.stringify(body) : undefined
       })
       break
@@ -28,6 +31,10 @@ async function json(method, url, body) {
     }
   }
   if (!response) throw new Error(`${method} ${url} could not connect`, { cause: lastError })
+  if (options.expectedStatus !== undefined) {
+    assert.equal(response.status, options.expectedStatus, `${method} ${url} returned ${response.status}`)
+    return response
+  }
   assert.equal(response.ok, true, `${method} ${url} returned ${response.status}`)
   const payload = await response.json()
   assert.equal(payload.code, 0, payload.message ?? `${url} failed`)
@@ -65,7 +72,9 @@ When('用户使用测试账号登录', async function () {
     userPassword: process.env.BDD_PASSWORD ?? '12345678',
     loginType: 'Cucumber'
   })
+  this.token = data.token
   this.userId = data.user.id
+  assert.ok(this.token)
   assert.ok(this.userId)
 })
 
@@ -80,22 +89,26 @@ When('用户搜索一本书并打开第一章', async function () {
 
 When('用户保存当前阅读位置', async function () {
   assert.ok(this.userId, 'Login must run before saving progress')
+  assert.ok(this.token, 'Login must run before saving progress')
   this.position = {
     userId: this.userId,
     bookId: this.book.id,
     chapterId: this.chapter.id,
     paragraphIndex: 0
   }
-  await json('POST', `${urls.stats}/stats/progress`, this.position)
+  await json('POST', `${urls.stats}/stats/progress`, this.position, { token: this.token })
 })
 
 Then('再次查询时应返回该阅读位置', async function () {
-  const rows = await json('GET', `${urls.stats}/stats/reading?userId=${this.userId}`)
+  const rows = await json('GET', `${urls.stats}/stats/reading?userId=${this.userId}`, undefined, {
+    token: this.token
+  })
   const serialized = JSON.stringify(rows)
   assert.ok(serialized.includes(String(this.position.chapterId)), 'Saved chapter was not returned')
 })
 
 When('用户为当前段落保存划线和笔记', async function () {
+  assert.ok(this.token, 'Login must run before saving marks')
   const paragraph = this.chapter.paragraphs[0]
   this.note = `Cucumber note ${Date.now()}`
   this.mark = await json('POST', `${urls.library}/marks`, {
@@ -106,18 +119,39 @@ When('用户为当前段落保存划线和笔记', async function () {
     paragraphSeq: paragraph.seq,
     markType: 'NOTE',
     note: this.note
+  }, {
+    token: this.token
   })
+})
+
+When('未登录用户尝试保存划线笔记', async function () {
+  const paragraph = this.chapter.paragraphs[0]
+  this.securityResponse = await json('POST', `${urls.library}/marks`, {
+    bookId: this.book.id,
+    chapterId: this.chapter.id,
+    paragraphId: paragraph.id,
+    paragraphSeq: paragraph.seq,
+    markType: 'NOTE',
+    note: `unauthenticated ${Date.now()}`
+  }, { expectedStatus: 401 })
 })
 
 Then('再次查询章节标记时应返回该笔记', async function () {
   const marks = await json(
     'GET',
-    `${urls.library}/chapters/${this.chapter.id}/marks?userId=${this.userId}`
+    `${urls.library}/chapters/${this.chapter.id}/marks?userId=${this.userId}`,
+    undefined,
+    { token: this.token }
   )
   assert.ok(marks.some((mark) => mark.id === this.mark.id && mark.note === this.note))
 })
 
+Then('服务应返回未登录错误', function () {
+  assert.equal(this.securityResponse.status, 401)
+})
+
 When('用户为当前段落发布段评', async function () {
+  assert.ok(this.token, 'Login must run before posting comments')
   const paragraph = this.chapter.paragraphs[0]
   this.comment = await json('POST', `${urls.library}/comments`, {
     userId: this.userId,
@@ -125,17 +159,23 @@ When('用户为当前段落发布段评', async function () {
     chapterId: this.chapter.id,
     paragraphId: paragraph.id,
     content: `Cucumber comment ${Date.now()}`
+  }, {
+    token: this.token
   })
 })
 
 When('用户连续两次点赞该段评', async function () {
   this.firstLike = await json(
     'POST',
-    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`
+    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`,
+    undefined,
+    { token: this.token }
   )
   this.secondLike = await json(
     'POST',
-    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`
+    `${urls.library}/comments/${this.comment.id}/like?userId=${this.userId}`,
+    undefined,
+    { token: this.token }
   )
 })
 
@@ -146,6 +186,7 @@ Then('段评只记录一次点赞', function () {
 })
 
 When('用户连续上报两个阅读位置', async function () {
+  assert.ok(this.token, 'Login must run before reporting stats')
   this.latestParagraphIndex = 2
   for (const paragraphIndex of [1, this.latestParagraphIndex]) {
     await json('POST', `${urls.stats}/stats/progress`, {
@@ -153,12 +194,14 @@ When('用户连续上报两个阅读位置', async function () {
       bookId: this.book.id,
       chapterId: this.chapter.id,
       paragraphIndex
+    }, {
+      token: this.token
     })
   }
 })
 
 Then('阅读统计只保留该书当天的最新位置', async function () {
-  const rows = await json('GET', `${urls.stats}/stats/reading`)
+  const rows = await json('GET', `${urls.stats}/stats/reading`, undefined, { token: this.token })
   const matches = rows.filter((row) =>
     row.userId === this.userId &&
     row.bookId === this.book.id &&
@@ -169,12 +212,25 @@ Then('阅读统计只保留该书当天的最新位置', async function () {
   assert.ok(matches[0].reportCount >= 2)
 })
 
+When('另一个用户尝试删除该划线', async function () {
+  const forged = process.env.BDD_OTHER_TOKEN
+  assert.ok(forged, 'BDD_OTHER_TOKEN must be set for forbidden-delete scenario')
+  this.securityResponse = await json('DELETE', `${urls.library}/marks/${this.mark.id}`, undefined, {
+    token: forged,
+    expectedStatus: 403
+  })
+})
+
+Then('服务应返回无权操作错误', function () {
+  assert.equal(this.securityResponse.status, 403)
+})
+
 When('用户针对当前章节提问', async function () {
   this.answer = await json('POST', `${urls.ai}/ai/ask`, {
     bookId: this.book.id,
     chapterId: this.chapter.id,
     question: '这一章开头在讲什么？'
-  })
+  }, this.token ? { token: this.token } : {})
 })
 
 Then('AI 请求应成功并返回非空答案', function () {

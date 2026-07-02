@@ -48,3 +48,19 @@ Feature: 平台核心接口闭环
     And 用户搜索一本书并打开第一章
     When 用户针对当前章节提问
     Then AI 请求应成功并返回非空答案
+
+  @prd-002 @prd-010 @security
+  Scenario: 未登录用户不能保存划线笔记
+    Given 平台服务已经启动
+    And 用户搜索一本书并打开第一章
+    When 未登录用户尝试保存划线笔记
+    Then 服务应返回未登录错误
+
+  @prd-002 @prd-010 @security
+  Scenario: 用户不能删除他人的划线
+    Given 平台服务已经启动
+    And 用户使用测试账号登录
+    And 用户搜索一本书并打开第一章
+    And 用户为当前段落保存划线和笔记
+    When 另一个用户尝试删除该划线
+    Then 服务应返回无权操作错误

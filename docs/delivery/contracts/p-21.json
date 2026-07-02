@@ -11,6 +11,8 @@
   ],
   "allowedPaths": [
     "docs/superpowers/plans/2026-07-02-unified-jwt-validation.md",
+    "docs/specs/features/platform-api.feature",
+    "tests/bdd/platform-api.mjs",
     "docs/delivery/contracts/p-21.json"
   ],
   "requiredCommands": [
